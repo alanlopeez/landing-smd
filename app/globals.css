@@ -1,0 +1,131 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Auros Color System */
+  --color-liquid-abyss: #012624;
+  --color-liquid-deep: #011d1c;
+  --color-liquid-kelp: #003734;
+  --color-liquid-mist: #edfffe;
+  --color-platinum: #ffffff;
+  --color-silver-mist: #bbc7c6;
+  --color-ash: #f2f2f2;
+  --color-slate-deep: #707777;
+  --color-lavender-phosphor: #fde9ff;
+  
+  /* Integrated Biosciences Accent */
+  --color-bioluminescent-lime: #cef79e;
+  --color-abyssal-ink: #222f30;
+
+  /* Gradients */
+  --gradient-aurora: linear-gradient(90deg, rgb(203, 255, 252) 0%, rgb(237, 255, 254) 26.25%, rgb(255, 253, 250) 47.57%, rgb(250, 209, 255) 88.96%);
+  --gradient-bioluminescent: linear-gradient(90deg, rgb(0, 130, 124) 0%, rgb(203, 255, 252) 100%);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--color-liquid-abyss);
+  color: var(--color-silver-mist);
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  background-color: var(--color-liquid-abyss);
+  color: var(--color-silver-mist);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Strict Auros Rule: No drop-shadows or box-shadows. Depth through color contrast and borders */
+.shadow,
+.shadow-sm,
+.shadow-md,
+.shadow-lg,
+.shadow-xl,
+.shadow-2xl {
+  box-shadow: none !important;
+}
+
+/* Surface Lift Tokens */
+.surface-card {
+  background-color: var(--color-liquid-kelp);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: border-color 0.25s ease, background-color 0.25s ease;
+}
+
+.surface-card:hover {
+  border-color: rgba(203, 255, 252, 0.2);
+}
+
+.surface-recessed {
+  background-color: var(--color-liquid-deep);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Buttons */
+.btn-aurora {
+  background: var(--gradient-aurora);
+  color: #121818;
+  font-family: Arial, system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border-radius: 6px;
+  padding: 12px 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
+  cursor: pointer;
+}
+
+.btn-aurora:hover {
+  transform: translateY(-1px);
+  opacity: 0.95;
+}
+
+.btn-lime {
+  background-color: var(--color-bioluminescent-lime);
+  color: #0b1f1e;
+  border-radius: 6px;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-lime:hover {
+  transform: translateY(-1px);
+  background-color: #d8fba9;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-liquid-deep);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-liquid-kelp);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #005450;
+}
