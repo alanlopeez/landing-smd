@@ -49,12 +49,12 @@ export default function ConversionModals({ activeModal, onClose }: ConversionMod
   const LEAD_SCRIPT_URL =
     process.env.NEXT_PUBLIC_GOOGLE_SCRIPT_LEAD_URL ||
     process.env.NEXT_PUBLIC_GOOGLE_SCRIPT_URL ||
-    "https://script.google.com/macros/s/AKfycbywngGHP8VY6t5MiftzloX51n_Y-j3DKVdnPdVnzjnHlTnowLC0-35xAxDOrQbr2Re_Rg/exec";
+    "https://script.google.com/macros/s/AKfycbzbD3jkCnbEuRVGZZrdPxPtJLZ_fTrtfhDDf2W7YPQN3xHut5nldiyae1ljCQ1VXYzBfw/exec";
 
   const MAGNET_SCRIPT_URL =
     process.env.NEXT_PUBLIC_GOOGLE_SCRIPT_MAGNET_URL ||
     process.env.NEXT_PUBLIC_GOOGLE_SCRIPT_URL ||
-    "https://script.google.com/macros/s/AKfycbz0hlSoNfITO5KAu4ApSY42HL-rOf_aS_VMUPzcr15RHvrl9wBaWX6EDXzq6BFmgqvN/exec";
+    "https://script.google.com/macros/s/AKfycbxSUGeN38Y-FN5TRMe8s2KrQx8IaQYbHP2-sWIAqleMRxHXkDy_QzUeHLNXjD47bkY6/exec";
 
   const handleLeadSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

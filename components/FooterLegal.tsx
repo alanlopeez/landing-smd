@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 import { Shield, FileText, RefreshCw, Mail, ChevronDown, ChevronUp } from "lucide-react";
 
 export default function FooterLegal() {
@@ -18,8 +19,14 @@ export default function FooterLegal() {
           {/* Brand Info */}
           <div className="md:col-span-5 space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-7 h-7 rounded-full border border-white/20 flex items-center justify-center bg-liquid-abyss">
-                <div className="w-2 h-2 rounded-full bg-bioluminescent-lime" />
+              <div className="w-7 h-7 rounded-full border border-white/20 flex items-center justify-center bg-liquid-abyss overflow-hidden p-1">
+                <Image
+                  src="/logo.png"
+                  alt="Logo Alan López"
+                  width={20}
+                  height={20}
+                  className="object-contain"
+                />
               </div>
               <span className="text-sm font-semibold tracking-tight text-platinum font-matter uppercase">
                 Alan López · Servicio de Marketing Digital

@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 
 interface HeaderHeroProps {
@@ -41,8 +42,14 @@ export default function HeaderHero({
           href="#inicio"
           className="flex items-center gap-3 group focus:outline-none focus:ring-1 focus:ring-bioluminescent-lime rounded-md"
         >
-          <div className="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center bg-abyssal-ink/60 backdrop-blur-sm group-hover:border-bioluminescent-lime transition-colors">
-            <div className="w-2.5 h-2.5 rounded-full bg-bioluminescent-lime animate-pulse" />
+          <div className="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center bg-abyssal-ink/60 backdrop-blur-sm group-hover:border-bioluminescent-lime transition-colors overflow-hidden p-1">
+            <Image
+              src="/logo.png"
+              alt="Logo Penrose Alan López"
+              width={24}
+              height={24}
+              className="object-contain"
+            />
           </div>
           <div className="flex flex-col">
             <span className="text-sm font-semibold tracking-tight text-platinum font-matter">
@@ -64,6 +71,12 @@ export default function HeaderHero({
               Servicios
             </a>
             <a
+              href="#automatizaciones"
+              className="text-silver-mist hover:text-platinum transition-colors"
+            >
+              Automatizaciones
+            </a>
+            <a
               href="#demo"
               className="text-silver-mist hover:text-platinum transition-colors"
             >
@@ -74,6 +87,12 @@ export default function HeaderHero({
               className="text-silver-mist hover:text-platinum transition-colors"
             >
               Proyectos
+            </a>
+            <a
+              href="#faq"
+              className="text-silver-mist hover:text-platinum transition-colors"
+            >
+              FAQ
             </a>
             <button
               onClick={onOpenAboutModal}

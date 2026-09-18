@@ -3,9 +3,11 @@
 import React, { useState } from "react";
 import HeaderHero from "@/components/HeaderHero";
 import ValueProposition from "@/components/ValueProposition";
+import AutomationTypesSection from "@/components/AutomationTypesSection";
 import InteractiveDemo from "@/components/InteractiveDemo";
 import DesignShowcase from "@/components/DesignShowcase";
 import AboutMeSection from "@/components/AboutMeSection";
+import FaqSection from "@/components/FaqSection";
 import LeadMagnetSection from "@/components/LeadMagnetSection";
 import FinalCtaSection from "@/components/FinalCtaSection";
 import FooterLegal from "@/components/FooterLegal";
@@ -28,22 +30,28 @@ export default function HomePage() {
       {/* 2. Value Proposition & Multi-Agent Architecture (Auros Theme) */}
       <ValueProposition onOpenLeadModal={() => setActiveModal("lead")} />
 
-      {/* 3. Interactive Demo Simulator ("¿Cómo funciona? - Vea un proyecto DEMO") */}
+      {/* 3. Automation Types & Agent Levels (Express, Conversacional, Autónomo) */}
+      <AutomationTypesSection onOpenLeadModal={() => setActiveModal("lead")} />
+
+      {/* 4. Interactive Demo Simulator ("¿Cómo funciona? - Vea un proyecto DEMO") */}
       <InteractiveDemo onOpenLeadModal={() => setActiveModal("lead")} />
 
-      {/* 4. Design Models & Produced Live Projects (Refero & Alan López Projects) */}
+      {/* 5. Design Models & Produced Live Projects (Refero & Alan López Projects) */}
       <DesignShowcase onOpenLeadModal={() => setActiveModal("lead")} />
 
-      {/* 5. About Me Section (Alan López Bio & Lavender Phosphor Stats) */}
+      {/* 6. About Me Section (Alan López Bio & Lavender Phosphor Stats) */}
       <AboutMeSection onOpenLeadModal={() => setActiveModal("lead")} />
 
-      {/* 6. Lead Magnet Section (Free Multi-Agent AI Guide) */}
+      {/* 7. Frequently Asked Questions (FAQ Accordion with Schema.org & GEO) */}
+      <FaqSection onOpenLeadModal={() => setActiveModal("lead")} />
+
+      {/* 8. Lead Magnet Section (Free Multi-Agent AI Guide) */}
       <LeadMagnetSection onOpenMagnetModal={() => setActiveModal("magnet")} />
 
-      {/* 7. Final Call to Action Section (Recessed Liquid Deep Card) */}
+      {/* 9. Final Call to Action Section (Recessed Liquid Deep Card) */}
       <FinalCtaSection onOpenLeadModal={() => setActiveModal("lead")} />
 
-      {/* 8. Footer with Complete Legal Framework & Cybersecurity Protocols */}
+      {/* 10. Footer with Complete Legal Framework & Cybersecurity Protocols */}
       <FooterLegal />
 
       {/* Pop-up Modals */}

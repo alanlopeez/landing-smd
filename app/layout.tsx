@@ -41,7 +41,21 @@ export const metadata: Metadata = {
     "desarrollo web con inteligencia artificial",
     "sistemas multi-agentes",
     "embudos de venta automatizados",
+    "automatizaciones con inteligencia artificial",
+    "agentes autonomos ia",
+    "asistente omnicanal",
+    "preguntas frecuentes diseño web",
+    "garantias diseño web",
+    "costo pagina web dolares",
   ],
+  icons: {
+    icon: [
+      { url: "/logo.png", type: "image/png" },
+      { url: "/favicon.png", type: "image/png" },
+    ],
+    shortcut: "/logo.png",
+    apple: "/logo.png",
+  },
   authors: [{ name: "Alan López", url: "https://serviciodemarketingdigital.com" }],
   creator: "Alan López",
   publisher: "Servicio de Marketing Digital",
@@ -102,7 +116,7 @@ export default function RootLayout({
     name: "Alan López - Servicio de Diseño de Página Web & Multi-Agentes",
     alternateName: "Servicio de Marketing Digital",
     url: "https://serviciodemarketingdigital.com",
-    logo: "https://serviciodemarketingdigital.com/images/alan-lopez.png",
+    logo: "https://serviciodemarketingdigital.com/logo.png",
     image: "https://serviciodemarketingdigital.com/images/alan-lopez.png",
     description:
       "Servicio de página web y diseño de alta gama con integración de sistemas multi-agentes con IA. Oferta especial: creamos tu sitio web en 24 hs.",
@@ -157,12 +171,79 @@ export default function RootLayout({
     },
   };
 
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: "¿Cuánto tiempo tarda el desarrollo y entrega de mi página web?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Gracias a nuestra metodología orientada a resultados, podemos estructurar y crear la primera versión de tu sitio web en 24 horas. A partir de ese momento, iniciamos una etapa de revisión donde tienes el derecho de solicitar todas las modificaciones y optimizaciones que precises hasta que el proyecto se adapte exactamente a tus expectativas.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "¿Qué significa integrar \"sistemas multi-agentes\" en mi sitio web?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Implementar sistemas multi-agentes impulsados por Inteligencia Artificial permite integrar un ecosistema tecnológico automatizado directamente en tu página. Esto incluye embudos de ventas con formularios lógicos que filtran información en tiempo real, como el nivel de urgencia o el tipo de presupuesto del cliente. Esto te permite ahorrar recursos en tareas repetitivas y cerrar ventas mucho más rápido al cotizar al instante.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "¿Cuándo debo realizar el pago por el servicio de diseño web?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Nuestro modelo de trabajo asegura tu entera conformidad antes de facturar. Una vez confirmada la primera fase del servicio, iniciamos el diseño y desarrollo estructural. Solo procederemos a la instancia de pago luego de que el diseño cumpla con todas tus expectativas y nos confirmes tu aprobación de manera explícita por correo electrónico. Al acreditarse el pago, el sitio será publicado oficialmente en su dominio.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "¿Ofrecen soporte o mantenimiento una vez que la página está publicada?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Sí, nuestro servicio no termina con la publicación de la plataforma. Como usuario, mantendrás un acceso libre y directo para solicitar nuevas modificaciones, optimizaciones o cambios futuros que tu sitio web requiera para continuar evolucionando y creciendo en el entorno digital.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "¿Quién está a cargo del diseño, estrategia y posicionamiento de mi sitio?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Cada proyecto es liderado por Alan López, Productor Digital especializado en marketing estratégico, diseño y prompt engineering. La producción se enfoca en crear soluciones escalables que han optimizado recursos, generado ecosistemas de alta tasa de conversión y logrado un posicionamiento orgánico líder en motores de búsqueda.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "¿Qué rango de inversión se requiere para desarrollar una solución web?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Adaptamos nuestra propuesta técnica a la escala exacta de tu negocio y a tus tiempos operativos. Gestionamos proyectos de distintos niveles de complejidad, abarcando inversiones para negocios emergentes (menos de u$d 1500), escalas intermedias (entre u$d 1500 y u$d 3000), y ecosistemas corporativos avanzados (más de u$d 5000).",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "¿Qué garantías de seguridad y fidelidad de diseño ofrecen?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Garantizamos la máxima fidelidad: tienes el pleno derecho a solicitar una devolución si el sitio final entregado y publicado presenta distorsiones frente a la versión que aprobaste previamente. A nivel técnico, tu sitio cuenta con protocolos prioritarios de ciberseguridad; ante cualquier vulneración o ataque externo emergente, priorizaremos la investigación y la restitución inmediata de un nuevo sitio con las amenazas neutralizadas para garantizarte un entorno seguro para operar. Además, toda la información personal proporcionada se resguarda bajo estrictos estándares de confidencialidad.",
+        },
+      },
+    ],
+  };
+
   return (
     <html lang="es" className={`${interTight.variable} ${inter.variable}`}>
       <head>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
         />
       </head>
       <body className="bg-liquid-abyss text-silver-mist antialiased selection:bg-bioluminescent-lime selection:text-liquid-abyss">
