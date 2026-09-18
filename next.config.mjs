@@ -5,8 +5,8 @@ const ContentSecurityPolicy = `
   style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
   font-src 'self' https://fonts.gstatic.com data:;
   img-src 'self' data: https: blob:;
-  media-src 'self' data: blob:;
-  connect-src 'self' https://script.google.com https://script.googleusercontent.com https://styles.refero.design https://*.vercel.app;
+  media-src 'self' data: blob: https://images.refero.design;
+  connect-src 'self' https://script.google.com https://script.googleusercontent.com https://styles.refero.design https://images.refero.design https://*.vercel.app;
   frame-src 'self' https://styles.refero.design;
   object-src 'none';
   base-uri 'self';
