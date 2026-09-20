@@ -21,6 +21,7 @@ const automations = [
     icon: Zap,
     accentColor: "text-amber-300",
     badgeBg: "bg-amber-400/10 text-amber-300 border-amber-400/20",
+    glowBg: "from-amber-400/20 via-amber-400/5 to-transparent",
     features: [
       "Generación instantánea de presupuestos",
       "Formularios inteligentes conectados",
@@ -41,6 +42,7 @@ const automations = [
     icon: MessageSquare,
     accentColor: "text-bioluminescent-lime",
     badgeBg: "bg-bioluminescent-lime/10 text-bioluminescent-lime border-bioluminescent-lime/20",
+    glowBg: "from-bioluminescent-lime/20 via-bioluminescent-lime/5 to-transparent",
     features: [
       "Omnicanalidad: WhatsApp, Instagram, TikTok, Facebook, Telegram",
       "Filtrado cualitativo y lógico de consultas",
@@ -62,6 +64,7 @@ const automations = [
     icon: Cpu,
     accentColor: "text-sky-300",
     badgeBg: "bg-sky-400/10 text-sky-300 border-sky-400/20",
+    glowBg: "from-sky-400/20 via-sky-400/5 to-transparent",
     features: [
       "Orquestador multi-agente centralizado 24/7",
       "Agentes especializados para ventas, administración y marketing",
@@ -128,15 +131,20 @@ export default function AutomationTypesSection({
                   </div>
 
                   {/* 3D Image Container */}
-                  <div className="relative w-full h-56 rounded-xl bg-gradient-to-b from-white/5 to-transparent border border-white/5 flex items-center justify-center overflow-hidden group-hover:border-white/15 transition-colors">
-                    <div className="absolute inset-0 bg-radial from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                    <Image
-                      src={item.image}
-                      alt={item.imageAlt}
-                      width={320}
-                      height={320}
-                      className="object-contain max-h-52 drop-shadow-2xl transition-transform duration-500 group-hover:scale-105"
+                  <div className="relative w-full h-64 sm:h-72 rounded-2xl bg-gradient-to-b from-white/[0.07] to-white/[0.02] border border-white/10 flex items-center justify-center overflow-hidden p-3 group-hover:border-white/20 transition-all duration-300">
+                    {/* Ambient glow matching level color */}
+                    <div
+                      className={`absolute inset-0 bg-radial ${item.glowBg} opacity-25 group-hover:opacity-70 transition-opacity duration-500 blur-2xl pointer-events-none`}
                     />
+                    <div className="relative w-full h-full flex items-center justify-center">
+                      <Image
+                        src={item.image}
+                        alt={item.imageAlt}
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 380px"
+                        className="object-contain p-2 drop-shadow-[0_15px_30px_rgba(0,0,0,0.65)] transition-transform duration-500 group-hover:scale-105"
+                      />
+                    </div>
                   </div>
 
                   {/* Title & Subtitle */}
