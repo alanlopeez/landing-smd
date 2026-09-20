@@ -100,10 +100,11 @@ export default function ConversionModals({ activeModal, onClose }: ConversionMod
         body: JSON.stringify(payload),
       });
 
-      setStatus("success");
+      // Redirección directa a la URL de conversión para Google Ads
+      window.location.href = "/gracias";
     } catch {
       // Apps Script redirection may trigger catch in browser while still successfully recording
-      setStatus("success");
+      window.location.href = "/gracias";
     }
   };
 
@@ -143,9 +144,9 @@ export default function ConversionModals({ activeModal, onClose }: ConversionMod
         headers: { "Content-Type": "text/plain;charset=utf-8" },
         body: JSON.stringify(payload),
       });
-      setStatus("success");
+      window.location.href = "/gracias?tipo=guia";
     } catch {
-      setStatus("success");
+      window.location.href = "/gracias?tipo=guia";
     }
   };
 

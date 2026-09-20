@@ -1,13 +1,13 @@
 /** @type {import('next').NextConfig} */
 const ContentSecurityPolicy = `
   default-src 'self';
-  script-src 'self' 'unsafe-inline' 'unsafe-eval' https://vercel.live;
+  script-src 'self' 'unsafe-inline' 'unsafe-eval' https://vercel.live https://www.googletagmanager.com https://*.googletagmanager.com https://*.google-analytics.com https://googleads.g.doubleclick.net https://*.google.com;
   style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
   font-src 'self' https://fonts.gstatic.com data:;
-  img-src 'self' data: https: blob:;
+  img-src 'self' data: https: blob: https://www.google.com https://www.google.com.ar https://googleads.g.doubleclick.net https://*.google-analytics.com https://*.googletagmanager.com;
   media-src 'self' data: blob: https://images.refero.design;
-  connect-src 'self' https://script.google.com https://script.googleusercontent.com https://styles.refero.design https://images.refero.design https://*.vercel.app;
-  frame-src 'self' https://styles.refero.design;
+  connect-src 'self' https://script.google.com https://script.googleusercontent.com https://styles.refero.design https://images.refero.design https://*.vercel.app https://*.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com https://googleads.g.doubleclick.net https://*.google.com;
+  frame-src 'self' https://styles.refero.design https://*.google.com;
   object-src 'none';
   base-uri 'self';
   form-action 'self' https://script.google.com;
