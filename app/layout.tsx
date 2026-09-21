@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter_Tight, Inter } from "next/font/google";
 import "./globals.css";
+import WhatsAppButton from "@/components/WhatsAppButton";
 
 const interTight = Inter_Tight({
   subsets: ["latin"],
@@ -263,6 +264,7 @@ export default function RootLayout({
       </head>
       <body className="bg-liquid-abyss text-silver-mist antialiased selection:bg-bioluminescent-lime selection:text-liquid-abyss">
         {children}
+        <WhatsAppButton />
       </body>
     </html>
   );

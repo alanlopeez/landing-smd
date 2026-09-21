@@ -129,3 +129,20 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #005450;
 }
+
+/* Floating WhatsApp Button & Badge */
+.floating-whatsapp-btn {
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.28), 0 2px 6px rgba(37, 211, 102, 0.35);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, background-color 0.2s ease;
+}
+
+.floating-whatsapp-container:hover .floating-whatsapp-btn {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35), 0 4px 14px rgba(37, 211, 102, 0.55);
+  transform: translateY(-2px) scale(1.06);
+  background-color: #20ba59;
+}
+
+.floating-whatsapp-badge {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35), 0 1px 3px rgba(255, 255, 255, 0.05);
+}
+
