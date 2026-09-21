@@ -18,13 +18,13 @@ export default function ValueProposition({ onOpenLeadModal }: ValuePropositionPr
         {/* Section Header */}
         <div className="max-w-3xl space-y-4">
           <p className="text-xs uppercase tracking-[0.12em] text-silver-mist font-matter font-medium">
-            AUROS ECOSYSTEM · ARQUITECTURA DIGITAL
+            SERVICIOS DE DESARROLLO WEB · DISEÑO Y MARKETING DIGITAL
           </p>
           <h2 className="text-3xl sm:text-5xl lg:text-6xl font-medium text-platinum font-matter tracking-[-0.04em] leading-[1.05]">
-            Tu negocio online, con mayor eficiencia y diseño de alta gama.
+            Páginas web para empresas con diseño de alta gama y automatización de ventas.
           </h2>
           <p className="text-base sm:text-lg text-silver-mist font-matter leading-relaxed">
-            Como <strong className="text-platinum font-medium">diseñador de página web</strong> y productor digital, integro sistemas multi-agentes que convierten tu sitio en un motor de ventas autónomo. Si te preguntas <span className="text-liquid-mist">cómo crear mi página web</span> para destacar frente a la competencia, la respuesta es ingeniería visual y automatización.
+            Desarrollamos sitios web y creamos páginas web profesionales con sistemas multi-agentes y diseño de alta gama. Como <strong className="text-platinum font-medium">creador de páginas web</strong> y productor digital, integramos ingeniería visual y automatización de ventas para maximizar tus resultados comerciales.
           </p>
         </div>
 
@@ -48,7 +48,7 @@ export default function ValueProposition({ onOpenLeadModal }: ValuePropositionPr
 
               <div className="space-y-3">
                 <h3 className="text-2xl sm:text-3xl font-medium text-platinum font-matter tracking-tight">
-                  Ahorra recursos en tareas repetitivas
+                  Delega la recolección de datos y ahorra recursos
                 </h3>
                 <p className="text-sm text-silver-mist leading-relaxed font-matter">
                   Delega la recolección de datos, la cualificación inicial de prospectos y el agendamiento a agentes autónomos que trabajan las 24 horas del día.
@@ -86,10 +86,10 @@ export default function ValueProposition({ onOpenLeadModal }: ValuePropositionPr
 
               <div className="space-y-3">
                 <h3 className="text-2xl sm:text-3xl font-medium text-platinum font-matter tracking-tight">
-                  Cierra ventas más rápido al cotizar al instante
+                  Cierra ventas más rápido con cotizadores automáticos
                 </h3>
                 <p className="text-sm text-silver-mist leading-relaxed font-matter">
-                  Evita que tus clientes potenciales se vayan con la competencia mientras esperan un presupuesto manual. Un <strong className="text-platinum font-normal">creador de página web</strong> con lógica en tiempo real.
+                  Evita que tus clientes potenciales se vayan con la competencia mientras esperan un presupuesto manual. Integramos cotizadores automáticos y lógica en tiempo real para acelerar tus conversiones.
                 </p>
               </div>
             </div>
@@ -124,10 +124,10 @@ export default function ValueProposition({ onOpenLeadModal }: ValuePropositionPr
 
               <div className="space-y-3">
                 <h3 className="text-2xl sm:text-3xl font-medium text-platinum font-matter tracking-tight">
-                  Embudo con formularios lógicos en tiempo real
+                  Automatización de ventas con formularios lógicos en tiempo real
                 </h3>
                 <p className="text-sm text-silver-mist leading-relaxed font-matter">
-                  Filtra a cada cliente según su rango de inversión, urgencia y requerimientos técnicos, enviando los prospectos calificados directamente a tu CRM o base de datos.
+                  Filtra a cada cliente según su rango de inversión, urgencia y requerimientos técnicos, enviando los prospectos calificados directamente a tu base de datos o CRM.
                 </p>
               </div>
             </div>
@@ -152,10 +152,10 @@ export default function ValueProposition({ onOpenLeadModal }: ValuePropositionPr
               Arquitectura de Cero Código Basura
             </div>
             <h3 className="text-3xl sm:text-4xl lg:text-5xl font-medium text-platinum font-matter tracking-tight leading-tight">
-              Sin plantillas lentas de WordPress. Construido para velocidad extrema.
+              Diseño Web Profesional sin plantillas lentas. Cero código basura.
             </h3>
             <p className="text-sm sm:text-base text-silver-mist leading-relaxed">
-              Cada <strong className="text-platinum font-normal">diseño de página web</strong> se programa a mano con código modular, semántica HTML5 estricta y microservicios sin servidor. Esto garantiza tiempos de carga inferiores a 0.8 segundos y una experiencia fluida que enamora tanto a los usuarios como a los algoritmos de Google.
+              Desarrollamos sitios web y creamos páginas web profesionales a medida con código modular, semántica HTML5 estricta y microservicios sin servidor. Esto garantiza tiempos de carga inferiores a 0.8 segundos y una experiencia fluida que enamora tanto a los usuarios como a los algoritmos de Google.
             </p>
             <div className="pt-2 flex flex-wrap items-center gap-4">
               <button onClick={onOpenLeadModal} className="btn-aurora text-xs">

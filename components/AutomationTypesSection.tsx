@@ -13,9 +13,9 @@ const automations = [
     id: "express",
     level: "NIVEL 01 · RESPUESTA INMEDIATA",
     title: "Express",
-    subtitle: "Cotizaciones y respuestas al segundo exacto",
+    subtitle: "Cotizadores automáticos y respuestas al segundo exacto",
     description:
-      "No dejes enfriar ninguna venta. Este nivel conecta tus formularios para generar respuestas y cotizaciones al instante. Diseñado específicamente para impactar al prospecto con una propuesta en el segundo exacto en que demuestra interés.",
+      "No dejes enfriar ninguna venta. Este nivel conecta tus formularios con cotizadores automáticos para generar respuestas y presupuestos al instante. Diseñado para cerrar ventas más rápido y aumentar tu tasa de conversión sin demoras.",
     image: "/images/automations/express.png",
     imageAlt: "Automatización Express con envío y cálculo de cotizaciones automáticas",
     icon: Zap,
@@ -23,20 +23,20 @@ const automations = [
     badgeBg: "bg-amber-400/10 text-amber-300 border-amber-400/20",
     glowBg: "from-amber-400/20 via-amber-400/5 to-transparent",
     features: [
-      "Generación instantánea de presupuestos",
-      "Formularios inteligentes conectados",
-      "Cero tiempo muerto para el prospecto",
-      "Aumento drástico de tasa de contacto",
+      "Cotizadores automáticos y presupuestos al instante",
+      "Formularios inteligentes conectados en tiempo real",
+      "Cierra ventas más rápido sin tiempos muertos",
+      "Aumenta la tasa de conversión de tus prospectos",
     ],
     ctaText: "Cotizar Nivel Express",
   },
   {
     id: "conversacional",
     level: "NIVEL 02 · ATENCIÓN OMNICANAL",
-    title: "Conversacional",
-    subtitle: "Asistente inteligente que aprende y razona",
+    title: "Asistentes conversacionales",
+    subtitle: "Atención omnicanal inteligente que aprende y razona",
     description:
-      "Atención inteligente en todas tus plataformas y redes sociales. Un asistente omnicanal que no solo responde, sino que aprende, razona y mantiene una conversación natural. Filtra la consulta, ofrece la solución adecuada y delega inteligentemente el contacto a un humano cuando la venta lo requiere.",
+      "Atención inteligente en todas tus plataformas y redes sociales. Asistentes conversacionales que no solo responden, sino que aprenden, razonan y delegan la recolección de datos, cualificando al prospecto y derivando el contacto a un humano cuando la venta lo requiere.",
     image: "/images/automations/conversacional.png",
     imageAlt: "Asistente conversacional omnicanal conectado a WhatsApp, Instagram, Telegram y redes sociales",
     icon: MessageSquare,
@@ -44,21 +44,21 @@ const automations = [
     badgeBg: "bg-bioluminescent-lime/10 text-bioluminescent-lime border-bioluminescent-lime/20",
     glowBg: "from-bioluminescent-lime/20 via-bioluminescent-lime/5 to-transparent",
     features: [
-      "Omnicanalidad: WhatsApp, Instagram, TikTok, Facebook, Telegram",
-      "Filtrado cualitativo y lógico de consultas",
-      "Razonamiento contextual y respuestas naturales",
-      "Derivación inteligente a humanos al cerrar venta",
+      "Omnicanalidad: WhatsApp, Instagram, TikTok y web",
+      "Delega la recolección de datos y filtrado de clientes",
+      "Razonamiento contextual y respuestas naturales 24/7",
+      "Derivación inteligente a humanos para cerrar ventas",
     ],
-    ctaText: "Solicitar Asistente Omnicanal",
+    ctaText: "Solicitar Asistente Conversacional",
     popularBadge: "Más Solicitado",
   },
   {
     id: "autonomo",
     level: "NIVEL 03 · ECOSISTEMA 24/7",
-    title: "Autónomo",
-    subtitle: "Orquestador y red de agentes operando en la nube",
+    title: "Ecosistema Autónomo",
+    subtitle: "Automatización de ventas y red de agentes 24/7",
     description:
-      "El ecosistema definitivo de máxima rentabilidad. Despliega un orquestador y múltiples agentes hiper-específicos operando en la nube 24/7. Ya sea mediante instrucciones directas o rutinas programadas, estos agentes se integran a tu administración, marketing o ventas para ejecutar tareas complejas, investigar y devolverte resultados concretos listos para tu revisión y aprobación final.",
+      "El ecosistema definitivo de máxima rentabilidad. Despliega un orquestador y múltiples sistemas multi-agentes operando en la nube 24/7. Se integran a tu automatización de ventas, marketing digital y administración para devolverte resultados concretos listos para tu aprobación.",
     image: "/images/automations/autonomo.png",
     imageAlt: "Ecosistema autónomo con orquestador y múltiples agentes de IA operando 24/7",
     icon: Cpu,
@@ -66,10 +66,10 @@ const automations = [
     badgeBg: "bg-sky-400/10 text-sky-300 border-sky-400/20",
     glowBg: "from-sky-400/20 via-sky-400/5 to-transparent",
     features: [
-      "Orquestador multi-agente centralizado 24/7",
-      "Agentes especializados para ventas, administración y marketing",
-      "Investigación autónoma y entrega de informes ejecutivos",
-      "Máxima escalabilidad con mínima intervención humana",
+      "Orquestador de sistemas multi-agentes 24/7",
+      "Automatización de ventas, marketing digital y gestión",
+      "Investigación autónoma y reportes ejecutivos",
+      "Máxima rentabilidad y escalabilidad comercial",
     ],
     ctaText: "Desplegar Ecosistema Autónomo",
   },
@@ -91,13 +91,13 @@ export default function AutomationTypesSection({
         <div className="max-w-3xl space-y-4">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-mono uppercase tracking-[0.12em] text-silver-mist">
             <span className="w-2 h-2 rounded-full bg-bioluminescent-lime animate-pulse" />
-            Niveles de Agentes de IA
+            Automatización de Ventas & Sistemas Multi-Agentes
           </div>
           <h2 className="text-3xl sm:text-5xl lg:text-6xl font-medium text-platinum font-matter tracking-tight leading-[1.08]">
             Niveles de agentes según tus necesidades
           </h2>
           <p className="text-base sm:text-lg text-silver-mist font-matter leading-relaxed">
-            Desde la captura instantánea de prospectos hasta ecosistemas autónomos que gestionan áreas enteras de tu negocio. Conoce los 3 tipos de automatización diseñados por <strong className="text-platinum font-medium">Alan López</strong> para escalar tus resultados.
+            Desde cotizadores automáticos y asistentes conversacionales hasta ecosistemas autónomos que gestionan áreas enteras de tu negocio. Conoce los 3 tipos de automatización de ventas diseñados por <strong className="text-platinum font-medium">Alan López</strong> para aumentar tu tasa de conversión.
           </p>
         </div>
 

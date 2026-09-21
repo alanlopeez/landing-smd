@@ -122,7 +122,7 @@ export default function HeaderHero({
         <div className="mb-4 inline-flex items-center gap-2">
           <span className="w-2 h-2 rounded-full bg-bioluminescent-lime" />
           <span className="text-xs uppercase tracking-widest text-silver-mist font-matter">
-            Diseñador Web Freelance & Productor Digital
+            Diseño y Desarrollo Web · Automatización de Ventas
           </span>
         </div>
 
@@ -134,9 +134,9 @@ export default function HeaderHero({
       {/* Hero Bottom Bar: Subtext and Action Combination */}
       <div className="relative z-20 w-full max-w-7xl mx-auto px-6 pb-12 pt-4 flex flex-col md:flex-row md:items-end justify-between gap-8">
         {/* Left Subtext */}
-        <div className="max-w-xl">
+        <div className="max-w-2xl">
           <p className="text-base sm:text-lg text-liquid-mist font-matter leading-relaxed">
-            Tu <strong className="text-platinum font-medium">servicio de página web</strong> con sistemas multi-agentes y diseño de alta gama. Ahorra recursos en tareas repetitivas y cierra ventas más rápido al cotizar al instante.
+            <strong className="text-platinum font-semibold">Ofrecemos automatización de ventas, diseño y desarrollo web.</strong> Tu servicio de páginas web para empresas con sistemas multi-agentes y diseño de alta gama: ahorra recursos, delega la recolección de datos y cierra ventas más rápido al cotizar al instante.
           </p>
         </div>
 

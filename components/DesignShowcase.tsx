@@ -327,10 +327,10 @@ export default function DesignShowcase({ onOpenLeadModal }: DesignShowcaseProps)
               PORTFOLIO & INSPIRACIÓN GLOBAL
             </p>
             <h2 className="text-3xl sm:text-5xl font-medium text-platinum font-matter tracking-tight">
-              Diseño de página web con estándares internacionales
+              Servicios de desarrollo web y diseño de páginas web profesionales
             </h2>
             <p className="text-sm sm:text-base text-silver-mist leading-relaxed font-matter">
-              Explora la previsualización interactiva de <strong className="text-platinum font-medium">10 modelos Refero</strong> que se reproducen automáticamente a medida que scrolleas, además de los proyectos reales desplegados en producción.
+              Diseño de páginas web y landing pages de ultra alta conversión con diseño de alta gama. Explora la previsualización interactiva de <strong className="text-platinum font-medium">10 modelos Refero</strong> que se reproducen automáticamente al hacer scroll, además de nuestros proyectos reales producidos en vivo.
             </p>
           </div>
 
@@ -413,8 +413,18 @@ export default function DesignShowcase({ onOpenLeadModal }: DesignShowcaseProps)
 
         {/* TAB 2: PROYECTOS PRODUCIDOS */}
         {activeTab === "produced" && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-fadeIn">
-            {producedProjects.map((proj, idx) => (
+          <div className="space-y-6 animate-fadeIn">
+            <div className="p-4 sm:p-5 rounded-xl bg-liquid-deep border border-white/10 text-xs text-silver-mist flex items-center justify-between flex-wrap gap-4">
+              <div className="flex items-center gap-2.5">
+                <Sparkles className="w-4 h-4 text-bioluminescent-lime flex-shrink-0" />
+                <span>
+                  <strong className="text-platinum">Desarrollamos sitios web y creamos páginas web profesionales:</strong> landing pages y plataformas en producción con velocidad extrema y diseño de alta gama.
+                </span>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {producedProjects.map((proj, idx) => (
               <div
                 key={idx}
                 className="surface-card p-6 sm:p-8 flex flex-col justify-between group transition-all duration-200 hover:border-bioluminescent-lime/30"
@@ -449,6 +459,7 @@ export default function DesignShowcase({ onOpenLeadModal }: DesignShowcaseProps)
                 </div>
               </div>
             ))}
+            </div>
           </div>
         )}
       </div>

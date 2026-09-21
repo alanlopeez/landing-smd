@@ -27,27 +27,33 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL("https://serviciodemarketingdigital.com"),
   title: {
-    default: "Servicio de Página Web y Diseño de Alta Gama | Alan López - Diseñador Web Freelance",
+    default: "Servicio de Página Web y Diseño de Alta Gama | Alan López - Diseño y Desarrollo Web",
     template: "%s | Alan López - Servicio de Marketing Digital",
   },
   description:
-    "Servicio de página web y creador de página web con sistemas multi-agentes y diseño de alta gama. Ahorra recursos, cierra ventas cotizando al instante y escala con Alan López, diseñador de página web.",
+    "Ofrecemos automatización de ventas, diseño y desarrollo web. Páginas web para empresas con diseño de alta gama y sistemas multi-agentes. Cierra ventas más rápido y solicita tu llamada en 24 hs.",
   keywords: [
+    "Diseño y desarrollo web",
+    "Diseño de páginas web",
+    "Diseño web y marketing digital",
+    "Diseño Web Profesional",
+    "Servicios de Desarrollo Web",
+    "Creador de Sitios Web",
+    "Creador de páginas web",
+    "Diseño de alta gama",
+    "Asistentes conversacionales",
+    "Solicitar Llamada",
+    "Cierra ventas más rápido",
+    "Delega la recolección de datos",
+    "Automatización de ventas",
+    "Aumenta la tasa de conversión",
+    "Cotizadores automáticos",
+    "Páginas web para empresas con diseño de alta gama",
+    "Servicios de Desarrollo Web y Diseño de Páginas Web",
+    "Diseño de páginas web y landing pages de ultra alta conversión",
+    "Desarrollamos sitios web y creamos páginas web profesionales",
     "Servicio de página web",
-    "Diseño de página web",
     "diseñador web freelance",
-    "diseñador de página web",
-    "creador de página web",
-    "cómo crear mi página web",
-    "desarrollo web con inteligencia artificial",
-    "sistemas multi-agentes",
-    "embudos de venta automatizados",
-    "automatizaciones con inteligencia artificial",
-    "agentes autonomos ia",
-    "asistente omnicanal",
-    "preguntas frecuentes diseño web",
-    "garantias diseño web",
-    "costo pagina web dolares",
   ],
   icons: {
     icon: [
@@ -69,9 +75,9 @@ export const metadata: Metadata = {
     canonical: "https://serviciodemarketingdigital.com",
   },
   openGraph: {
-    title: "Servicio de Página Web y Diseño Alta Gama | Alan López",
+    title: "Servicio de Página Web y Diseño de Alta Gama | Alan López",
     description:
-      "Tu página web con sistemas multi-agentes y diseño alta gama. Ahorra recursos, cotiza al instante y convierte visitas en clientes.",
+      "Ofrecemos automatización de ventas, diseño y desarrollo web. Páginas web para empresas con sistemas multi-agentes y diseño de alta gama.",
     url: "https://serviciodemarketingdigital.com",
     siteName: "Alan López - Servicio de Marketing Digital",
     locale: "es_ES",
@@ -87,9 +93,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Diseño de Página Web de Alta Gama | Alan López",
+    title: "Servicios de Desarrollo Web y Diseño de Páginas Web | Alan López",
     description:
-      "Webs ultraligeras con IA y sistemas multi-agentes. Oferta especial: Comienza hoy, creamos tu sitio en 24 hs.",
+      "Webs ultraligeras con sistemas multi-agentes y automatización de ventas. Oferta especial: Comienza hoy, creamos tu sitio en 24 hs.",
     images: ["/images/alan-lopez.png"],
   },
   robots: {
@@ -120,7 +126,7 @@ export default function RootLayout({
     logo: "https://serviciodemarketingdigital.com/logo.png",
     image: "https://serviciodemarketingdigital.com/images/alan-lopez.png",
     description:
-      "Servicio de página web y diseño de alta gama con integración de sistemas multi-agentes con IA. Oferta especial: creamos tu sitio web en 24 hs.",
+      "Ofrecemos automatización de ventas, diseño y desarrollo web. Páginas web para empresas con diseño de alta gama y sistemas multi-agentes. Oferta especial: creamos tu sitio web en 24 hs.",
     telephone: "+54 9 11 0000-0000",
     email: "hola@serviciodemarketingdigital.com",
     priceRange: "$$ - $$$",
@@ -139,33 +145,33 @@ export default function RootLayout({
     },
     hasOfferCatalog: {
       "@type": "OfferCatalog",
-      name: "Servicios de Desarrollo y Diseño Web",
+      name: "Servicios de Desarrollo Web y Diseño de Páginas Web",
       itemListElement: [
         {
           "@type": "Offer",
           itemOffered: {
             "@type": "Service",
-            name: "Servicio de página web con sistemas multi-agentes",
+            name: "Servicios de Desarrollo Web y Diseño de Páginas Web",
             description:
-              "Diseño de página web ultraligera con embudo de ventas y cotización automatizada en tiempo real.",
+              "Diseño y desarrollo web profesional de alta gama con carga ultrarrápida y semántica HTML5 estricta.",
           },
         },
         {
           "@type": "Offer",
           itemOffered: {
             "@type": "Service",
-            name: "Diseño de página web de alta gama",
+            name: "Páginas web para empresas con diseño de alta gama",
             description:
-              "Desarrollo frontend a medida sin plantillas lentas, optimizado para 100/100 en Google PageSpeed.",
+              "Desarrollamos sitios web y creamos páginas web profesionales con sistemas multi-agentes.",
           },
         },
         {
           "@type": "Offer",
           itemOffered: {
             "@type": "Service",
-            name: "Consultoría cómo crear mi página web",
+            name: "Automatización de ventas, cotizadores automáticos y asistentes conversacionales",
             description:
-              "Asesoramiento estratégico y entrega garantizada en 24 horas con soporte continuo.",
+              "Embudos de venta interactivos que delegan la recolección de datos, aumentan la tasa de conversión y cierran ventas más rápido.",
           },
         },
       ],
