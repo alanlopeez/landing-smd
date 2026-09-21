@@ -101,7 +101,7 @@ function doPost(e) {
         "Email"
       ]);
 
-      var magnetNombre = data.name || "";
+      var magnetNombre = data.nombre || data.name || "";
       var magnetEmail = data.email || "";
 
       sheetMagnet.appendRow([

@@ -2,10 +2,10 @@
 
 import React from "react";
 import Image from "next/image";
-import { Download, Sparkles, BookOpen, CheckCircle } from "lucide-react";
+import { Download, Sparkles, CheckCircle } from "lucide-react";
 
 interface LeadMagnetSectionProps {
-  onOpenMagnetModal: () => void;
+  onOpenMagnetModal?: () => void;
 }
 
 export default function LeadMagnetSection({ onOpenMagnetModal }: LeadMagnetSectionProps) {
@@ -21,7 +21,7 @@ export default function LeadMagnetSection({ onOpenMagnetModal }: LeadMagnetSecti
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
             {/* Left Content */}
-            <div className="lg:col-span-8 space-y-6">
+            <div className="lg:col-span-7 space-y-6">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-bioluminescent-lime/10 text-bioluminescent-lime text-xs uppercase tracking-wider font-semibold">
                 <Sparkles className="w-3.5 h-3.5" />
                 Recurso Gratuito para Emprendedores y Empresas
@@ -57,24 +57,29 @@ export default function LeadMagnetSection({ onOpenMagnetModal }: LeadMagnetSecti
               <div className="pt-4 flex items-center gap-4">
                 <button
                   onClick={onOpenMagnetModal}
-                  className="btn-aurora text-xs py-3.5 px-7 cursor-pointer"
+                  className="btn-aurora text-xs py-3.5 px-7 cursor-pointer uppercase tracking-wider font-semibold flex items-center gap-2"
                 >
                   <Download className="w-4 h-4" />
-                  <span>Descargar Guía Gratuita Ahora</span>
+                  <span>DESCARGAR GUÍA GRATUITA AHORA</span>
                 </button>
               </div>
             </div>
 
-            {/* Right Visual (Robot Asset) */}
-            <div className="lg:col-span-4 flex items-center justify-center">
-              <div className="relative w-56 h-56 sm:w-64 sm:h-64 flex items-center justify-center">
-                <div className="absolute inset-0 bg-bioluminescent-lime/10 rounded-full filter blur-2xl pointer-events-none" />
+            {/* Right Visual (Mockup PDF Asset) */}
+            <div className="lg:col-span-5 flex items-center justify-center">
+              <div
+                onClick={onOpenMagnetModal}
+                className="relative w-full max-w-[280px] sm:max-w-[340px] aspect-square flex items-center justify-center cursor-pointer group"
+                title="Haz clic para descargar la guía gratuita"
+              >
+                <div className="absolute inset-0 bg-bioluminescent-lime/15 rounded-2xl filter blur-2xl pointer-events-none group-hover:bg-bioluminescent-lime/25 transition-all duration-500" />
                 <Image
-                  src="/images/robot.png"
-                  alt="Guía gratuita de inteligencia artificial y agentes por Alan López"
-                  width={260}
-                  height={260}
-                  className="relative z-10 object-contain"
+                  src="/images/mockup-guia-pdf.jpg"
+                  alt="Mockup de la Guía: Cómo integrar Sistemas Multi-Agentes en tu Negocio"
+                  width={340}
+                  height={340}
+                  className="relative z-10 w-full h-auto object-cover rounded-xl border border-white/10 shadow-2xl shadow-black/80 transition-transform duration-500 group-hover:scale-105"
+                  priority
                 />
               </div>
             </div>

@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { X, CheckCircle2, AlertCircle, Loader2, Sparkles, ShieldCheck } from "lucide-react";
+import LeadMagnetForm from "./LeadMagnetForm";
 
 export type ModalType = "lead" | "magnet" | "about" | "privacy" | "terms" | "refund" | null;
 
@@ -32,14 +33,6 @@ export default function ConversionModals({ activeModal, onClose }: ConversionMod
     honeypot: "",
   });
 
-  // Form 2: Lead Magnet State
-  const [magnetForm, setMagnetForm] = useState({
-    name: "",
-    email: "",
-    consent: true,
-    honeypot: "",
-  });
-
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -50,11 +43,6 @@ export default function ConversionModals({ activeModal, onClose }: ConversionMod
     process.env.NEXT_PUBLIC_GOOGLE_SCRIPT_LEAD_URL ||
     process.env.NEXT_PUBLIC_GOOGLE_SCRIPT_URL ||
     "https://script.google.com/macros/s/AKfycbzbD3jkCnbEuRVGZZrdPxPtJLZ_fTrtfhDDf2W7YPQN3xHut5nldiyae1ljCQ1VXYzBfw/exec";
-
-  const MAGNET_SCRIPT_URL =
-    process.env.NEXT_PUBLIC_GOOGLE_SCRIPT_MAGNET_URL ||
-    process.env.NEXT_PUBLIC_GOOGLE_SCRIPT_URL ||
-    "https://script.google.com/macros/s/AKfycbxSUGeN38Y-FN5TRMe8s2KrQx8IaQYbHP2-sWIAqleMRxHXkDy_QzUeHLNXjD47bkY6/exec";
 
   const handleLeadSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -108,48 +96,6 @@ export default function ConversionModals({ activeModal, onClose }: ConversionMod
     }
   };
 
-  const handleMagnetSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (magnetForm.honeypot) return;
-
-    if (!magnetForm.name || !magnetForm.email) {
-      setErrorMessage("Por favor complete nombre y correo electrónico.");
-      return;
-    }
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(magnetForm.email)) {
-      setErrorMessage("Por favor ingrese un correo electrónico válido.");
-      return;
-    }
-
-    if (!magnetForm.consent) {
-      setErrorMessage("Debe aceptar los términos de contacto.");
-      return;
-    }
-
-    setStatus("loading");
-    setErrorMessage("");
-
-    const payload = {
-      type: "magnet",
-      name: sanitizeInput(magnetForm.name),
-      email: sanitizeInput(magnetForm.email),
-      timestamp: new Date().toISOString(),
-    };
-
-    try {
-      await fetch(MAGNET_SCRIPT_URL, {
-        method: "POST",
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify(payload),
-      });
-      window.location.href = "/gracias?tipo=guia";
-    } catch {
-      window.location.href = "/gracias?tipo=guia";
-    }
-  };
-
   const resetAndClose = () => {
     setStatus("idle");
     setErrorMessage("");
@@ -176,19 +122,17 @@ export default function ConversionModals({ activeModal, onClose }: ConversionMod
           <X className="w-5 h-5" />
         </button>
 
-        {/* Success Screen */}
-        {status === "success" && (
+        {/* Success Screen for Lead Qualifier */}
+        {status === "success" && activeModal === "lead" && (
           <div className="py-8 text-center space-y-4 animate-fadeIn">
             <div className="w-16 h-16 mx-auto rounded-full bg-bioluminescent-lime/10 flex items-center justify-center text-bioluminescent-lime">
               <CheckCircle2 className="w-10 h-10" />
             </div>
             <h3 className="text-2xl font-medium text-platinum font-matter">
-              {activeModal === "magnet" ? "¡Guía en camino!" : "¡Solicitud Recibida con Éxito!"}
+              ¡Solicitud Recibida con Éxito!
             </h3>
             <p className="text-silver-mist text-sm max-w-md mx-auto leading-relaxed">
-              {activeModal === "magnet"
-                ? "Hemos registrado tu solicitud. Te enviaremos el enlace de descarga de la guía de sistemas multi-agentes directamente a tu bandeja de entrada."
-                : "Gracias por tu confianza. Alan López revisará tu información técnica y te contactará en menos de 24 horas para coordinar tu propuesta."}
+              Gracias por tu confianza. Alan López revisará tu información técnica y te contactará en menos de 24 horas para coordinar tu propuesta.
             </p>
             <div className="pt-4">
               <button onClick={resetAndClose} className="btn-aurora text-xs">
@@ -376,8 +320,8 @@ export default function ConversionModals({ activeModal, onClose }: ConversionMod
           </div>
         )}
 
-        {/* MODAL 2: LEAD MAGNET (CORTO) */}
-        {activeModal === "magnet" && status !== "success" && (
+        {/* MODAL 2: LEAD MAGNET */}
+        {activeModal === "magnet" && (
           <div>
             <div className="mb-6">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-bioluminescent-lime/10 text-bioluminescent-lime text-xs tracking-wide uppercase font-semibold mb-2">
@@ -392,88 +336,7 @@ export default function ConversionModals({ activeModal, onClose }: ConversionMod
               </p>
             </div>
 
-            {errorMessage && (
-              <div className="mb-4 p-3 rounded-lg bg-red-900/30 border border-red-500/40 text-red-200 text-xs flex items-center gap-2">
-                <AlertCircle className="w-4 h-4 flex-shrink-0" />
-                <span>{errorMessage}</span>
-              </div>
-            )}
-
-            <form onSubmit={handleMagnetSubmit} className="space-y-4">
-              <input
-                type="text"
-                name="website_url_hp"
-                value={magnetForm.honeypot}
-                onChange={(e) => setMagnetForm({ ...magnetForm, honeypot: e.target.value })}
-                tabIndex={-1}
-                autoComplete="off"
-                className="hidden"
-                aria-hidden="true"
-              />
-
-              <div>
-                <label className="block text-xs font-medium text-platinum mb-1.5 uppercase tracking-wide">
-                  * Nombre:
-                </label>
-                <input
-                  type="text"
-                  required
-                  value={magnetForm.name}
-                  onChange={(e) => setMagnetForm({ ...magnetForm, name: e.target.value })}
-                  placeholder="Tu nombre completo"
-                  className="w-full px-3.5 py-2.5 rounded-md bg-liquid-abyss border border-white/10 text-platinum text-sm focus:outline-none focus:border-bioluminescent-lime transition-colors"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-medium text-platinum mb-1.5 uppercase tracking-wide">
-                  * E-mail:
-                </label>
-                <input
-                  type="email"
-                  required
-                  value={magnetForm.email}
-                  onChange={(e) => setMagnetForm({ ...magnetForm, email: e.target.value })}
-                  placeholder="nombre@empresa.com"
-                  className="w-full px-3.5 py-2.5 rounded-md bg-liquid-abyss border border-white/10 text-platinum text-sm focus:outline-none focus:border-bioluminescent-lime transition-colors"
-                />
-              </div>
-
-              <div className="pt-2">
-                <label className="flex items-start gap-3 cursor-pointer text-xs text-silver-mist leading-relaxed select-none">
-                  <input
-                    type="checkbox"
-                    checked={magnetForm.consent}
-                    onChange={(e) => setMagnetForm({ ...magnetForm, consent: e.target.checked })}
-                    className="mt-0.5 rounded border-white/20 text-bioluminescent-lime focus:ring-0 focus:ring-offset-0 bg-liquid-abyss"
-                  />
-                  <span>
-                    Acepto recibir la guía gratuita, ofertas del servicio y material promocional de marketing digital.
-                  </span>
-                </label>
-              </div>
-
-              <div className="pt-4 flex items-center justify-between">
-                <div className="flex items-center gap-1.5 text-[11px] text-silver-mist/70">
-                  <ShieldCheck className="w-4 h-4 text-bioluminescent-lime" />
-                  <span>Sin spam. Cero trackers invasivos.</span>
-                </div>
-                <button
-                  type="submit"
-                  disabled={status === "loading"}
-                  className="btn-aurora text-xs disabled:opacity-50"
-                >
-                  {status === "loading" ? (
-                    <>
-                      <Loader2 className="w-4 h-4 animate-spin" />
-                      Enviando...
-                    </>
-                  ) : (
-                    "Descargar Guía Ahora"
-                  )}
-                </button>
-              </div>
-            </form>
+            <LeadMagnetForm idPrefix="modal-" />
           </div>
         )}
       </div>
