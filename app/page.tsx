@@ -5,6 +5,7 @@ import HeaderHero from "@/components/HeaderHero";
 import ValueProposition from "@/components/ValueProposition";
 import AutomationTypesSection from "@/components/AutomationTypesSection";
 import InteractiveDemo from "@/components/InteractiveDemo";
+import NicheLandingSection from "@/components/NicheLandingSection";
 import DesignShowcase from "@/components/DesignShowcase";
 import AboutMeSection from "@/components/AboutMeSection";
 import FaqSection from "@/components/FaqSection";
@@ -36,7 +37,10 @@ export default function HomePage() {
       {/* 4. Interactive Demo Simulator ("¿Cómo funciona? - Vea un proyecto DEMO") */}
       <InteractiveDemo onOpenLeadModal={() => setActiveModal("lead")} />
 
-      {/* 5. Design Models & Produced Live Projects (Refero & Alan López Projects) */}
+      {/* 5. Niche Specialization & Rapid Decisions (14 Profiles with Custom WhatsApp CTAs & AI Video) */}
+      <NicheLandingSection />
+
+      {/* 6. Design Models & Produced Live Projects (Refero & Alan López Projects) */}
       <DesignShowcase onOpenLeadModal={() => setActiveModal("lead")} />
 
       {/* 6. About Me Section (Alan López Bio & Lavender Phosphor Stats) */}

@@ -2,7 +2,15 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import { Shield, FileText, RefreshCw, Mail, ChevronDown, ChevronUp } from "lucide-react";
+import { Shield, FileText, RefreshCw, Mail, ChevronDown, ChevronUp, Instagram, Youtube, Sparkles, ExternalLink } from "lucide-react";
+
+function TikTokIcon({ className = "w-4 h-4" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden="true">
+      <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64c.298-.002.595.042.88.13V9.4a6.33 6.33 0 0 0-1-.08A6.34 6.34 0 0 0 3 15.66a6.34 6.34 0 0 0 10.82 4.49 6.27 6.27 0 0 0 1.96-4.49V8.6a8.28 8.28 0 0 0 5.18 1.83V7.02c-.48 0-.96-.11-1.37-.33z" />
+    </svg>
+  );
+}
 
 export default function FooterLegal() {
   const [openPolicy, setOpenPolicy] = useState<"privacy" | "terms" | "refund" | null>(null);
@@ -14,6 +22,102 @@ export default function FooterLegal() {
   return (
     <footer className="w-full bg-liquid-deep text-silver-mist border-t border-white/5 pt-16 pb-12 px-6">
       <div className="max-w-7xl mx-auto space-y-12">
+        {/* Social Media & AI Community Row */}
+        <div className="p-6 sm:p-8 rounded-2xl bg-liquid-abyss/80 border border-white/10 space-y-6">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-white/5">
+            <div className="space-y-1">
+              <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-bioluminescent-lime">
+                <Sparkles className="w-3.5 h-3.5" />
+                <span>Canales Oficiales & Comunidad de IA</span>
+              </div>
+              <h3 className="text-xl sm:text-2xl font-medium text-platinum font-matter">
+                Conéctate con nosotros en redes sociales
+              </h3>
+            </div>
+            <p className="text-xs sm:text-sm text-silver-mist max-w-md font-matter">
+              Estrategias de automatización, sistemas multi-agentes y contenido exclusivo para acelerar tus ventas.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            {/* Card Aurelius Sistemiza */}
+            <div className="p-5 rounded-xl bg-liquid-deep/90 border border-white/10 flex flex-col justify-between space-y-4 hover:border-bioluminescent-lime/40 transition-colors">
+              <div className="space-y-2">
+                <div className="flex items-center justify-between gap-2">
+                  <span className="text-[11px] font-mono uppercase tracking-wider text-bioluminescent-lime bg-bioluminescent-lime/10 px-2.5 py-0.5 rounded-full border border-bioluminescent-lime/20">
+                    Influencer Creado con IA
+                  </span>
+                  <span className="text-[11px] font-mono text-silver-mist/60">@aurelius.ia</span>
+                </div>
+                <h4 className="text-base font-medium text-platinum font-matter">
+                  Sigue a Aurelius Sistemiza
+                </h4>
+                <p className="text-xs text-silver-mist font-matter leading-relaxed">
+                  Conoce al primer influencer de automatizaciones generado íntegramente por IA. Tips diarios, agentes autónomos y experimentos de tecnología.
+                </p>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-3 pt-2">
+                <a
+                  href="https://www.instagram.com/aureliussistemiza/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Seguir a Aurelius Sistemiza en Instagram"
+                  className="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg bg-pink-500/10 hover:bg-pink-500/20 text-pink-300 border border-pink-500/20 text-xs font-matter font-medium transition-colors"
+                >
+                  <Instagram className="w-4 h-4" />
+                  <span>Instagram</span>
+                  <ExternalLink className="w-3 h-3 opacity-60" />
+                </a>
+
+                <a
+                  href="https://www.tiktok.com/@aurelius.ia"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Seguir a Aurelius Sistemiza en TikTok"
+                  className="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg bg-cyan-400/10 hover:bg-cyan-400/20 text-cyan-200 border border-cyan-400/20 text-xs font-matter font-medium transition-colors"
+                >
+                  <TikTokIcon className="w-4 h-4" />
+                  <span>TikTok</span>
+                  <ExternalLink className="w-3 h-3 opacity-60" />
+                </a>
+              </div>
+            </div>
+
+            {/* Card YouTube Servicio de Marketing Digital */}
+            <div className="p-5 rounded-xl bg-liquid-deep/90 border border-white/10 flex flex-col justify-between space-y-4 hover:border-red-400/40 transition-colors">
+              <div className="space-y-2">
+                <div className="flex items-center justify-between gap-2">
+                  <span className="text-[11px] font-mono uppercase tracking-wider text-red-300 bg-red-500/10 px-2.5 py-0.5 rounded-full border border-red-500/20">
+                    Canal Oficial de YouTube
+                  </span>
+                  <span className="text-[11px] font-mono text-silver-mist/60">@serviciodemarketingdigital</span>
+                </div>
+                <h4 className="text-base font-medium text-platinum font-matter">
+                  Servicio de Marketing Digital en YouTube
+                </h4>
+                <p className="text-xs text-silver-mist font-matter leading-relaxed">
+                  Tutoriales técnicos, casos reales de páginas web de ultra conversión, arquitecturas multi-agentes y estrategias de posicionamiento SEO.
+                </p>
+              </div>
+
+              <div className="pt-2">
+                <a
+                  href="https://www.youtube.com/@serviciodemarketingdigital"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Suscribirse al canal de YouTube de Servicio de Marketing Digital"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-red-600/15 hover:bg-red-600/25 text-red-200 border border-red-500/30 text-xs font-matter font-medium transition-colors"
+                >
+                  <Youtube className="w-4 h-4 text-red-400" />
+                  <span>Seguinos en YouTube</span>
+                  <ExternalLink className="w-3 h-3 opacity-60" />
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Main Footer Row */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 items-start">
           {/* Brand Info */}

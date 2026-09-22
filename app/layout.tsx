@@ -54,6 +54,16 @@ export const metadata: Metadata = {
     "Desarrollamos sitios web y creamos páginas web profesionales",
     "Servicio de página web",
     "diseñador web freelance",
+    "página web de una sola página",
+    "diseño especializado para decisiones rápidas",
+    "landing page para profesionales de salud",
+    "landing page para abogados y estudios jurídicos",
+    "landing page para inmobiliarias y arquitectos",
+    "landing page para psicólogos y terapeutas",
+    "landing page para entrenadores personales",
+    "landing page para veterinarias y odontólogos",
+    "landing page para consultores de negocios",
+    "Aurelius Sistemiza influencer IA",
   ],
   icons: {
     icon: [
@@ -134,6 +144,13 @@ export default function RootLayout({
       "@type": "PostalAddress",
       addressCountry: "AR",
     },
+    sameAs: [
+      "https://www.instagram.com/aureliussistemiza/",
+      "https://www.tiktok.com/@aurelius.ia",
+      "https://www.youtube.com/@serviciodemarketingdigital",
+      "https://blog-relatos-alan-lopez.vercel.app/",
+      "https://app-fundar.vercel.app/",
+    ],
     founder: {
       "@type": "Person",
       name: "Alan López",
@@ -141,12 +158,24 @@ export default function RootLayout({
       sameAs: [
         "https://blog-relatos-alan-lopez.vercel.app/",
         "https://app-fundar.vercel.app/",
+        "https://www.instagram.com/aureliussistemiza/",
+        "https://www.tiktok.com/@aurelius.ia",
+        "https://www.youtube.com/@serviciodemarketingdigital",
       ],
     },
     hasOfferCatalog: {
       "@type": "OfferCatalog",
       name: "Servicios de Desarrollo Web y Diseño de Páginas Web",
       itemListElement: [
+        {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: "Páginas web de una sola página para decisiones rápidas",
+            description:
+              "Diseño hiper-enfocado para ofrecer el servicio más vendido y conectar directamente por WhatsApp con el cliente ideal.",
+          },
+        },
         {
           "@type": "Offer",
           itemOffered: {

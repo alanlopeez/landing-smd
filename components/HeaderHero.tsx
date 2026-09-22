@@ -77,6 +77,12 @@ export default function HeaderHero({
               Automatizaciones
             </a>
             <a
+              href="#nichos"
+              className="text-silver-mist hover:text-platinum transition-colors"
+            >
+              Nichos
+            </a>
+            <a
               href="#demo"
               className="text-silver-mist hover:text-platinum transition-colors"
             >
