@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import HeaderHero from "@/components/HeaderHero";
 import ValueProposition from "@/components/ValueProposition";
 import AutomationTypesSection from "@/components/AutomationTypesSection";
+import SpecializedServicesSection from "@/components/SpecializedServicesSection";
 import InteractiveDemo from "@/components/InteractiveDemo";
 import NicheLandingSection from "@/components/NicheLandingSection";
 import DesignShowcase from "@/components/DesignShowcase";
@@ -34,7 +35,10 @@ export default function HomePage() {
       {/* 3. Automation Types & Agent Levels (Express, Conversacional, Autónomo) */}
       <AutomationTypesSection onOpenLeadModal={() => setActiveModal("lead")} />
 
-      {/* 4. Interactive Demo Simulator ("¿Cómo funciona? - Vea un proyecto DEMO") */}
+      {/* 4. Specialized Turnkey Services & Validation Offers (Motor 72h y Departamento Autónomo con IA) */}
+      <SpecializedServicesSection />
+
+      {/* 5. Interactive Demo Simulator ("¿Cómo funciona? - Vea un proyecto DEMO") */}
       <InteractiveDemo onOpenLeadModal={() => setActiveModal("lead")} />
 
       {/* 5. Niche Specialization & Rapid Decisions (14 Profiles with Custom WhatsApp CTAs & AI Video) */}

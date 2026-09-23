@@ -64,6 +64,11 @@ export const metadata: Metadata = {
     "landing page para veterinarias y odontólogos",
     "landing page para consultores de negocios",
     "Aurelius Sistemiza influencer IA",
+    "Motor Autónomo de Marketing y SEO Local con IA",
+    "Departamento de Marketing y Captación Autónomo con Agentes de IA",
+    "Agentes de IA para captación de clientes",
+    "Automatización de SEO local con IA",
+    "Infraestructura integral de marketing con IA",
   ],
   icons: {
     icon: [
@@ -201,6 +206,30 @@ export default function RootLayout({
             name: "Automatización de ventas, cotizadores automáticos y asistentes conversacionales",
             description:
               "Embudos de venta interactivos que delegan la recolección de datos, aumentan la tasa de conversión y cierran ventas más rápido.",
+          },
+        },
+        {
+          "@type": "Offer",
+          price: "1200",
+          priceCurrency: "USD",
+          url: "https://calendar.app.google/dhGQgyMUs2eHBPgN9",
+          itemOffered: {
+            "@type": "Service",
+            name: "Motor Autónomo de Marketing y SEO Local con IA (Setup en 72 horas)",
+            description:
+              "Multiplica tu presencia orgánica y capta clientes calificados sin contratar una agencia ni dedicar 4 horas al día a crear contenido. Incluye investigación continua, generación SEO, distribución multicanal y memoria de marca.",
+          },
+        },
+        {
+          "@type": "Offer",
+          price: "8000",
+          priceCurrency: "USD",
+          url: "https://calendar.app.google/xo1qqYbiVVpQTzCP8",
+          itemOffered: {
+            "@type": "Service",
+            name: "Departamento de Marketing y Captación de Clientes 100% Autónomo con Agentes de IA",
+            description:
+              "Sustituye la fricción y el costo de un equipo tradicional de marketing por un ecosistema de agentes inteligentes que investigan, publican, optimizan pauta y derivan llamadas calificadas a tu equipo comercial.",
           },
         },
       ],

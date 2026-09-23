@@ -77,6 +77,12 @@ export default function HeaderHero({
               Automatizaciones
             </a>
             <a
+              href="#soluciones-autonomas"
+              className="text-silver-mist hover:text-platinum transition-colors"
+            >
+              Sistemas IA
+            </a>
+            <a
               href="#nichos"
               className="text-silver-mist hover:text-platinum transition-colors"
             >
