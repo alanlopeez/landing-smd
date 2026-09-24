@@ -1,12 +1,12 @@
 /** @type {import('next').NextConfig} */
 const ContentSecurityPolicy = `
   default-src 'self';
-  script-src 'self' 'unsafe-inline' 'unsafe-eval' https://vercel.live https://www.googletagmanager.com https://*.googletagmanager.com https://*.google-analytics.com https://googleads.g.doubleclick.net https://*.google.com http://localhost:3000 http://127.0.0.1:3000;
+  script-src 'self' 'unsafe-inline' 'unsafe-eval' https://vercel.live https://www.googletagmanager.com https://*.googletagmanager.com https://*.google-analytics.com https://googleads.g.doubleclick.net https://*.google.com https://crm.serviciodemarketingdigital.com http://localhost:3000 http://127.0.0.1:3000;
   style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
   font-src 'self' https://fonts.gstatic.com data:;
   img-src 'self' data: https: blob: https://www.google.com https://www.google.com.ar https://googleads.g.doubleclick.net https://*.google-analytics.com https://*.googletagmanager.com https://*.ytimg.com https://i.ytimg.com;
   media-src 'self' data: blob: https://images.refero.design;
-  connect-src 'self' https://script.google.com https://script.googleusercontent.com https://styles.refero.design https://images.refero.design https://*.vercel.app https://*.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com https://googleads.g.doubleclick.net https://*.google.com http://localhost:3000 http://127.0.0.1:3000;
+  connect-src 'self' https://script.google.com https://script.googleusercontent.com https://styles.refero.design https://images.refero.design https://*.vercel.app https://*.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com https://googleads.g.doubleclick.net https://*.google.com https://crm.serviciodemarketingdigital.com http://localhost:3000 http://127.0.0.1:3000;
   frame-src 'self' https://styles.refero.design https://*.google.com https://www.youtube.com https://youtube.com;
   object-src 'none';
   base-uri 'self';

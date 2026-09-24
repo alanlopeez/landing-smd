@@ -304,7 +304,7 @@ export default function RootLayout({
       <head>
         {/* CRM Tracking */}
         <script
-          src="http://localhost:3000/t/crm.js"
+          src="https://crm.serviciodemarketingdigital.com/t/crm.js"
           data-site="cmp_452cc6a6"
           async
           defer
