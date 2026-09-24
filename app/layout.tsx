@@ -302,6 +302,13 @@ export default function RootLayout({
   return (
     <html lang="es" className={`${interTight.variable} ${inter.variable}`}>
       <head>
+        {/* CRM Tracking */}
+        <script
+          src="http://localhost:3000/t/crm.js"
+          data-site="cmp_452cc6a6"
+          async
+          defer
+        />
         {/* Google tag (gtag.js) */}
         <script
           async
