@@ -1,0 +1,10 @@
+.git
+.next
+node_modules
+Imágenes
+Nuevo contenido
+Referencia de diseño
+Contenido.pdf
+scripts
+*.md
+*.log
