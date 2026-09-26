@@ -24,6 +24,7 @@ import {
   Route,
   CheckCircle2,
   Zap,
+  ArrowRight,
 } from "lucide-react";
 
 interface NicheItem {
@@ -472,29 +473,28 @@ export default function NicheLandingSection() {
                     </div>
                   </div>
 
-                  {/* Direct WhatsApp CTA Button */}
+                  {/* Qualification CTA Button (Reemplaza WhatsApp directo) */}
                   <div className="pt-5 mt-4 border-t border-white/5">
-                    <a
-                      href={waUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={`Cotizar página web para ${niche.name} por WhatsApp`}
-                      className="w-full inline-flex items-center justify-between px-4 py-2.5 rounded-lg bg-[#25D366]/15 hover:bg-[#25D366] text-[#25D366] hover:text-white border border-[#25D366]/30 hover:border-[#25D366] text-xs font-matter font-semibold tracking-wide transition-all duration-200 group/btn"
+                    <button
+                      type="button"
+                      onClick={() => {
+                        if (typeof window !== "undefined") {
+                          window.dispatchEvent(
+                            new CustomEvent("open-qualification-modal", {
+                              detail: { businessType: niche.name },
+                            })
+                          );
+                        }
+                      }}
+                      aria-label={`Calificar proyecto para ${niche.name}`}
+                      className="w-full inline-flex items-center justify-between px-4 py-2.5 rounded-lg bg-bioluminescent-lime/10 hover:bg-bioluminescent-lime text-bioluminescent-lime hover:text-liquid-abyss border border-bioluminescent-lime/30 hover:border-bioluminescent-lime text-xs font-matter font-semibold tracking-wide transition-all duration-200 group/btn cursor-pointer"
                     >
                       <div className="flex items-center gap-2">
-                        {/* WhatsApp SVG Icon */}
-                        <svg
-                          viewBox="0 0 24 24"
-                          fill="currentColor"
-                          className="w-4 h-4"
-                          aria-hidden="true"
-                        >
-                          <path d="M17.472 14.382c-.301-.15-1.78-.878-2.056-.978-.276-.1-.477-.15-.678.15-.2.3-.778.978-.954 1.179-.175.2-.351.226-.652.075s-1.272-.469-2.423-1.496c-.895-.798-1.5-1.784-1.676-2.085-.175-.3-.019-.463.132-.612.136-.135.301-.351.452-.527.15-.175.201-.3.301-.501.101-.2.05-.376-.025-.527s-.678-1.631-.929-2.234c-.244-.587-.492-.507-.678-.517l-.578-.01c-.2 0-.527.075-.803.376s-1.054 1.029-1.054 2.509 1.079 2.91 1.23 3.11c.15.201 2.122 3.24 5.141 4.542.718.31 1.279.495 1.716.634.721.229 1.377.197 1.896.12.578-.086 1.78-.728 2.031-1.431.251-.703.251-1.305.176-1.431-.076-.126-.277-.201-.578-.351zM12.004 0C5.378 0 .008 5.37.008 11.996c0 2.112.551 4.17 1.598 5.984L0 24l6.192-1.624c1.75 1.01 3.754 1.542 5.807 1.543 6.626 0 11.996-5.37 11.996-11.997 0-3.205-1.248-6.218-3.515-8.486C18.212 1.248 15.202 0 12.004 0zm0 21.968c-1.786 0-3.535-.48-5.059-1.388l-.363-.215-3.673.963.98-3.58-.236-.375c-.998-1.587-1.524-3.424-1.524-5.357 0-5.503 4.478-9.98 9.98-9.98 2.666 0 5.172 1.038 7.057 2.924 1.886 1.886 2.924 4.392 2.924 7.056-.002 5.503-4.48 9.98-9.985 9.98z" />
-                        </svg>
-                        <span>Escribir por WhatsApp</span>
+                        <Sparkles className="w-4 h-4" />
+                        <span>Calificar Proyecto para {niche.name}</span>
                       </div>
-                      <ExternalLink className="w-3.5 h-3.5 transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
-                    </a>
+                      <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover/btn:translate-x-0.5" />
+                    </button>
                   </div>
                 </div>
               );

@@ -53,37 +53,43 @@ function doPost(e) {
 
     // 3. Procesar según el tipo de formulario
     if (type === "lead") {
-      // HOJA 1: "Leads"
-      var sheetLeads = getOrCreateSheet(ss, "Leads", [
+      // HOJA 1: "Leads Calificados"
+      var sheetLeads = getOrCreateSheet(ss, "Leads Calificados", [
         "Fecha",
         "Nombre",
+        "Empresa / Web / Red",
         "Email",
-        "Teléfono",
-        "WhatsApp",
-        "Flujo de consultas",
-        "Inversión",
-        "Implementación"
+        "WhatsApp / Teléfono",
+        "Rubro",
+        "Presupuesto Mensual",
+        "Rol en Empresa",
+        "Estado Calificación",
+        "Notas / Origen"
       ]);
 
       // Extraer campos del formulario calificador
       var nombre = data.name || "";
+      var empresa = data.company || "";
       var email = data.email || "";
-      var telefono = data.phone || "";
-      var whatsapp = data.whatsapp || "";
-      var volumen = data.volume || "";
-      var inversion = data.budget || "";
-      var implementacion = data.timeline || "";
+      var whatsapp = data.whatsapp || data.phone || "";
+      var rubro = data.businessType || data.volume || "";
+      var presupuesto = data.adBudget || data.budget || "";
+      var rol = data.companyRole || data.timeline || "";
+      var estadoCalificacion = data.qualification_status || (data.isQualified ? "Calificado" : "No Calificado");
+      var notas = data.notes || "";
 
       // Insertar nueva fila
       sheetLeads.appendRow([
         fechaActual,
         nombre,
+        empresa,
         email,
-        telefono,
         whatsapp,
-        volumen,
-        inversion,
-        implementacion
+        rubro,
+        presupuesto,
+        rol,
+        estadoCalificacion,
+        notas
       ]);
 
       return createJsonResponse({

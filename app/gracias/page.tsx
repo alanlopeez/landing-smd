@@ -3,9 +3,9 @@ import { Suspense } from "react";
 import ThankYouContent from "@/components/ThankYouContent";
 
 export const metadata: Metadata = {
-  title: "¡Solicitud Recibida con Éxito! | Alan López - Servicio de Marketing Digital",
+  title: "Confirmación de Proyecto | Alan López - Sistemas Web B2B",
   description:
-    "Gracias por contactarnos. Tu información técnica ha sido recibida y Alan López revisará tu proyecto en menos de 24 horas para coordinar tu propuesta técnica.",
+    "Tu información técnica ha sido recibida y Alan López revisará tu proyecto para coordinar tu propuesta técnica.",
   robots: {
     index: false,
     follow: false,

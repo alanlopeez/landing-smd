@@ -27,22 +27,24 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL("https://serviciodemarketingdigital.com"),
   title: {
-    default: "Servicio de Página Web y Diseño de Alta Gama | Alan López - Diseño y Desarrollo Web",
-    template: "%s | Alan López - Servicio de Marketing Digital",
+    default: "Webs de Alta Conversión y Agentes IA para Empresas B2B | Alan López",
+    template: "%s | Alan López - Sistemas Web B2B",
   },
   description:
-    "Ofrecemos automatización de ventas, diseño y desarrollo web. Páginas web para empresas con diseño de alta gama y sistemas multi-agentes. Cierra ventas más rápido y solicita tu llamada en 24 hs.",
+    "Desarrollamos sistemas web de alta gama y agentes multi-agente para empresas B2B y marcas consolidadas. Automatiza cotizaciones, califica prospectos y escala ventas 24/7 sin fricción operativa.",
   keywords: [
+    "Sistemas Web B2B",
+    "Páginas web para empresas B2B",
+    "Agentes de IA para ventas",
+    "Calificación de leads B2B",
+    "Automatización de cotizaciones",
     "Diseño y desarrollo web",
     "Diseño de páginas web",
     "Diseño web y marketing digital",
     "Diseño Web Profesional",
     "Servicios de Desarrollo Web",
-    "Creador de Sitios Web",
-    "Creador de páginas web",
     "Diseño de alta gama",
     "Asistentes conversacionales",
-    "Solicitar Llamada",
     "Cierra ventas más rápido",
     "Delega la recolección de datos",
     "Automatización de ventas",
@@ -52,23 +54,9 @@ export const metadata: Metadata = {
     "Servicios de Desarrollo Web y Diseño de Páginas Web",
     "Diseño de páginas web y landing pages de ultra alta conversión",
     "Desarrollamos sitios web y creamos páginas web profesionales",
-    "Servicio de página web",
-    "diseñador web freelance",
-    "página web de una sola página",
-    "diseño especializado para decisiones rápidas",
-    "landing page para profesionales de salud",
-    "landing page para abogados y estudios jurídicos",
-    "landing page para inmobiliarias y arquitectos",
-    "landing page para psicólogos y terapeutas",
-    "landing page para entrenadores personales",
-    "landing page para veterinarias y odontólogos",
-    "landing page para consultores de negocios",
     "Aurelius Sistemiza influencer IA",
     "Motor Autónomo de Marketing y SEO Local con IA",
     "Departamento de Marketing y Captación Autónomo con Agentes de IA",
-    "Agentes de IA para captación de clientes",
-    "Automatización de SEO local con IA",
-    "Infraestructura integral de marketing con IA",
   ],
   icons: {
     icon: [
@@ -80,7 +68,7 @@ export const metadata: Metadata = {
   },
   authors: [{ name: "Alan López", url: "https://serviciodemarketingdigital.com" }],
   creator: "Alan López",
-  publisher: "Servicio de Marketing Digital",
+  publisher: "Alan López - Sistemas Web B2B",
   formatDetection: {
     email: false,
     address: false,
@@ -90,11 +78,11 @@ export const metadata: Metadata = {
     canonical: "https://serviciodemarketingdigital.com",
   },
   openGraph: {
-    title: "Servicio de Página Web y Diseño de Alta Gama | Alan López",
+    title: "Webs de Alta Conversión y Agentes IA para Empresas B2B | Alan López",
     description:
-      "Ofrecemos automatización de ventas, diseño y desarrollo web. Páginas web para empresas con sistemas multi-agentes y diseño de alta gama.",
+      "Infraestructura web de alta gama y sistemas multi-agentes para empresas B2B y marcas consolidadas. Filtra prospectos calificados y automatiza cotizaciones 24/7.",
     url: "https://serviciodemarketingdigital.com",
-    siteName: "Alan López - Servicio de Marketing Digital",
+    siteName: "Alan López - Sistemas Web B2B",
     locale: "es_ES",
     type: "website",
     images: [
@@ -102,15 +90,15 @@ export const metadata: Metadata = {
         url: "/images/alan-lopez.png",
         width: 800,
         height: 800,
-        alt: "Alan López - Diseñador Web Freelance y Productor Digital",
+        alt: "Alan López - Sistemas Web B2B y Agentes Autónomos",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Servicios de Desarrollo Web y Diseño de Páginas Web | Alan López",
+    title: "Sistemas Web de Alta Conversión y Agentes IA B2B | Alan López",
     description:
-      "Webs ultraligeras con sistemas multi-agentes y automatización de ventas. Oferta especial: Comienza hoy, creamos tu sitio en 24 hs.",
+      "Webs corporativas ultrarrápidas con sistemas multi-agentes y calificación automática de prospectos. Entrega V1 en 24 horas.",
     images: ["/images/alan-lopez.png"],
   },
   robots: {
@@ -321,6 +309,7 @@ export default function RootLayout({
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
               gtag('config', 'G-BN895RKRF7');
+              ${process.env.NEXT_PUBLIC_GOOGLE_ADS_ID ? `gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ADS_ID}');` : ""}
             `,
           }}
         />

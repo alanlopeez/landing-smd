@@ -2,7 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, ShieldCheck, Zap, Bot } from "lucide-react";
 
 interface HeaderHeroProps {
   onOpenLeadModal: () => void;
@@ -56,7 +56,7 @@ export default function HeaderHero({
               ALAN LÓPEZ
             </span>
             <span className="text-[10px] tracking-wide text-silver-mist uppercase">
-              Servicio de Marketing Digital
+              Sistemas Web B2B & Agentes IA
             </span>
           </div>
         </a>
@@ -86,7 +86,7 @@ export default function HeaderHero({
               href="#nichos"
               className="text-silver-mist hover:text-platinum transition-colors"
             >
-              Nichos
+              Nichos B2B
             </a>
             <a
               href="#demo"
@@ -124,45 +124,68 @@ export default function HeaderHero({
             onClick={onOpenLeadModal}
             className="bg-liquid-abyss/90 hover:bg-white/10 text-platinum text-xs font-semibold px-4 py-2 rounded-full border border-white/10 transition-colors uppercase tracking-wider"
           >
-            Solicitar Llamada
+            Calificar Proyecto
           </button>
         </div>
       </nav>
 
-      {/* Main Massive Title Area */}
-      <div className="relative z-20 w-full max-w-7xl mx-auto px-6 pt-16 pb-12 flex-1 flex flex-col justify-center">
+      {/* Main Massive Title Area (Above the Fold con Propuesta B2B Específica) */}
+      <div className="relative z-20 w-full max-w-7xl mx-auto px-6 pt-12 sm:pt-16 pb-8 flex-1 flex flex-col justify-center">
+        {/* Eyebrow Target Definition */}
         <div className="mb-4 inline-flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-bioluminescent-lime" />
+          <span className="w-2 h-2 rounded-full bg-bioluminescent-lime animate-pulse" />
           <span className="text-xs uppercase tracking-widest text-silver-mist font-matter">
-            Diseño y Desarrollo Web · Automatización de Ventas
+            Infraestructura Web & Agentes Autónomos · B2B & Marcas Consolidadas
           </span>
         </div>
 
-        <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-[114px] xl:text-[138px] font-aspekta font-normal text-platinum tracking-[-0.03em] leading-[0.92] max-w-6xl select-none">
-          Libera tu tiempo para lo importante.
+        {/* Powerful Value-Focused H1 */}
+        <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-[98px] xl:text-[112px] font-aspekta font-normal text-platinum tracking-[-0.03em] leading-[0.94] max-w-6xl select-none">
+          Sistemas Web y Agentes IA para Empresas B2B.
         </h1>
+
+        {/* Feature Badges for Business Value */}
+        <div className="mt-6 flex flex-wrap items-center gap-3 sm:gap-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs text-platinum font-matter">
+            <Bot className="w-3.5 h-3.5 text-bioluminescent-lime" />
+            <span>Filtro y Cotización Automática 24/7</span>
+          </div>
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs text-platinum font-matter">
+            <Zap className="w-3.5 h-3.5 text-bioluminescent-lime" />
+            <span>Primera Versión Operativa en 24 Horas</span>
+          </div>
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs text-platinum font-matter">
+            <ShieldCheck className="w-3.5 h-3.5 text-bioluminescent-lime" />
+            <span>Sin Pagos por Adelantado · Con Garantía</span>
+          </div>
+        </div>
       </div>
 
       {/* Hero Bottom Bar: Subtext and Action Combination */}
       <div className="relative z-20 w-full max-w-7xl mx-auto px-6 pb-12 pt-4 flex flex-col md:flex-row md:items-end justify-between gap-8">
-        {/* Left Subtext */}
+        {/* Left Subtext: Specific Business Problem Solved */}
         <div className="max-w-2xl">
           <p className="text-base sm:text-lg text-liquid-mist font-matter leading-relaxed">
-            <strong className="text-platinum font-semibold">Ofrecemos automatización de ventas, diseño y desarrollo web.</strong> Tu servicio de páginas web para empresas con sistemas multi-agentes y diseño de alta gama: ahorra recursos, delega la recolección de datos y cierra ventas más rápido al cotizar al instante.
+            <strong className="text-platinum font-semibold">
+              Eliminamos la fuga de prospectos calificados y los cuellos de botella comerciales.
+            </strong>{" "}
+            Diseñamos plataformas web ultrarrápidas con sistemas multi-agentes que filtran consultas,
+            cotizan requerimientos al instante y derivan llamadas con alta intención de compra directamente
+            a tu equipo de ventas.
           </p>
         </div>
 
-        {/* Right CTA Button Pair (Integrated Biosciences reference style) */}
+        {/* Right CTA Button Pair */}
         <div className="flex items-center gap-2 self-start md:self-auto">
           <button
             onClick={onOpenLeadModal}
-            className="bg-[#222f30] hover:bg-[#2c3d3e] text-platinum text-xs font-semibold uppercase tracking-wider px-6 py-3.5 rounded-full border border-white/15 transition-all cursor-pointer"
+            className="bg-[#222f30] hover:bg-[#2c3d3e] text-platinum text-xs font-semibold uppercase tracking-wider px-6 py-3.5 rounded-full border border-white/15 transition-all cursor-pointer shadow-lg hover:border-bioluminescent-lime/40"
           >
-            Solicitar una llamada
+            Calificar mi Proyecto B2B
           </button>
           <button
             onClick={onOpenLeadModal}
-            aria-label="Abrir formulario de llamada en 24 horas"
+            aria-label="Abrir formulario de calificación en 24 horas"
             className="btn-lime w-11 h-11 rounded-full cursor-pointer hover:scale-105 transition-transform"
           >
             <ArrowUpRight className="w-5 h-5 text-liquid-abyss" />
