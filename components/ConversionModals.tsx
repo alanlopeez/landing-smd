@@ -11,12 +11,18 @@ interface ConversionModalsProps {
   activeModal: ModalType;
   onClose: () => void;
   defaultBusinessType?: string;
+  sourceContext?: string;
+  initialVolume?: string;
+  initialBudget?: string;
 }
 
 export default function ConversionModals({
   activeModal,
   onClose,
   defaultBusinessType = "Servicios B2B / Consultoría empresarial",
+  sourceContext = "Landing CTA Modal",
+  initialVolume,
+  initialBudget,
 }: ConversionModalsProps) {
   if (!activeModal) return null;
 
@@ -27,7 +33,9 @@ export default function ConversionModals({
         isOpen={true}
         onClose={onClose}
         defaultBusinessType={defaultBusinessType}
-        sourceContext="Landing CTA Modal"
+        sourceContext={sourceContext}
+        initialVolume={initialVolume}
+        initialBudget={initialBudget}
       />
     );
   }

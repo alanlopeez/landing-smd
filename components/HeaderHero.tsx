@@ -122,9 +122,9 @@ export default function HeaderHero({
 
           <button
             onClick={onOpenLeadModal}
-            className="bg-liquid-abyss/90 hover:bg-white/10 text-platinum text-xs font-semibold px-4 py-2 rounded-full border border-white/10 transition-colors uppercase tracking-wider"
+            className="bg-liquid-abyss/90 hover:bg-white/10 text-platinum text-xs font-semibold px-4 py-2 rounded-full border border-white/10 transition-colors uppercase tracking-wider hover:border-bioluminescent-lime/40 cursor-pointer"
           >
-            Calificar Proyecto
+            Evaluar con IA
           </button>
         </div>
       </nav>
@@ -176,17 +176,23 @@ export default function HeaderHero({
         </div>
 
         {/* Right CTA Button Pair */}
-        <div className="flex items-center gap-2 self-start md:self-auto">
+        <div className="flex flex-wrap items-center gap-3 self-start md:self-auto">
+          <a
+            href="#calculadora-roi"
+            className="text-xs text-silver-mist hover:text-white underline underline-offset-4 font-matter py-2 px-3 transition-colors"
+          >
+            Calcular fuga de ingresos ↓
+          </a>
           <button
             onClick={onOpenLeadModal}
-            className="bg-[#222f30] hover:bg-[#2c3d3e] text-platinum text-xs font-semibold uppercase tracking-wider px-6 py-3.5 rounded-full border border-white/15 transition-all cursor-pointer shadow-lg hover:border-bioluminescent-lime/40"
+            className="bg-[#222f30] hover:bg-[#2c3d3e] text-platinum text-xs sm:text-sm font-semibold uppercase tracking-wider px-6 py-3.5 rounded-full border border-white/15 transition-all cursor-pointer shadow-lg hover:border-bioluminescent-lime/40 inline-flex items-center gap-2"
           >
-            Calificar mi Proyecto B2B
+            <span>Evaluar Viabilidad y Cotizar con IA</span>
           </button>
           <button
             onClick={onOpenLeadModal}
-            aria-label="Abrir formulario de calificación en 24 horas"
-            className="btn-lime w-11 h-11 rounded-full cursor-pointer hover:scale-105 transition-transform"
+            aria-label="Abrir evaluación y cotización con IA"
+            className="btn-lime w-11 h-11 rounded-full cursor-pointer hover:scale-105 transition-transform shrink-0"
           >
             <ArrowUpRight className="w-5 h-5 text-liquid-abyss" />
           </button>

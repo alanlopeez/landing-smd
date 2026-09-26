@@ -491,7 +491,7 @@ export default function NicheLandingSection() {
                     >
                       <div className="flex items-center gap-2">
                         <Sparkles className="w-4 h-4" />
-                        <span>Calificar Proyecto para {niche.name}</span>
+                        <span>Evaluar con IA para {niche.name}</span>
                       </div>
                       <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover/btn:translate-x-0.5" />
                     </button>

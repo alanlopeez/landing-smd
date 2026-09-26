@@ -2,10 +2,11 @@
 
 import React, { useState } from "react";
 import HeaderHero from "@/components/HeaderHero";
+import RevenueLeakCalculator from "@/components/RevenueLeakCalculator";
 import ValueProposition from "@/components/ValueProposition";
+import InteractiveDemo from "@/components/InteractiveDemo";
 import AutomationTypesSection from "@/components/AutomationTypesSection";
 import SpecializedServicesSection from "@/components/SpecializedServicesSection";
-import InteractiveDemo from "@/components/InteractiveDemo";
 import NicheLandingSection from "@/components/NicheLandingSection";
 import DesignShowcase from "@/components/DesignShowcase";
 import AboutMeSection from "@/components/AboutMeSection";
@@ -19,60 +20,140 @@ import AboutMeModal from "@/components/AboutMeModal";
 export default function HomePage() {
   const [activeModal, setActiveModal] = useState<ModalType>(null);
   const [isAboutModalOpen, setIsAboutModalOpen] = useState(false);
+  const [modalContext, setModalContext] = useState<{
+    businessType?: string;
+    sourceContext?: string;
+    initialVolume?: string;
+    initialBudget?: string;
+  }>({});
+
+  const handleOpenLeadModal = (context?: {
+    volume?: string;
+    budget?: string;
+    servicePreset?: string;
+    source?: string;
+  }) => {
+    setModalContext({
+      businessType: context?.servicePreset || "Servicios B2B / Consultoría empresarial",
+      sourceContext: context?.source || "Landing B2B North Star CTA",
+      initialVolume: context?.volume,
+      initialBudget: context?.budget,
+    });
+    setActiveModal("lead");
+  };
 
   return (
     <main className="min-h-screen bg-liquid-abyss text-silver-mist selection:bg-bioluminescent-lime selection:text-liquid-abyss">
-      {/* 1. Header / Hero Section (Integrated Biosciences Theme) */}
+      {/* 1. Header / Hero Section con North Star CTA: Evaluar Viabilidad y Cotizar con IA */}
       <HeaderHero
-        onOpenLeadModal={() => setActiveModal("lead")}
+        onOpenLeadModal={() => handleOpenLeadModal({ source: "Header Hero CTA" })}
         onOpenAboutModal={() => setIsAboutModalOpen(true)}
         onOpenMagnetModal={() => setActiveModal("magnet")}
       />
 
-      {/* 2. Value Proposition & Multi-Agent Architecture (Auros Theme) */}
-      <ValueProposition onOpenLeadModal={() => setActiveModal("lead")} />
+      {/* 2. Calculadora Interactiva de Fuga de Ingresos / ROI */}
+      <RevenueLeakCalculator
+        onOpenQualification={(calcData) =>
+          handleOpenLeadModal({
+            volume: calcData?.volume,
+            budget: calcData?.budget,
+            source: calcData?.source || "Calculadora de Fuga de Ingresos",
+          })
+        }
+      />
 
-      {/* 3. Automation Types & Agent Levels (Express, Conversacional, Autónomo) */}
-      <AutomationTypesSection onOpenLeadModal={() => setActiveModal("lead")} />
+      {/* 3. Dogfooding Interactivo: Cotizador y Evaluador de Proyectos con IA en Vivo + Demo */}
+      <InteractiveDemo
+        onOpenLeadModal={(demoData) =>
+          handleOpenLeadModal({
+            servicePreset: demoData?.servicePreset,
+            budget: demoData?.budgetPreset,
+            source: "Simulador Interactivo Dogfooding",
+          })
+        }
+      />
 
-      {/* 4. Specialized Turnkey Services & Validation Offers (Motor 72h y Departamento Autónomo con IA) */}
-      <SpecializedServicesSection />
+      {/* 4. Value Proposition & Arquitectura de Automatización B2B */}
+      <ValueProposition
+        onOpenLeadModal={() =>
+          handleOpenLeadModal({ source: "Propuesta de Valor B2B" })
+        }
+      />
 
-      {/* 5. Interactive Demo Simulator ("¿Cómo funciona? - Vea un proyecto DEMO") */}
-      <InteractiveDemo onOpenLeadModal={() => setActiveModal("lead")} />
+      {/* 5. Niveles de Agentes con CTAs Unificados */}
+      <AutomationTypesSection
+        onOpenLeadModal={(autoData) =>
+          handleOpenLeadModal({
+            servicePreset: autoData?.servicePreset,
+            source: "Niveles de Automatización",
+          })
+        }
+      />
 
-      {/* 5. Niche Specialization & Rapid Decisions (14 Profiles with Custom WhatsApp CTAs & AI Video) */}
+      {/* 6. Servicios Llave en Mano y Auditoría Técnica */}
+      <SpecializedServicesSection
+        onOpenLeadModal={(serviceData) =>
+          handleOpenLeadModal({
+            servicePreset: serviceData?.servicePreset,
+            source: "Servicios Especializados B2B",
+          })
+        }
+      />
+
+      {/* 7. Especialización por Nichos B2B */}
       <NicheLandingSection />
 
-      {/* 6. Design Models & Produced Live Projects (Refero & Alan López Projects) */}
-      <DesignShowcase onOpenLeadModal={() => setActiveModal("lead")} />
+      {/* 8. Casos de Estudio con Formato Problema -> Arquitectura -> Resultado Medible */}
+      <DesignShowcase
+        onOpenLeadModal={() =>
+          handleOpenLeadModal({ source: "Portafolio y Casos de Estudio" })
+        }
+      />
 
-      {/* 6. About Me Section (Alan López Bio & Lavender Phosphor Stats) */}
-      <AboutMeSection onOpenLeadModal={() => setActiveModal("lead")} />
+      {/* 9. Sobre Mí (Alan López - Productor Digital) */}
+      <AboutMeSection
+        onOpenLeadModal={() =>
+          handleOpenLeadModal({ source: "Sección Sobre Mí" })
+        }
+      />
 
-      {/* 7. Frequently Asked Questions (FAQ Accordion with Schema.org & GEO) */}
-      <FaqSection onOpenLeadModal={() => setActiveModal("lead")} />
+      {/* 10. Preguntas Frecuentes con Schema.org */}
+      <FaqSection
+        onOpenLeadModal={() =>
+          handleOpenLeadModal({ source: "Preguntas Frecuentes" })
+        }
+      />
 
-      {/* 8. Lead Magnet Section (Free Multi-Agent AI Guide) */}
+      {/* 11. Lead Magnet (Guía Estratégica de Multi-Agentes para Empresas) */}
       <LeadMagnetSection onOpenMagnetModal={() => setActiveModal("magnet")} />
 
-      {/* 9. Final Call to Action Section (Recessed Liquid Deep Card) */}
-      <FinalCtaSection onOpenLeadModal={() => setActiveModal("lead")} />
+      {/* 12. Final CTA Maestro */}
+      <FinalCtaSection
+        onOpenLeadModal={() =>
+          handleOpenLeadModal({ source: "Sección Final CTA" })
+        }
+      />
 
-      {/* 10. Footer with Complete Legal Framework & Cybersecurity Protocols */}
+      {/* 13. Footer Legal y Protocolos de Ciberseguridad */}
       <FooterLegal />
 
-      {/* Pop-up Modals */}
+      {/* Modales de Conversión (Calificador BANT en 5 pasos & Lead Magnet) */}
       <ConversionModals
         activeModal={activeModal}
         onClose={() => setActiveModal(null)}
+        defaultBusinessType={modalContext.businessType}
+        sourceContext={modalContext.sourceContext}
+        initialVolume={modalContext.initialVolume}
+        initialBudget={modalContext.initialBudget}
       />
 
-      {/* About Me Popup Modal (Pestaña Emergente) */}
+      {/* Modal Sobre Mí */}
       <AboutMeModal
         isOpen={isAboutModalOpen}
         onClose={() => setIsAboutModalOpen(false)}
-        onOpenLeadModal={() => setActiveModal("lead")}
+        onOpenLeadModal={() =>
+          handleOpenLeadModal({ source: "Modal Sobre Mí" })
+        }
       />
     </main>
   );

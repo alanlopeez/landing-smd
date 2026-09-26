@@ -20,7 +20,13 @@ import {
   Building2,
 } from "lucide-react";
 
-export default function SpecializedServicesSection() {
+interface SpecializedServicesSectionProps {
+  onOpenLeadModal?: (context?: { servicePreset?: string }) => void;
+}
+
+export default function SpecializedServicesSection({
+  onOpenLeadModal,
+}: SpecializedServicesSectionProps) {
   return (
     <section
       id="soluciones-autonomas"
@@ -157,21 +163,24 @@ export default function SpecializedServicesSection() {
 
             {/* CTA Button */}
             <div className="pt-8">
-              <a
-                href="https://calendar.app.google/dhGQgyMUs2eHBPgN9"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full group/btn relative inline-flex items-center justify-between px-6 py-4 rounded-xl bg-bioluminescent-lime hover:bg-bioluminescent-lime/90 text-liquid-abyss text-xs sm:text-sm font-semibold uppercase tracking-wider transition-all duration-200 shadow-lg shadow-bioluminescent-lime/20 focus:outline-none focus:ring-2 focus:ring-bioluminescent-lime focus:ring-offset-2 focus:ring-offset-liquid-abyss"
-                aria-label="Ver demo en vivo y solicitar acceso para mi negocio en Google Calendar"
+              <button
+                type="button"
+                onClick={() =>
+                  onOpenLeadModal
+                    ? onOpenLeadModal({ servicePreset: "Nivel 1: Asistente Conversacional B2B" })
+                    : window.open("https://calendar.app.google/dhGQgyMUs2eHBPgN9", "_blank")
+                }
+                className="w-full group/btn relative inline-flex items-center justify-between px-6 py-4 rounded-xl bg-bioluminescent-lime hover:bg-bioluminescent-lime/90 text-liquid-abyss text-xs sm:text-sm font-semibold uppercase tracking-wider transition-all duration-200 shadow-lg shadow-bioluminescent-lime/20 cursor-pointer"
+                aria-label="Evaluar Viabilidad y Cotizar Nivel 1 con IA"
               >
                 <div className="flex items-center gap-2">
-                  <Calendar className="w-4 h-4 text-liquid-abyss" />
-                  <span>Ver demo en vivo y solicitar acceso para mi negocio</span>
+                  <Sparkles className="w-4 h-4 text-liquid-abyss" />
+                  <span>Evaluar Viabilidad y Cotizar con IA</span>
                 </div>
                 <ArrowUpRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
-              </a>
+              </button>
               <p className="text-center text-[11px] text-silver-mist/70 pt-2 font-mono">
-                Lleva a un formulario corto y llamada de diagnóstico de 15 min
+                Evaluación en 5 preguntas • Desbloquea agenda en Google Calendar
               </p>
             </div>
           </article>
@@ -285,21 +294,24 @@ export default function SpecializedServicesSection() {
 
             {/* CTA Button */}
             <div className="pt-8">
-              <a
-                href="https://calendar.app.google/xo1qqYbiVVpQTzCP8"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full group/btn relative inline-flex items-center justify-between px-6 py-4 rounded-xl bg-gradient-to-r from-sky-400 to-teal-400 hover:from-sky-300 hover:to-teal-300 text-liquid-abyss text-xs sm:text-sm font-semibold uppercase tracking-wider transition-all duration-200 shadow-lg shadow-sky-400/20 focus:outline-none focus:ring-2 focus:ring-sky-400 focus:ring-offset-2 focus:ring-offset-liquid-abyss"
-                aria-label="Solicitar auditoría de viabilidad y arquitectura para mi empresa en Google Calendar"
+              <button
+                type="button"
+                onClick={() =>
+                  onOpenLeadModal
+                    ? onOpenLeadModal({ servicePreset: "Nivel 2: Ecosistema Multi-Agente Autónomo" })
+                    : window.open("https://calendar.app.google/xo1qqYbiVVpQTzCP8", "_blank")
+                }
+                className="w-full group/btn relative inline-flex items-center justify-between px-6 py-4 rounded-xl bg-gradient-to-r from-sky-400 to-teal-400 hover:from-sky-300 hover:to-teal-300 text-liquid-abyss text-xs sm:text-sm font-semibold uppercase tracking-wider transition-all duration-200 shadow-lg shadow-sky-400/20 cursor-pointer"
+                aria-label="Evaluar Viabilidad y Cotizar Arquitectura Enterprise con IA"
               >
                 <div className="flex items-center gap-2">
-                  <Calendar className="w-4 h-4 text-liquid-abyss" />
-                  <span>Solicitar auditoría de viabilidad y arquitectura para mi empresa</span>
+                  <Sparkles className="w-4 h-4 text-liquid-abyss" />
+                  <span>Evaluar Viabilidad y Cotizar con IA</span>
                 </div>
                 <ArrowUpRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
-              </a>
+              </button>
               <p className="text-center text-[11px] text-silver-mist/70 pt-2 font-mono">
-                Agendar sesión estratégica con Alan López para evaluar viabilidad
+                Evaluación en 5 preguntas • Desbloquea sesión estratégica de arquitectura
               </p>
             </div>
           </article>

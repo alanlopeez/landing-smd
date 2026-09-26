@@ -11,7 +11,11 @@ export interface QualificationData {
   whatsapp?: string;
   businessType: string; // Rubro o modelo de negocio
   adBudget: string; // Rango de facturación o presupuesto mensual
-  companyRole: string; // Rol en la empresa
+  companyRole?: string; // Rol en la empresa
+  monthlyVolume?: string; // Volumen mensual de consultas
+  currentSystem?: string; // Sistema actual de gestión
+  timeline?: string; // Plazo de implementación
+  estimatedLoss?: number; // Fuga económica calculada
   isQualified?: boolean;
   notes?: string;
   timestamp?: string;
@@ -21,43 +25,42 @@ export const WHATSAPP_PHONE =
   process.env.NEXT_PUBLIC_WHATSAPP_PHONE || "5491127887093";
 
 /**
- * Criterio estricto de calificación:
- * - Calificado: Presupuesto >= USD 500 con rol de toma de decisiones (Dueño, Socio, Director, Gerente),
- *   o Presupuesto alto (> USD 1.500) en cualquier caso.
- * - No Calificado: Presupuesto inferior a USD 500 o empleados/asistentes sin capacidad de inversión.
+ * Criterio estricto de calificación BANT / FAINT:
+ * - Calificado: Presupuesto >= USD 500 con volumen comercial o necesidad de automatización.
+ * - No Calificado: Presupuesto inferior a USD 500 o falta de infraestructura/volumen mínimo.
  */
 export function evaluateLeadQualification(
   adBudget: string,
-  companyRole: string
+  companyRole?: string,
+  monthlyVolume?: string
 ): boolean {
   if (adBudget === "Menos de USD 500") {
     return false;
   }
 
   if (
-    companyRole.toLowerCase().includes("empleado") ||
-    companyRole.toLowerCase().includes("asistente")
+    companyRole &&
+    (companyRole.toLowerCase().includes("empleado") ||
+      companyRole.toLowerCase().includes("asistente"))
   ) {
-    // Si es empleado pero la empresa maneja más de 1.500 USD, puede calificar para evaluación
-    return adBudget === "Más de USD 1.500";
+    return adBudget === "Más de USD 1.500" || adBudget === "Más de USD 3.500";
   }
 
   return true;
 }
 
-/**
- * Genera la URL de WhatsApp con mensaje precargado con todos los datos de calificación
- */
 export function buildWhatsAppPreloadedUrl(data: QualificationData): string {
   const lines = [
-    "Hola Alan, completé el formulario de calificación en la web:",
+    "Hola Alan, completé la evaluación de viabilidad y cotización en tu web:",
     `• Nombre: ${data.name || "N/A"}`,
     `• Empresa / Web: ${data.company || "N/A"}`,
-    `• Rubro: ${data.businessType || "N/A"}`,
-    `• Presupuesto mensual / Facturación: ${data.adBudget || "N/A"}`,
-    `• Rol: ${data.companyRole || "N/A"}`,
+    `• Rubro / Modelo: ${data.businessType || "N/A"}`,
+    `• Volumen mensual: ${data.monthlyVolume || "N/A"}`,
+    `• Sistema actual: ${data.currentSystem || "N/A"}`,
+    `• Plazo deseado: ${data.timeline || "Inmediato"}`,
+    `• Presupuesto previsto: ${data.adBudget || "N/A"}`,
     "",
-    "Me gustaría coordinar una llamada y recibir la propuesta técnica para mi empresa.",
+    "He completado la precalificación técnica y me gustaría coordinar la propuesta para mi empresa.",
   ];
 
   const message = lines.join("\n");

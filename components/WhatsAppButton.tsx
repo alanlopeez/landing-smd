@@ -31,8 +31,8 @@ export default function WhatsAppButton() {
         <button
           type="button"
           onClick={() => setIsModalOpen(true)}
-          aria-label="Calificar proyecto antes de chatear por WhatsApp"
-          title="Calificar proyecto antes de chatear por WhatsApp"
+          aria-label="Evaluar viabilidad y cotizar con IA antes de chatear por WhatsApp"
+          title="Evaluar viabilidad y cotizar con IA antes de chatear por WhatsApp"
           className="floating-whatsapp-container fixed bottom-5 right-5 sm:bottom-6 sm:right-6 z-40 flex items-center gap-2.5 sm:gap-3 cursor-pointer select-none group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#25D366] focus-visible:ring-offset-2 focus-visible:ring-offset-liquid-abyss rounded-full border-0 bg-transparent p-0"
         >
           {/* Tooltip on Mobile */}
@@ -41,7 +41,7 @@ export default function WhatsAppButton() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#25D366] opacity-75" />
               <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#25D366]" />
             </span>
-            <span>Calificar Proyecto</span>
+            <span>Evaluar con IA</span>
           </span>
 
           {/* Discreet Badge on Desktop */}
@@ -50,7 +50,7 @@ export default function WhatsAppButton() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#25D366] opacity-75" />
               <span className="relative inline-flex rounded-full h-2 w-2 bg-[#25D366]" />
             </span>
-            <span>Calificar Proyecto</span>
+            <span>Evaluar con IA</span>
           </span>
 
           {/* WhatsApp Floating Icon Button */}

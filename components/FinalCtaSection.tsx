@@ -22,20 +22,20 @@ export default function FinalCtaSection({ onOpenLeadModal }: FinalCtaSectionProp
               DESPLIEGUE PRIORITARIO EN 24 HORAS
             </div>
 
-            <h2 className="text-4xl sm:text-6xl lg:text-7xl font-medium text-platinum font-matter tracking-[-0.04em] leading-[1.02]">
-              ¿Le interesa tener su sitio web publicado?
+            <h2 className="text-3xl sm:text-5xl lg:text-6xl font-medium text-platinum font-matter tracking-[-0.04em] leading-[1.02]">
+              ¿Tu empresa está lista para operar con agentes y cotizadores con IA?
             </h2>
 
-            <p className="text-base sm:text-xl text-liquid-mist font-matter leading-relaxed max-w-2xl mx-auto">
-              Oferta especial: <span className="text-platinum font-semibold">Comienza hoy, creamos tu sitio en 24 hs</span> con sistemas multi-agentes de captación y diseño de alta gama.
+            <p className="text-base sm:text-lg text-liquid-mist font-matter leading-relaxed max-w-2xl mx-auto">
+              Elimina los cuellos de botella de ventas y la fuga de prospectos. <span className="text-platinum font-semibold">Diseñamos tu sistema con calificación en 24 a 48 horas</span> con garantía de fidelidad y rendimiento.
             </p>
 
             <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
               <button
                 onClick={onOpenLeadModal}
-                className="btn-aurora text-xs py-4 px-8 w-full sm:w-auto cursor-pointer"
+                className="btn-aurora text-xs sm:text-sm py-4 px-8 w-full sm:w-auto cursor-pointer"
               >
-                <span>Solicitar una llamada ahora</span>
+                <span>Evaluar Viabilidad y Cotizar Proyecto con IA</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
             </div>

@@ -5,7 +5,7 @@ import Image from "next/image";
 import { ArrowUpRight, Zap, MessageSquare, Cpu, CheckCircle2 } from "lucide-react";
 
 interface AutomationTypesSectionProps {
-  onOpenLeadModal: () => void;
+  onOpenLeadModal: (context?: { servicePreset?: string }) => void;
 }
 
 const automations = [
@@ -28,7 +28,7 @@ const automations = [
       "Cierra ventas más rápido sin tiempos muertos",
       "Aumenta la tasa de conversión de tus prospectos",
     ],
-    ctaText: "Cotizar Nivel Express",
+    ctaText: "Evaluar Viabilidad y Cotizar con IA",
   },
   {
     id: "conversacional",
@@ -49,7 +49,7 @@ const automations = [
       "Razonamiento contextual y respuestas naturales 24/7",
       "Derivación inteligente a humanos para cerrar ventas",
     ],
-    ctaText: "Solicitar Asistente Conversacional",
+    ctaText: "Evaluar Viabilidad y Cotizar con IA",
     popularBadge: "Más Solicitado",
   },
   {
@@ -71,7 +71,7 @@ const automations = [
       "Investigación autónoma y reportes ejecutivos",
       "Máxima rentabilidad y escalabilidad comercial",
     ],
-    ctaText: "Desplegar Ecosistema Autónomo",
+    ctaText: "Evaluar Viabilidad y Cotizar con IA",
   },
 ];
 
@@ -177,8 +177,8 @@ export default function AutomationTypesSection({
                 {/* Card Bottom CTA Button */}
                 <div className="pt-8">
                   <button
-                    onClick={onOpenLeadModal}
-                    className="w-full group/btn relative inline-flex items-center justify-between px-5 py-3 rounded-[6px] bg-liquid-kelp/50 hover:bg-bioluminescent-lime text-platinum hover:text-liquid-abyss text-xs font-semibold uppercase tracking-wider border border-white/10 hover:border-bioluminescent-lime transition-all duration-200"
+                    onClick={() => onOpenLeadModal({ servicePreset: `Nivel: ${item.title}` })}
+                    className="w-full group/btn relative inline-flex items-center justify-between px-5 py-3 rounded-[6px] bg-liquid-kelp/50 hover:bg-bioluminescent-lime text-platinum hover:text-liquid-abyss text-xs font-semibold uppercase tracking-wider border border-white/10 hover:border-bioluminescent-lime transition-all duration-200 cursor-pointer"
                   >
                     <span>{item.ctaText}</span>
                     <ArrowUpRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
@@ -200,10 +200,10 @@ export default function AutomationTypesSection({
             </p>
           </div>
           <button
-            onClick={onOpenLeadModal}
-            className="btn-aurora text-xs uppercase tracking-wider whitespace-nowrap flex-shrink-0"
+            onClick={() => onOpenLeadModal({ servicePreset: "Diagnóstico General B2B" })}
+            className="btn-aurora text-xs uppercase tracking-wider whitespace-nowrap flex-shrink-0 cursor-pointer"
           >
-            Diagnóstico Sin Cargo en 24h
+            Evaluar Viabilidad y Cotizar con IA
           </button>
         </div>
       </div>

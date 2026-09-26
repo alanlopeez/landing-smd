@@ -61,8 +61,8 @@ export default function AboutMeSection({ onOpenLeadModal }: AboutMeSectionProps)
               </p>
 
               <div className="pt-4 flex items-center gap-4">
-                <button onClick={onOpenLeadModal} className="btn-aurora text-xs">
-                  Agendar Consulta Estratégica
+                <button onClick={onOpenLeadModal} className="btn-aurora text-xs sm:text-sm cursor-pointer">
+                  Evaluar Viabilidad y Cotizar con IA
                 </button>
               </div>
             </div>
