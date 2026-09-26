@@ -112,11 +112,21 @@ export default function QualificationModal({
     try {
       await fetch(LEAD_SCRIPT_URL, {
         method: "POST",
+        mode: "no-cors",
         headers: { "Content-Type": "text/plain;charset=utf-8" },
         body: JSON.stringify({
           type: "lead",
+          tipo: "lead",
           ...payload,
+          nombre: payload.name,
+          empresa: payload.company,
+          telefono: payload.whatsapp,
+          phone: payload.whatsapp,
+          rubro: payload.businessType,
+          presupuesto: payload.adBudget,
+          rol: payload.companyRole,
           qualification_status: isQualified ? "Calificado" : "No Calificado",
+          estado_calificacion: isQualified ? "Calificado" : "No Calificado",
         }),
       });
     } catch {

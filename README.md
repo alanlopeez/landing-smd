@@ -75,11 +75,12 @@ Los formularios envían los datos a Google Sheets sin necesidad de servidores de
 
 ### Vincular la URL al Frontend:
 
-- **En desarrollo local**: Crea un archivo `.env.local` en la raíz del proyecto:
+- **En desarrollo local**: Tu archivo `.env.local` en la raíz del proyecto ya contiene los endpoints:
   ```bash
-  NEXT_PUBLIC_GOOGLE_SCRIPT_URL=https://script.google.com/macros/s/TU_SCRIPT_ID/exec
+  NEXT_PUBLIC_GOOGLE_SCRIPT_LEAD_URL=https://script.google.com/macros/s/AKfycbzbD3jkCnbEuRVGZZrdPxPtJLZ_fTrtfhDDf2W7YPQN3xHut5nldiyae1ljCQ1VXYzBfw/exec
+  NEXT_PUBLIC_GOOGLE_SCRIPT_MAGNET_URL=https://script.google.com/macros/s/AKfycbxSUGeN38Y-FN5TRMe8s2KrQx8IaQYbHP2-sWIAqleMRxHXkDy_QzUeHLNXjD47bkY6/exec
   ```
-- **En Vercel**: Ve a **Settings** > **Environment Variables** en el panel del proyecto en Vercel, agrega la variable `NEXT_PUBLIC_GOOGLE_SCRIPT_URL` y despliega nuevamente.
+- **En Vercel**: Ve a **Settings** > **Environment Variables** en el panel del proyecto en Vercel, agrega las variables `NEXT_PUBLIC_GOOGLE_SCRIPT_LEAD_URL` y `NEXT_PUBLIC_GOOGLE_SCRIPT_MAGNET_URL` (y opcionalmente `NEXT_PUBLIC_GOOGLE_SCRIPT_URL` como respaldo) y despliega nuevamente.
 
 ---
 
@@ -99,5 +100,5 @@ Los formularios envían los datos a Google Sheets sin necesidad de servidores de
 3. En Vercel:
    - Importa el repositorio de GitHub.
    - Vercel detectará Next.js automáticamente con configuración zero-config.
-   - Agrega la variable `NEXT_PUBLIC_GOOGLE_SCRIPT_URL`.
+   - Agrega las variables `NEXT_PUBLIC_GOOGLE_SCRIPT_LEAD_URL` y `NEXT_PUBLIC_GOOGLE_SCRIPT_MAGNET_URL`.
    - Haz clic en **Deploy**.

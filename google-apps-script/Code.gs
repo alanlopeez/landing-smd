@@ -16,9 +16,9 @@
  *    - Ejecutar como (Execute as): "Yo" (tu cuenta de Google)
  *    - Quién tiene acceso (Who has access): "Cualquier persona" (Anyone / Anyone, even anonymous)
  * 8. Haz clic en "Implementar", autoriza los permisos de tu cuenta de Google.
- * 9. Copia la "URL de la aplicación web" (termina en /exec) y pégala en tu archivo .env.local
- *    o en las variables de entorno de Vercel como:
- *    NEXT_PUBLIC_GOOGLE_SCRIPT_URL=https://script.google.com/macros/s/TU_ID_AQUI/exec
+ * 9. Copia la "URL de la aplicación web" (termina en /exec) y configúrala en .env.local y Vercel:
+ *    NEXT_PUBLIC_GOOGLE_SCRIPT_LEAD_URL=https://script.google.com/macros/s/AKfycbzbD3jkCnbEuRVGZZrdPxPtJLZ_fTrtfhDDf2W7YPQN3xHut5nldiyae1ljCQ1VXYzBfw/exec
+ *    NEXT_PUBLIC_GOOGLE_SCRIPT_MAGNET_URL=https://script.google.com/macros/s/AKfycbxSUGeN38Y-FN5TRMe8s2KrQx8IaQYbHP2-sWIAqleMRxHXkDy_QzUeHLNXjD47bkY6/exec
  */
 
 /**
@@ -67,16 +67,16 @@ function doPost(e) {
         "Notas / Origen"
       ]);
 
-      // Extraer campos del formulario calificador
-      var nombre = data.name || "";
-      var empresa = data.company || "";
+      // Extraer campos del formulario calificador (soporta nombres en inglés y español)
+      var nombre = data.name || data.nombre || "";
+      var empresa = data.company || data.empresa || "";
       var email = data.email || "";
-      var whatsapp = data.whatsapp || data.phone || "";
-      var rubro = data.businessType || data.volume || "";
-      var presupuesto = data.adBudget || data.budget || "";
-      var rol = data.companyRole || data.timeline || "";
-      var estadoCalificacion = data.qualification_status || (data.isQualified ? "Calificado" : "No Calificado");
-      var notas = data.notes || "";
+      var whatsapp = data.whatsapp || data.phone || data.telefono || "";
+      var rubro = data.businessType || data.rubro || data.volume || "";
+      var presupuesto = data.adBudget || data.presupuesto || data.budget || "";
+      var rol = data.companyRole || data.rol || data.timeline || "";
+      var estadoCalificacion = data.qualification_status || data.estado_calificacion || (data.isQualified ? "Calificado" : "No Calificado");
+      var notas = data.notes || data.notas || data.origen || data.source || "";
 
       // Insertar nueva fila
       sheetLeads.appendRow([

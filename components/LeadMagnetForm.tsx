@@ -72,8 +72,14 @@ export default function LeadMagnetForm({
           "Content-Type": "text/plain;charset=utf-8",
         },
         body: JSON.stringify({
+          type: "magnet",
+          tipo: "magnet",
+          name: valorCampoNombre,
           nombre: valorCampoNombre,
           email: valorCampoEmail,
+          origen: "Lead Magnet - Guía Multi-Agentes",
+          source: "Lead Magnet - Guía Multi-Agentes",
+          timestamp: new Date().toISOString(),
         }),
       });
 

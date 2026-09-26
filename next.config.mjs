@@ -10,7 +10,7 @@ const ContentSecurityPolicy = `
   frame-src 'self' https://styles.refero.design https://*.google.com https://www.youtube.com https://youtube.com;
   object-src 'none';
   base-uri 'self';
-  form-action 'self' https://script.google.com;
+  form-action 'self' https://script.google.com https://script.googleusercontent.com;
   frame-ancestors 'none';
   block-all-mixed-content;
   upgrade-insecure-requests;
