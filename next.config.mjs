@@ -64,6 +64,45 @@ const nextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: '/privacidad',
+        destination: '/#politicas-de-privacidad',
+        permanent: true,
+      },
+      {
+        source: '/politica-de-privacidad',
+        destination: '/#politicas-de-privacidad',
+        permanent: true,
+      },
+      {
+        source: '/politicas-de-privacidad',
+        destination: '/#politicas-de-privacidad',
+        permanent: true,
+      },
+      {
+        source: '/terminos',
+        destination: '/#terminos-del-servicio',
+        permanent: true,
+      },
+      {
+        source: '/terminos-de-servicio',
+        destination: '/#terminos-del-servicio',
+        permanent: true,
+      },
+      {
+        source: '/terminos-del-servicio',
+        destination: '/#terminos-del-servicio',
+        permanent: true,
+      },
+      {
+        source: '/condiciones-del-servicio',
+        destination: '/#terminos-del-servicio',
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     return [
       {

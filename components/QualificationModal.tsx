@@ -601,7 +601,7 @@ export default function QualificationModal({
                       className="mt-0.5 rounded border-white/20 bg-liquid-deep text-bioluminescent-lime focus:ring-bioluminescent-lime"
                     />
                     <span>
-                      Acepto la <a href="/privacidad" target="_blank" className="underline hover:text-white">política de privacidad</a> para recibir el diagnóstico técnico y coordinar la propuesta.
+                      Acepto la <a href="/#politicas-de-privacidad" target="_blank" className="underline hover:text-white">política de privacidad</a> para recibir el diagnóstico técnico y coordinar la propuesta.
                     </span>
                   </label>
                 </div>

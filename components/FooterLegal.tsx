@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { Shield, FileText, RefreshCw, Mail, ChevronDown, ChevronUp, Instagram, Youtube, Sparkles, ExternalLink } from "lucide-react";
 
@@ -18,6 +18,59 @@ export default function FooterLegal() {
   const togglePolicy = (policy: "privacy" | "terms" | "refund") => {
     setOpenPolicy(openPolicy === policy ? null : policy);
   };
+
+  useEffect(() => {
+    const handleHash = () => {
+      if (typeof window === "undefined") return;
+      const hash = window.location.hash.toLowerCase();
+
+      if (
+        hash === "#politicas-de-privacidad" ||
+        hash === "#politica-de-privacidad" ||
+        hash === "#privacidad" ||
+        hash === "#privacy"
+      ) {
+        setOpenPolicy("privacy");
+        setTimeout(() => {
+          const el = document.getElementById("politicas-de-privacidad") || document.getElementById("privacidad");
+          el?.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 150);
+      } else if (
+        hash === "#terminos-del-servicio" ||
+        hash === "#terminos-de-servicio" ||
+        hash === "#condiciones-del-servicio" ||
+        hash === "#terminos" ||
+        hash === "#terms" ||
+        hash === "#condiciones"
+      ) {
+        setOpenPolicy("terms");
+        setTimeout(() => {
+          const el = document.getElementById("terminos-del-servicio") || document.getElementById("condiciones-del-servicio");
+          el?.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 150);
+      } else if (
+        hash === "#politicas-de-devolucion" ||
+        hash === "#devoluciones" ||
+        hash === "#reembolso" ||
+        hash === "#refund"
+      ) {
+        setOpenPolicy("refund");
+        setTimeout(() => {
+          const el = document.getElementById("politicas-de-devolucion") || document.getElementById("devoluciones");
+          el?.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 150);
+      } else if (hash === "#marco-legal" || hash === "#legal") {
+        setTimeout(() => {
+          const el = document.getElementById("marco-legal");
+          el?.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 150);
+      }
+    };
+
+    handleHash();
+    window.addEventListener("hashchange", handleHash);
+    return () => window.removeEventListener("hashchange", handleHash);
+  }, []);
 
   return (
     <footer className="w-full bg-liquid-deep text-silver-mist border-t border-white/5 pt-16 pb-12 px-6">
@@ -151,15 +204,27 @@ export default function FooterLegal() {
           </div>
 
           {/* Quick Legal Accordion Buttons */}
-          <div className="md:col-span-7 space-y-3">
+          <div id="marco-legal" className="md:col-span-7 space-y-3 scroll-mt-28">
             <p className="text-xs uppercase tracking-[0.12em] text-silver-mist font-matter font-medium mb-3">
               MARCO LEGAL & TRANSPARENCIA CONTRACTUAL
             </p>
 
             {/* Accordion 1: Políticas de Privacidad */}
-            <div className="border border-white/10 rounded-xl overflow-hidden bg-liquid-abyss/60">
+            <div
+              id="politicas-de-privacidad"
+              className={`border rounded-xl overflow-hidden bg-liquid-abyss/60 scroll-mt-28 transition-all duration-300 ${
+                openPolicy === "privacy"
+                  ? "border-bioluminescent-lime/40 shadow-sm shadow-bioluminescent-lime/10"
+                  : "border-white/10"
+              }`}
+            >
+              {/* Alias anchors for #privacidad and #politica-de-privacidad */}
+              <span id="privacidad" className="block -mt-28 pt-28 pointer-events-none" aria-hidden="true" />
+              <span id="politica-de-privacidad" className="block -mt-28 pt-28 pointer-events-none" aria-hidden="true" />
               <button
                 onClick={() => togglePolicy("privacy")}
+                aria-expanded={openPolicy === "privacy"}
+                aria-controls="privacy-content"
                 className="w-full px-5 py-3.5 flex items-center justify-between text-left text-xs uppercase tracking-wide text-platinum hover:text-bioluminescent-lime transition-colors"
               >
                 <span className="flex items-center gap-2 font-medium">
@@ -173,7 +238,7 @@ export default function FooterLegal() {
                 )}
               </button>
               {openPolicy === "privacy" && (
-                <div className="px-5 pb-5 pt-1 text-xs text-silver-mist leading-relaxed border-t border-white/5 space-y-2">
+                <div id="privacy-content" className="px-5 pb-5 pt-1 text-xs text-silver-mist leading-relaxed border-t border-white/5 space-y-2">
                   <p>
                     Toda tu información personal está completamente protegida y resguardada bajo los más altos estándares de seguridad. Los datos que proporciones serán utilizados de manera estrictamente confidencial y únicamente bajo tu consentimiento expreso.
                   </p>
@@ -184,15 +249,28 @@ export default function FooterLegal() {
               )}
             </div>
 
-            {/* Accordion 2: Condiciones del Servicio */}
-            <div className="border border-white/10 rounded-xl overflow-hidden bg-liquid-abyss/60">
+            {/* Accordion 2: Términos y Condiciones del Servicio */}
+            <div
+              id="terminos-del-servicio"
+              className={`border rounded-xl overflow-hidden bg-liquid-abyss/60 scroll-mt-28 transition-all duration-300 ${
+                openPolicy === "terms"
+                  ? "border-bioluminescent-lime/40 shadow-sm shadow-bioluminescent-lime/10"
+                  : "border-white/10"
+              }`}
+            >
+              {/* Alias anchors for #condiciones-del-servicio, #terminos, #terminos-de-servicio, #terms */}
+              <span id="condiciones-del-servicio" className="block -mt-28 pt-28 pointer-events-none" aria-hidden="true" />
+              <span id="terminos-de-servicio" className="block -mt-28 pt-28 pointer-events-none" aria-hidden="true" />
+              <span id="terminos" className="block -mt-28 pt-28 pointer-events-none" aria-hidden="true" />
               <button
                 onClick={() => togglePolicy("terms")}
+                aria-expanded={openPolicy === "terms"}
+                aria-controls="terms-content"
                 className="w-full px-5 py-3.5 flex items-center justify-between text-left text-xs uppercase tracking-wide text-platinum hover:text-bioluminescent-lime transition-colors"
               >
                 <span className="flex items-center gap-2 font-medium">
                   <FileText className="w-3.5 h-3.5 text-bioluminescent-lime" />
-                  Condiciones del Servicio
+                  Condiciones y Términos del Servicio
                 </span>
                 {openPolicy === "terms" ? (
                   <ChevronUp className="w-4 h-4" />
@@ -201,7 +279,7 @@ export default function FooterLegal() {
                 )}
               </button>
               {openPolicy === "terms" && (
-                <div className="px-5 pb-5 pt-1 text-xs text-silver-mist leading-relaxed border-t border-white/5 space-y-3">
+                <div id="terms-content" className="px-5 pb-5 pt-1 text-xs text-silver-mist leading-relaxed border-t border-white/5 space-y-3">
                   <div>
                     <strong className="text-platinum block mb-0.5">Inicio y Desarrollo:</strong>
                     Una vez confirmado el servicio, se dará inicio inmediato a la etapa de diseño y desarrollo estructural de tu sitio web.
@@ -227,9 +305,21 @@ export default function FooterLegal() {
             </div>
 
             {/* Accordion 3: Políticas de Devolución & Protocolo de Ciberseguridad */}
-            <div className="border border-white/10 rounded-xl overflow-hidden bg-liquid-abyss/60">
+            <div
+              id="politicas-de-devolucion"
+              className={`border rounded-xl overflow-hidden bg-liquid-abyss/60 scroll-mt-28 transition-all duration-300 ${
+                openPolicy === "refund"
+                  ? "border-bioluminescent-lime/40 shadow-sm shadow-bioluminescent-lime/10"
+                  : "border-white/10"
+              }`}
+            >
+              {/* Alias anchors for #devoluciones and #reembolso */}
+              <span id="devoluciones" className="block -mt-28 pt-28 pointer-events-none" aria-hidden="true" />
+              <span id="reembolso" className="block -mt-28 pt-28 pointer-events-none" aria-hidden="true" />
               <button
                 onClick={() => togglePolicy("refund")}
+                aria-expanded={openPolicy === "refund"}
+                aria-controls="refund-content"
                 className="w-full px-5 py-3.5 flex items-center justify-between text-left text-xs uppercase tracking-wide text-platinum hover:text-bioluminescent-lime transition-colors"
               >
                 <span className="flex items-center gap-2 font-medium">
@@ -243,7 +333,7 @@ export default function FooterLegal() {
                 )}
               </button>
               {openPolicy === "refund" && (
-                <div className="px-5 pb-5 pt-1 text-xs text-silver-mist leading-relaxed border-t border-white/5 space-y-3">
+                <div id="refund-content" className="px-5 pb-5 pt-1 text-xs text-silver-mist leading-relaxed border-t border-white/5 space-y-3">
                   <div>
                     <strong className="text-platinum block mb-0.5">Garantía de Fidelidad del Diseño:</strong>
                     El cliente tiene el pleno derecho de solicitar una devolución en caso de que el sitio web final entregado y publicado presente distorsiones o sea sustancialmente distinto a la versión que confirmó y aprobó previamente.
@@ -262,11 +352,34 @@ export default function FooterLegal() {
           </div>
         </div>
 
-        {/* Copyright and Legal Notice */}
+        {/* Copyright and Legal Direct Links */}
         <div className="pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-silver-mist/60 font-matter">
           <p>© 2026 Servicio de Marketing Digital. Todos los derechos reservados.</p>
-          <div className="flex items-center gap-6">
-            <span>Diseñado con Auros & Integrated Bio Architecture</span>
+          <div className="flex flex-wrap items-center gap-4 sm:gap-6">
+            <a
+              href="#politicas-de-privacidad"
+              onClick={() => {
+                setOpenPolicy("privacy");
+                const el = document.getElementById("politicas-de-privacidad");
+                el?.scrollIntoView({ behavior: "smooth", block: "start" });
+              }}
+              className="text-silver-mist hover:text-bioluminescent-lime transition-colors"
+            >
+              Políticas de Privacidad
+            </a>
+            <span className="text-white/20">·</span>
+            <a
+              href="#terminos-del-servicio"
+              onClick={() => {
+                setOpenPolicy("terms");
+                const el = document.getElementById("terminos-del-servicio");
+                el?.scrollIntoView({ behavior: "smooth", block: "start" });
+              }}
+              className="text-silver-mist hover:text-bioluminescent-lime transition-colors"
+            >
+              Términos del Servicio
+            </a>
+            <span className="text-white/20">·</span>
             <a
               href="mailto:hola@serviciodemarketingdigital.com"
               className="text-silver-mist hover:text-platinum transition-colors"
@@ -279,3 +392,4 @@ export default function FooterLegal() {
     </footer>
   );
 }
+
