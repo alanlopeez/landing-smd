@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import ThankYouContent from "@/components/ThankYouContent";
+import ThankYouContent from "../../components/ThankYouContent";
 
 export const metadata: Metadata = {
   title: "Confirmación de Proyecto | Alan López - Sistemas Web B2B",

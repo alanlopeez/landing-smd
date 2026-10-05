@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter_Tight, Inter } from "next/font/google";
 import "./globals.css";
-import WhatsAppButton from "@/components/WhatsAppButton";
+import WhatsAppButton from "../components/WhatsAppButton";
 
 const interTight = Inter_Tight({
   subsets: ["latin"],
@@ -27,36 +27,21 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL("https://serviciodemarketingdigital.com"),
   title: {
-    default: "Webs de Alta Conversión y Agentes IA para Empresas B2B | Alan López",
-    template: "%s | Alan López - Sistemas Web B2B",
+    default: "Rediseño / Creación de Landing Pages Interactivas | Alan López",
+    template: "%s | Alan López - SMD",
   },
   description:
-    "Desarrollamos sistemas web de alta gama y agentes multi-agente para empresas B2B y marcas consolidadas. Automatiza cotizaciones, califica prospectos y escala ventas 24/7 sin fricción operativa.",
+    "Rediseño y creación de landing page interactiva de alto impacto para lanzamiento de producto o captación de leads. Primera propuesta interactiva en 48 hs. Entrega final afinada en 3 a 5 días hábiles.",
   keywords: [
-    "Sistemas Web B2B",
-    "Páginas web para empresas B2B",
-    "Agentes de IA para ventas",
-    "Calificación de leads B2B",
-    "Automatización de cotizaciones",
-    "Diseño y desarrollo web",
+    "Rediseño de landing page",
+    "Creación de landing page interactiva",
+    "Lanzamiento de producto",
+    "Captación de leads",
+    "Diseño web interactivo",
+    "Landing page de alto impacto",
     "Diseño de páginas web",
-    "Diseño web y marketing digital",
-    "Diseño Web Profesional",
-    "Servicios de Desarrollo Web",
-    "Diseño de alta gama",
-    "Asistentes conversacionales",
-    "Cierra ventas más rápido",
-    "Delega la recolección de datos",
-    "Automatización de ventas",
-    "Aumenta la tasa de conversión",
-    "Cotizadores automáticos",
-    "Páginas web para empresas con diseño de alta gama",
-    "Servicios de Desarrollo Web y Diseño de Páginas Web",
-    "Diseño de páginas web y landing pages de ultra alta conversión",
-    "Desarrollamos sitios web y creamos páginas web profesionales",
-    "Aurelius Sistemiza influencer IA",
-    "Motor Autónomo de Marketing y SEO Local con IA",
-    "Departamento de Marketing y Captación Autónomo con Agentes de IA",
+    "Alan López Productor Digital",
+    "Servicio de Marketing Digital",
   ],
   icons: {
     icon: [
@@ -123,14 +108,14 @@ export default function RootLayout({
     "@context": "https://schema.org",
     "@type": ["ProfessionalService", "LocalBusiness"],
     "@id": "https://serviciodemarketingdigital.com/#service",
-    name: "Alan López - Servicio de Diseño de Página Web & Multi-Agentes",
+    name: "Alan López - Rediseño de Landing Pages Interactivas",
     alternateName: "Servicio de Marketing Digital",
     url: "https://serviciodemarketingdigital.com",
     logo: "https://serviciodemarketingdigital.com/logo.png",
     image: "https://serviciodemarketingdigital.com/images/alan-lopez.png",
     description:
-      "Ofrecemos automatización de ventas, diseño y desarrollo web. Páginas web para empresas con diseño de alta gama y sistemas multi-agentes. Oferta especial: creamos tu sitio web en 24 hs.",
-    telephone: "+54 9 11 0000-0000",
+      "Rediseño y creación de landing page interactiva de alto impacto para lanzamiento de producto o captación de leads. Primera propuesta interactiva en 48 hs. Entrega final afinada en 3 a 5 días hábiles.",
+    telephone: "+54 9 11 2788-7093",
     email: "hola@serviciodemarketingdigital.com",
     priceRange: "$$ - $$$",
     address: {

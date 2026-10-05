@@ -2,7 +2,19 @@
 
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import { Shield, FileText, RefreshCw, Mail, ChevronDown, ChevronUp, Instagram, Youtube, Sparkles, ExternalLink } from "lucide-react";
+import {
+  Shield,
+  FileText,
+  RefreshCw,
+  Mail,
+  ChevronDown,
+  ChevronUp,
+  Instagram,
+  Youtube,
+  Sparkles,
+  ExternalLink,
+  MessageCircle,
+} from "lucide-react";
 
 function TikTokIcon({ className = "w-4 h-4" }: { className?: string }) {
   return (
@@ -13,7 +25,7 @@ function TikTokIcon({ className = "w-4 h-4" }: { className?: string }) {
 }
 
 export default function FooterLegal() {
-  const [openPolicy, setOpenPolicy] = useState<"privacy" | "terms" | "refund" | null>(null);
+  const [openPolicy, setOpenPolicy] = useState<"privacy" | "terms" | "refund" | null>("privacy");
 
   const togglePolicy = (policy: "privacy" | "terms" | "refund") => {
     setOpenPolicy(openPolicy === policy ? null : policy);
@@ -73,143 +85,146 @@ export default function FooterLegal() {
   }, []);
 
   return (
-    <footer className="w-full bg-liquid-deep text-silver-mist border-t border-white/5 pt-16 pb-12 px-6">
+    <footer id="marco-legal" className="w-full bg-liquid-deep text-silver-mist border-t border-white/5 pt-16 pb-12 px-6 scroll-mt-16">
       <div className="max-w-7xl mx-auto space-y-12">
-        {/* Social Media & AI Community Row */}
+        {/* Social Media & Official Channels Row */}
         <div className="p-6 sm:p-8 rounded-2xl bg-liquid-abyss/80 border border-white/10 space-y-6">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-white/5">
             <div className="space-y-1">
               <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-bioluminescent-lime">
                 <Sparkles className="w-3.5 h-3.5" />
-                <span>Canales Oficiales & Comunidad de IA</span>
+                <span>Canales Oficiales & Redes Sociales</span>
               </div>
               <h3 className="text-xl sm:text-2xl font-medium text-platinum font-matter">
                 Conéctate con nosotros en redes sociales
               </h3>
             </div>
             <p className="text-xs sm:text-sm text-silver-mist max-w-md font-matter">
-              Estrategias de automatización, sistemas multi-agentes y contenido exclusivo para acelerar tus ventas.
+              Estrategias de rediseño web, proyectos en vivo y contenidos interactivos de alto impacto.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            {/* Card Aurelius Sistemiza */}
-            <div className="p-5 rounded-xl bg-liquid-deep/90 border border-white/10 flex flex-col justify-between space-y-4 hover:border-bioluminescent-lime/40 transition-colors">
-              <div className="space-y-2">
-                <div className="flex items-center justify-between gap-2">
-                  <span className="text-[11px] font-mono uppercase tracking-wider text-bioluminescent-lime bg-bioluminescent-lime/10 px-2.5 py-0.5 rounded-full border border-bioluminescent-lime/20">
-                    Influencer Creado con IA
-                  </span>
-                  <span className="text-[11px] font-mono text-silver-mist/60">@aurelius.ia</span>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            {/* Instagram */}
+            <a
+              href="https://www.instagram.com/aureliussistemiza/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-5 rounded-xl bg-liquid-deep/90 border border-white/10 flex items-center justify-between hover:border-bioluminescent-lime/40 transition-colors group"
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-lg bg-pink-500/10 border border-pink-500/20 flex items-center justify-center text-pink-400 group-hover:scale-105 transition-transform">
+                  <Instagram className="w-5 h-5" />
                 </div>
-                <h4 className="text-base font-medium text-platinum font-matter">
-                  Sigue a Aurelius Sistemiza
-                </h4>
-                <p className="text-xs text-silver-mist font-matter leading-relaxed">
-                  Conoce al primer influencer de automatizaciones generado íntegramente por IA. Tips diarios, agentes autónomos y experimentos de tecnología.
-                </p>
-              </div>
-
-              <div className="flex flex-wrap items-center gap-3 pt-2">
-                <a
-                  href="https://www.instagram.com/aureliussistemiza/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Seguir a Aurelius Sistemiza en Instagram"
-                  className="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg bg-pink-500/10 hover:bg-pink-500/20 text-pink-300 border border-pink-500/20 text-xs font-matter font-medium transition-colors"
-                >
-                  <Instagram className="w-4 h-4" />
-                  <span>Instagram</span>
-                  <ExternalLink className="w-3 h-3 opacity-60" />
-                </a>
-
-                <a
-                  href="https://www.tiktok.com/@aurelius.ia"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Seguir a Aurelius Sistemiza en TikTok"
-                  className="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg bg-cyan-400/10 hover:bg-cyan-400/20 text-cyan-200 border border-cyan-400/20 text-xs font-matter font-medium transition-colors"
-                >
-                  <TikTokIcon className="w-4 h-4" />
-                  <span>TikTok</span>
-                  <ExternalLink className="w-3 h-3 opacity-60" />
-                </a>
-              </div>
-            </div>
-
-            {/* Card YouTube Servicio de Marketing Digital */}
-            <div className="p-5 rounded-xl bg-liquid-deep/90 border border-white/10 flex flex-col justify-between space-y-4 hover:border-red-400/40 transition-colors">
-              <div className="space-y-2">
-                <div className="flex items-center justify-between gap-2">
-                  <span className="text-[11px] font-mono uppercase tracking-wider text-red-300 bg-red-500/10 px-2.5 py-0.5 rounded-full border border-red-500/20">
-                    Canal Oficial de YouTube
-                  </span>
-                  <span className="text-[11px] font-mono text-silver-mist/60">@serviciodemarketingdigital</span>
+                <div>
+                  <h4 className="text-sm font-medium text-platinum">Instagram</h4>
+                  <p className="text-xs text-silver-mist">@aureliussistemiza</p>
                 </div>
-                <h4 className="text-base font-medium text-platinum font-matter">
-                  Servicio de Marketing Digital en YouTube
-                </h4>
-                <p className="text-xs text-silver-mist font-matter leading-relaxed">
-                  Tutoriales técnicos, casos reales de páginas web de ultra conversión, arquitecturas multi-agentes y estrategias de posicionamiento SEO.
-                </p>
               </div>
+              <ExternalLink className="w-4 h-4 text-silver-mist group-hover:text-bioluminescent-lime transition-colors" />
+            </a>
 
-              <div className="pt-2">
-                <a
-                  href="https://www.youtube.com/@serviciodemarketingdigital"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Suscribirse al canal de YouTube de Servicio de Marketing Digital"
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-red-600/15 hover:bg-red-600/25 text-red-200 border border-red-500/30 text-xs font-matter font-medium transition-colors"
-                >
-                  <Youtube className="w-4 h-4 text-red-400" />
-                  <span>Seguinos en YouTube</span>
-                  <ExternalLink className="w-3 h-3 opacity-60" />
-                </a>
+            {/* YouTube */}
+            <a
+              href="https://www.youtube.com/@serviciodemarketingdigital"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-5 rounded-xl bg-liquid-deep/90 border border-white/10 flex items-center justify-between hover:border-bioluminescent-lime/40 transition-colors group"
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-lg bg-red-500/10 border border-red-500/20 flex items-center justify-center text-red-400 group-hover:scale-105 transition-transform">
+                  <Youtube className="w-5 h-5" />
+                </div>
+                <div>
+                  <h4 className="text-sm font-medium text-platinum">YouTube</h4>
+                  <p className="text-xs text-silver-mist">@serviciodemarketingdigital</p>
+                </div>
               </div>
-            </div>
+              <ExternalLink className="w-4 h-4 text-silver-mist group-hover:text-bioluminescent-lime transition-colors" />
+            </a>
+
+            {/* TikTok */}
+            <a
+              href="https://www.tiktok.com/@aurelius.ia"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-5 rounded-xl bg-liquid-deep/90 border border-white/10 flex items-center justify-between hover:border-bioluminescent-lime/40 transition-colors group"
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-lg bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 group-hover:scale-105 transition-transform">
+                  <TikTokIcon className="w-5 h-5" />
+                </div>
+                <div>
+                  <h4 className="text-sm font-medium text-platinum">TikTok</h4>
+                  <p className="text-xs text-silver-mist">@aurelius.ia</p>
+                </div>
+              </div>
+              <ExternalLink className="w-4 h-4 text-silver-mist group-hover:text-bioluminescent-lime transition-colors" />
+            </a>
           </div>
         </div>
 
-        {/* Main Footer Row */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 items-start">
-          {/* Brand Info */}
+        {/* Main Footer Grid: Identity and Legal Framework */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-10">
+          {/* Brand & Direct Contact */}
           <div className="md:col-span-5 space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-7 h-7 rounded-full border border-white/20 flex items-center justify-center bg-liquid-abyss overflow-hidden p-1">
+              <div className="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center bg-abyssal-ink overflow-hidden p-1">
                 <Image
                   src="/logo.png"
-                  alt="Logo Alan López"
-                  width={20}
-                  height={20}
+                  alt="Logo Alan López SMD"
+                  width={24}
+                  height={24}
                   className="object-contain"
                 />
               </div>
-              <span className="text-sm font-semibold tracking-tight text-platinum font-matter uppercase">
-                Alan López · Servicio de Marketing Digital
-              </span>
+              <div>
+                <span className="text-sm font-semibold tracking-tight text-platinum font-matter block">
+                  ALAN LÓPEZ
+                </span>
+                <span className="text-[10px] uppercase tracking-wide text-silver-mist">
+                  Servicio de Marketing Digital
+                </span>
+              </div>
             </div>
-            <p className="text-xs text-silver-mist/80 leading-relaxed font-matter max-w-sm">
-              Desarrollo y diseño de página web con sistemas multi-agentes de inteligencia artificial. Arquitectura ultra veloz orientada a conversión y posicionamiento orgánico líder.
+
+            <p className="text-xs text-silver-mist leading-relaxed font-matter max-w-sm">
+              Rediseño y creación de landing pages interactivas de alto impacto para lanzamiento de producto o captación de leads.
             </p>
-            <div className="pt-2">
+
+            <div className="pt-2 space-y-2 text-xs font-mono">
+              <div className="flex items-center gap-2 text-silver-mist">
+                <span className="text-platinum font-semibold">© 2026</span>
+                <span>Servicio de Marketing Digital</span>
+              </div>
+
               <a
                 href="mailto:hola@serviciodemarketingdigital.com"
-                className="inline-flex items-center gap-2 text-xs text-platinum hover:text-bioluminescent-lime transition-colors font-mono"
+                className="text-bioluminescent-lime hover:underline inline-flex items-center gap-2 transition-colors"
               >
                 <Mail className="w-3.5 h-3.5 text-bioluminescent-lime" />
                 <span>hola@serviciodemarketingdigital.com</span>
               </a>
+
+              <a
+                href="https://wa.me/5491127887093"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-silver-mist hover:text-white flex items-center gap-2 transition-colors pt-1"
+              >
+                <MessageCircle className="w-3.5 h-3.5 text-[#25D366]" />
+                <span>WhatsApp: +54 9 11 2788-7093</span>
+              </a>
             </div>
           </div>
 
-          {/* Quick Legal Accordion Buttons */}
-          <div id="marco-legal" className="md:col-span-7 space-y-3 scroll-mt-28">
+          {/* Quick Legal Accordion */}
+          <div className="md:col-span-7 space-y-3">
             <p className="text-xs uppercase tracking-[0.12em] text-silver-mist font-matter font-medium mb-3">
-              MARCO LEGAL & TRANSPARENCIA CONTRACTUAL
+              MARCO LEGAL & POLÍTICAS OFICIALES
             </p>
 
-            {/* Accordion 1: Políticas de Privacidad */}
+            {/* Accordion 1: Políticas de privacidad */}
             <div
               id="politicas-de-privacidad"
               className={`border rounded-xl overflow-hidden bg-liquid-abyss/60 scroll-mt-28 transition-all duration-300 ${
@@ -218,38 +233,27 @@ export default function FooterLegal() {
                   : "border-white/10"
               }`}
             >
-              {/* Alias anchors for #privacidad and #politica-de-privacidad */}
-              <span id="privacidad" className="block -mt-28 pt-28 pointer-events-none" aria-hidden="true" />
-              <span id="politica-de-privacidad" className="block -mt-28 pt-28 pointer-events-none" aria-hidden="true" />
               <button
                 onClick={() => togglePolicy("privacy")}
                 aria-expanded={openPolicy === "privacy"}
-                aria-controls="privacy-content"
                 className="w-full px-5 py-3.5 flex items-center justify-between text-left text-xs uppercase tracking-wide text-platinum hover:text-bioluminescent-lime transition-colors"
               >
                 <span className="flex items-center gap-2 font-medium">
                   <Shield className="w-3.5 h-3.5 text-bioluminescent-lime" />
-                  Políticas de Privacidad
+                  Políticas de privacidad
                 </span>
-                {openPolicy === "privacy" ? (
-                  <ChevronUp className="w-4 h-4" />
-                ) : (
-                  <ChevronDown className="w-4 h-4" />
-                )}
+                {openPolicy === "privacy" ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
               </button>
               {openPolicy === "privacy" && (
-                <div id="privacy-content" className="px-5 pb-5 pt-1 text-xs text-silver-mist leading-relaxed border-t border-white/5 space-y-2">
+                <div className="px-5 pb-5 pt-1 text-xs text-silver-mist leading-relaxed border-t border-white/5 space-y-2">
                   <p>
-                    Toda tu información personal está completamente protegida y resguardada bajo los más altos estándares de seguridad. Los datos que proporciones serán utilizados de manera estrictamente confidencial y únicamente bajo tu consentimiento expreso.
-                  </p>
-                  <p>
-                    Su uso exclusivo será para mantener una comunicación bidireccional directa referida a la consulta, gestión y prestación de los servicios propuestos en esta página web. No compartiremos, cederemos ni utilizaremos tu información para ningún otro fin de terceros.
+                    Toda tu información personal está completamente protegida y resguardada bajo los más altos estándares de seguridad. Los datos que proporciones serán utilizados de manera estrictamente confidencial y únicamente bajo tu consentimiento expreso. Su uso exclusivo será para mantener una comunicación bidireccional directa referida a la consulta, gestión y prestación de los servicios propuestos en esta página web. No compartiremos, cederemos ni utilizaremos tu información para ningún otro fin de terceros.
                   </p>
                 </div>
               )}
             </div>
 
-            {/* Accordion 2: Términos y Condiciones del Servicio */}
+            {/* Accordion 2: Condiciones del servicio */}
             <div
               id="terminos-del-servicio"
               className={`border rounded-xl overflow-hidden bg-liquid-abyss/60 scroll-mt-28 transition-all duration-300 ${
@@ -258,53 +262,44 @@ export default function FooterLegal() {
                   : "border-white/10"
               }`}
             >
-              {/* Alias anchors for #condiciones-del-servicio, #terminos, #terminos-de-servicio, #terms */}
-              <span id="condiciones-del-servicio" className="block -mt-28 pt-28 pointer-events-none" aria-hidden="true" />
-              <span id="terminos-de-servicio" className="block -mt-28 pt-28 pointer-events-none" aria-hidden="true" />
-              <span id="terminos" className="block -mt-28 pt-28 pointer-events-none" aria-hidden="true" />
               <button
                 onClick={() => togglePolicy("terms")}
                 aria-expanded={openPolicy === "terms"}
-                aria-controls="terms-content"
                 className="w-full px-5 py-3.5 flex items-center justify-between text-left text-xs uppercase tracking-wide text-platinum hover:text-bioluminescent-lime transition-colors"
               >
                 <span className="flex items-center gap-2 font-medium">
                   <FileText className="w-3.5 h-3.5 text-bioluminescent-lime" />
-                  Condiciones y Términos del Servicio
+                  Condiciones del servicio
                 </span>
-                {openPolicy === "terms" ? (
-                  <ChevronUp className="w-4 h-4" />
-                ) : (
-                  <ChevronDown className="w-4 h-4" />
-                )}
+                {openPolicy === "terms" ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
               </button>
               {openPolicy === "terms" && (
-                <div id="terms-content" className="px-5 pb-5 pt-1 text-xs text-silver-mist leading-relaxed border-t border-white/5 space-y-3">
+                <div className="px-5 pb-5 pt-1 text-xs text-silver-mist leading-relaxed border-t border-white/5 space-y-3">
                   <div>
                     <strong className="text-platinum block mb-0.5">Inicio y Desarrollo:</strong>
-                    Una vez confirmado el servicio, se dará inicio inmediato a la etapa de diseño y desarrollo estructural de tu sitio web.
+                    Una vez confirmado el servicio, se procede al pago y facturación. Luego se dará inicio inmediato a la etapa de diseño y desarrollo estructural de tu sitio web.
                   </div>
                   <div>
                     <strong className="text-platinum block mb-0.5">Optimizaciones y Cambios:</strong>
-                    Al finalizar la primera versión del sitio, tendrás el derecho de solicitar todas las modificaciones, ajustes y optimizaciones que precises para que el proyecto se adapte exactamente a tus necesidades.
+                    Incluye hasta 2 rondas completas de revisiones y ajustes durante el desarrollo. Cambios estructurales posteriores se cotizan por separado o mediante plan de mantenimiento.
                   </div>
                   <div>
                     <strong className="text-platinum block mb-0.5">Aprobación del Cliente:</strong>
-                    Una vez que el diseño cumpla con todas tus expectativas, deberás confirmar tu entera conformidad con el sitio de manera explícita vía correo electrónico.
+                    Una vez que el diseño cumpla con todas tus expectativas, deberás confirmar tu entera conformidad con el sitio de manera explícita vía correo electrónico o whastapp.
                   </div>
                   <div>
-                    <strong className="text-platinum block mb-0.5">Gestión de Pago y Lanzamiento:</strong>
-                    Tras recibir tu confirmación de conformidad por escrito, se procederá a la instancia de pago. Al confirmar la acreditación del mismo, el sitio será liberado, publicado oficialmente en su dominio y puesto en marcha para su etapa de producción.
+                    <strong className="text-platinum block mb-0.5">Condiciones de pago:</strong>
+                    Pago del total al incio, o también con la opción del 50% de anticipo para iniciar el desarrollo y 50% restante contra entrega y aprobación final antes de la publicación definitiva.
                   </div>
                   <div>
                     <strong className="text-platinum block mb-0.5">Soporte y Evolución Continua:</strong>
-                    El servicio no termina con la publicación. Como usuario, mantendrás un acceso libre y directo para solicitar nuevas modificaciones, optimizaciones o cambios futuros que tu sitio web requiera para seguir creciendo.
+                    El servicio no termina con la publicación. Como usuario, mantendrás un acceso libre y directo para solicitar hasta 3 nuevas modificaciones, optimizaciones o cambios futuros que tu sitio web requiera para seguir creciendo. A partir del 3er cambio solicitado se procederá a la cotización actualizada de los mismos.
                   </div>
                 </div>
               )}
             </div>
 
-            {/* Accordion 3: Políticas de Devolución & Protocolo de Ciberseguridad */}
+            {/* Accordion 3: Políticas de devolución */}
             <div
               id="politicas-de-devolucion"
               className={`border rounded-xl overflow-hidden bg-liquid-abyss/60 scroll-mt-28 transition-all duration-300 ${
@@ -313,27 +308,19 @@ export default function FooterLegal() {
                   : "border-white/10"
               }`}
             >
-              {/* Alias anchors for #devoluciones and #reembolso */}
-              <span id="devoluciones" className="block -mt-28 pt-28 pointer-events-none" aria-hidden="true" />
-              <span id="reembolso" className="block -mt-28 pt-28 pointer-events-none" aria-hidden="true" />
               <button
                 onClick={() => togglePolicy("refund")}
                 aria-expanded={openPolicy === "refund"}
-                aria-controls="refund-content"
                 className="w-full px-5 py-3.5 flex items-center justify-between text-left text-xs uppercase tracking-wide text-platinum hover:text-bioluminescent-lime transition-colors"
               >
                 <span className="flex items-center gap-2 font-medium">
                   <RefreshCw className="w-3.5 h-3.5 text-bioluminescent-lime" />
-                  Políticas de Devolución & Protocolo de Ciberseguridad
+                  Políticas de devolución & Ciberseguridad
                 </span>
-                {openPolicy === "refund" ? (
-                  <ChevronUp className="w-4 h-4" />
-                ) : (
-                  <ChevronDown className="w-4 h-4" />
-                )}
+                {openPolicy === "refund" ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
               </button>
               {openPolicy === "refund" && (
-                <div id="refund-content" className="px-5 pb-5 pt-1 text-xs text-silver-mist leading-relaxed border-t border-white/5 space-y-3">
+                <div className="px-5 pb-5 pt-1 text-xs text-silver-mist leading-relaxed border-t border-white/5 space-y-3">
                   <div>
                     <strong className="text-platinum block mb-0.5">Garantía de Fidelidad del Diseño:</strong>
                     El cliente tiene el pleno derecho de solicitar una devolución en caso de que el sitio web final entregado y publicado presente distorsiones o sea sustancialmente distinto a la versión que confirmó y aprobó previamente.
@@ -351,45 +338,7 @@ export default function FooterLegal() {
             </div>
           </div>
         </div>
-
-        {/* Copyright and Legal Direct Links */}
-        <div className="pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-silver-mist/60 font-matter">
-          <p>© 2026 Servicio de Marketing Digital. Todos los derechos reservados.</p>
-          <div className="flex flex-wrap items-center gap-4 sm:gap-6">
-            <a
-              href="#politicas-de-privacidad"
-              onClick={() => {
-                setOpenPolicy("privacy");
-                const el = document.getElementById("politicas-de-privacidad");
-                el?.scrollIntoView({ behavior: "smooth", block: "start" });
-              }}
-              className="text-silver-mist hover:text-bioluminescent-lime transition-colors"
-            >
-              Políticas de Privacidad
-            </a>
-            <span className="text-white/20">·</span>
-            <a
-              href="#terminos-del-servicio"
-              onClick={() => {
-                setOpenPolicy("terms");
-                const el = document.getElementById("terminos-del-servicio");
-                el?.scrollIntoView({ behavior: "smooth", block: "start" });
-              }}
-              className="text-silver-mist hover:text-bioluminescent-lime transition-colors"
-            >
-              Términos del Servicio
-            </a>
-            <span className="text-white/20">·</span>
-            <a
-              href="mailto:hola@serviciodemarketingdigital.com"
-              className="text-silver-mist hover:text-platinum transition-colors"
-            >
-              Contacto directo
-            </a>
-          </div>
-        </div>
       </div>
     </footer>
   );
 }
-

@@ -1,38 +1,30 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import QualificationModal from "./QualificationModal";
+import RedesignLeadModal from "./RedesignLeadModal";
 
 export default function WhatsAppButton() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedBusinessType, setSelectedBusinessType] = useState<string>(
-    "Servicios B2B / Consultoría empresarial"
-  );
 
-  // Listen to custom trigger event to open the qualification modal from any CTA
   useEffect(() => {
-    const handleCustomOpen = (e: Event) => {
-      const customEvent = e as CustomEvent<{ businessType?: string }>;
-      if (customEvent.detail?.businessType) {
-        setSelectedBusinessType(customEvent.detail.businessType);
-      }
+    const handleOpenModal = () => {
       setIsModalOpen(true);
     };
 
-    window.addEventListener("open-qualification-modal", handleCustomOpen);
+    window.addEventListener("open-redesign-modal", handleOpenModal);
     return () => {
-      window.removeEventListener("open-qualification-modal", handleCustomOpen);
+      window.removeEventListener("open-redesign-modal", handleOpenModal);
     };
   }, []);
 
   return (
     <>
-      <aside aria-label="Contacto calificado con Alan López">
+      <aside aria-label="Contacto por WhatsApp para Rediseño">
         <button
           type="button"
           onClick={() => setIsModalOpen(true)}
-          aria-label="Evaluar viabilidad y cotizar con IA antes de chatear por WhatsApp"
-          title="Evaluar viabilidad y cotizar con IA antes de chatear por WhatsApp"
+          aria-label="Comenzar mi rediseño y coordinar por WhatsApp"
+          title="Comenzar mi rediseño y coordinar por WhatsApp (+54 9 11 2788-7093)"
           className="floating-whatsapp-container fixed bottom-5 right-5 sm:bottom-6 sm:right-6 z-40 flex items-center gap-2.5 sm:gap-3 cursor-pointer select-none group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#25D366] focus-visible:ring-offset-2 focus-visible:ring-offset-liquid-abyss rounded-full border-0 bg-transparent p-0"
         >
           {/* Tooltip on Mobile */}
@@ -41,16 +33,16 @@ export default function WhatsAppButton() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#25D366] opacity-75" />
               <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#25D366]" />
             </span>
-            <span>Evaluar con IA</span>
+            <span>Comenzar Rediseño</span>
           </span>
 
-          {/* Discreet Badge on Desktop */}
+          {/* Badge on Desktop */}
           <span className="floating-whatsapp-badge hidden sm:inline-flex items-center gap-2 px-3.5 py-2 rounded-full bg-liquid-deep/95 border border-white/10 backdrop-blur-md text-platinum text-xs font-matter font-medium tracking-wide transition-all duration-300 group-hover:border-[#25D366]/50 group-hover:text-white group-hover:-translate-y-0.5 shadow-xl">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#25D366] opacity-75" />
               <span className="relative inline-flex rounded-full h-2 w-2 bg-[#25D366]" />
             </span>
-            <span>Evaluar con IA</span>
+            <span>Comenzar Rediseño</span>
           </span>
 
           {/* WhatsApp Floating Icon Button */}
@@ -68,12 +60,9 @@ export default function WhatsAppButton() {
         </button>
       </aside>
 
-      {/* Qualification Modal Triggered by WhatsApp Floating Button */}
-      <QualificationModal
+      <RedesignLeadModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        defaultBusinessType={selectedBusinessType}
-        sourceContext="Floating WhatsApp Qualifier"
       />
     </>
   );

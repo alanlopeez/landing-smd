@@ -49,6 +49,24 @@ export function evaluateLeadQualification(
   return true;
 }
 
+export function buildRedesignWhatsAppUrl(data: {
+  name: string;
+  websiteOrProfile: string;
+  projectPriority: string;
+  budgetRange: string;
+}): string {
+  const lines = [
+    "Hola Alan, completé el formulario de rediseño de landing page en tu web:",
+    `• Nombre: ${data.name.trim()}`,
+    `• Enlace / Perfil: ${data.websiteOrProfile.trim()}`,
+    `• Prioridad: ${data.projectPriority}`,
+    `• Rango de inversión: ${data.budgetRange}`,
+    "",
+    "Me gustaría coordinar la primera propuesta interactiva en 48 hs.",
+  ];
+  return `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(lines.join("\n"))}`;
+}
+
 export function buildWhatsAppPreloadedUrl(data: QualificationData): string {
   const lines = [
     "Hola Alan, completé la evaluación de viabilidad y cotización en tu web:",
