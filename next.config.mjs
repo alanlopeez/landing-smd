@@ -86,10 +86,6 @@ const nextConfig = {
         source: '/trato_garantizado',
         destination: '/500/index.html',
       },
-      {
-        source: '/500',
-        destination: '/500/index.html',
-      },
     ];
   },
   async redirects() {
