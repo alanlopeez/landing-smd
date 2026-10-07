@@ -10,6 +10,25 @@
   <script src="https://cdn.tailwindcss.com"></script>
   
   <!-- Google Fonts: Plus Jakarta Sans & Outfit -->
+    <!-- Meta Pixel Code -->
+  <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1402373658188900');
+    fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1402373658188900&ev=PageView&noscript=1"
+    alt=""
+  /></noscript>
+  <!-- End Meta Pixel Code -->
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -118,6 +137,46 @@
       font-size: 16px !important;
     }
   </style>
+  <!-- SCRIPT DE MEDICIÓN DE CONVERSIONES META PIXEL -->
+  <script>
+    function trackMetaCheckout(planName, value) {
+      if (typeof fbq === 'function') {
+        fbq('track', 'InitiateCheckout', {
+          content_name: planName,
+          value: value,
+          currency: 'ARS',
+          content_category: 'Sistema de Captacion 500 Leads',
+          num_items: 1
+        });
+      }
+    }
+
+    function trackMetaContact(channel) {
+      if (typeof fbq === 'function') {
+        fbq('track', 'Contact', {
+          content_name: channel,
+          content_category: 'WhatsApp Directo'
+        });
+        fbq('track', 'Lead', {
+          content_name: channel,
+          value: 350000,
+          currency: 'ARS'
+        });
+      }
+    }
+
+    let roiTracked = false;
+    function trackMetaRoiEngagement() {
+      if (!roiTracked && typeof fbq === 'function') {
+        roiTracked = true;
+        fbq('track', 'ViewContent', {
+          content_name: 'Interaccion con Calculadora ROI',
+          content_category: 'Engagement'
+        });
+      }
+    }
+  </script>
+
 </head>
 <body class="selection:bg-emerald-500 selection:text-slate-950 font-sans relative pb-28 sm:pb-0 overflow-x-hidden">
 
@@ -158,7 +217,7 @@
         <a href="#garantia-gratis" class="hidden md:inline-flex items-center gap-1.5 text-xs font-bold text-slate-300 hover:text-emerald-400 transition-colors">
           <span>Garantía 3 Meses</span>
         </a>
-        <a href="#cuadro-de-pago" class="px-4 sm:px-5 py-2.5 rounded-xl btn-shimmer text-slate-950 font-black text-xs shadow-lg shadow-emerald-500/20 uppercase tracking-wider whitespace-nowrap active:scale-95 transition-transform">
+        <a href="#cuadro-de-pago" onclick="trackMetaCheckout('Header Navbar - Asegurar Cupo', 350000)" class="px-4 sm:px-5 py-2.5 rounded-xl btn-shimmer text-slate-950 font-black text-xs shadow-lg shadow-emerald-500/20 uppercase tracking-wider whitespace-nowrap active:scale-95 transition-transform">
           Asegurar Cupo ($350k)
         </a>
       </div>
@@ -240,7 +299,7 @@
       <!-- BOTON CTA CONIC GLOW INMEDIATO -->
       <div class="mt-8 text-center max-w-xl mx-auto px-2">
         <div class="conic-glow-wrapper inline-block w-full sm:w-auto">
-          <a href="#cuadro-de-pago" class="relative z-10 w-full sm:w-auto inline-flex items-center justify-center gap-3 px-6 sm:px-8 py-4 rounded-2xl bg-slate-950 text-white hover:text-slate-950 hover:bg-gradient-to-r hover:from-emerald-400 hover:to-teal-300 font-extrabold text-xs sm:text-base transition-all duration-300 shadow-2xl active:scale-95 group">
+          <a href="#cuadro-de-pago" onclick="trackMetaCheckout('Hero CTA Seña $350k', 350000)" class="relative z-10 w-full sm:w-auto inline-flex items-center justify-center gap-3 px-6 sm:px-8 py-4 rounded-2xl bg-slate-950 text-white hover:text-slate-950 hover:bg-gradient-to-r hover:from-emerald-400 hover:to-teal-300 font-extrabold text-xs sm:text-base transition-all duration-300 shadow-2xl active:scale-95 group">
             <span class="font-display tracking-wide">🚀 CONTRATAR AHORA Y RESERVAR CUPO CON $350.000 ARS</span>
             <svg class="w-5 h-5 group-hover:translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
           </a>
@@ -561,7 +620,7 @@
           </div>
 
           <div class="mt-6 pt-4 border-t border-slate-800">
-            <a href="https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=3724152558-04c4dcd1-4592-4c02-8ac1-504c13b09ead" target="_blank" class="w-full py-4 rounded-xl btn-shimmer text-slate-950 font-black text-xs sm:text-sm text-center block shadow-lg shadow-emerald-500/30 hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-wider">
+            <a href="https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=3724152558-04c4dcd1-4592-4c02-8ac1-504c13b09ead" target="_blank" onclick="trackMetaCheckout('Plan 1 - Seña Reserva $350.000 ARS', 350000)" class="w-full py-4 rounded-xl btn-shimmer text-slate-950 font-black text-xs sm:text-sm text-center block shadow-lg shadow-emerald-500/30 hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-wider">
               Reservar por $350.000 ARS →
             </a>
           </div>
@@ -594,7 +653,7 @@
           </div>
 
           <div class="mt-6 pt-4 border-t border-slate-800">
-            <a href="https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=3724152558-06a49a53-dccb-4e5b-9761-6dd9ca10ab73" target="_blank" class="w-full py-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-black text-xs sm:text-sm text-center block border border-slate-700 hover:border-slate-600 transition-all uppercase tracking-wider active:scale-95">
+            <a href="https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=3724152558-06a49a53-dccb-4e5b-9761-6dd9ca10ab73" target="_blank" onclick="trackMetaCheckout('Plan 2 - Cuota 1 de 2 $1.750.000 ARS', 1750000)" class="w-full py-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-black text-xs sm:text-sm text-center block border border-slate-700 hover:border-slate-600 transition-all uppercase tracking-wider active:scale-95">
               Pagar Cuota 1 ($1.750.000) →
             </a>
           </div>
@@ -627,7 +686,7 @@
           </div>
 
           <div class="mt-6 pt-4 border-t border-slate-800">
-            <a href="https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=3724152558-ace51496-f51a-41da-9b9b-2d6158225ca2" target="_blank" class="w-full py-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-black text-xs sm:text-sm text-center block border border-slate-700 hover:border-slate-600 transition-all uppercase tracking-wider active:scale-95">
+            <a href="https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=3724152558-ace51496-f51a-41da-9b9b-2d6158225ca2" target="_blank" onclick="trackMetaCheckout('Plan 3 - Contado Total $3.500.000 ARS', 3500000)" class="w-full py-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-black text-xs sm:text-sm text-center block border border-slate-700 hover:border-slate-600 transition-all uppercase tracking-wider active:scale-95">
               Pagar Total ($3.500.000) →
             </a>
           </div>
@@ -646,7 +705,7 @@
         </p>
       </div>
 
-      <a href="https://wa.me/5491127887093?text=Hola%20Alan,%20quiero%20cerrar%20el%20trato%20concreto%20de%20los%20500%20leads%20sin%20llamadas" target="_blank" class="px-6 sm:px-8 py-4 rounded-xl bg-emerald-500/15 border border-emerald-500/40 text-emerald-300 hover:bg-emerald-500 hover:text-slate-950 font-black text-xs sm:text-sm whitespace-nowrap transition-all shadow-lg shadow-emerald-500/10 flex items-center gap-2 active:scale-95">
+      <a href="https://wa.me/5491127887093?text=Hola%20Alan,%20quiero%20cerrar%20el%20trato%20concreto%20de%20los%20500%20leads%20sin%20llamadas" target="_blank" onclick="trackMetaContact('Banner WhatsApp Canal Directo Alan')" class="px-6 sm:px-8 py-4 rounded-xl bg-emerald-500/15 border border-emerald-500/40 text-emerald-300 hover:bg-emerald-500 hover:text-slate-950 font-black text-xs sm:text-sm whitespace-nowrap transition-all shadow-lg shadow-emerald-500/10 flex items-center gap-2 active:scale-95">
         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.698c.995.578 1.956.883 3.013.883 3.182 0 5.767-2.586 5.768-5.766 0-3.18-2.586-5.768-5.768-5.768zm0-2.172c4.418 0 8 3.582 8 8s-3.582 8-8 8c-1.391 0-2.695-.361-3.834-.993l-4.197 1.101 1.12-4.092c-.696-1.182-1.089-2.55-1.089-4.016 0-4.418 3.582-8 8-8z"></path></svg>
         <span>Chatear por WhatsApp (+54 9 11 2788-7093)</span>
       </a>
@@ -673,7 +732,7 @@
           <a href="#requisitos" class="hover:text-white transition-colors">Requisitos Deseables</a>
           <a href="#garantia-gratis" class="hover:text-emerald-400 transition-colors">Garantía 3 Meses</a>
           <a href="#cuadro-de-pago" class="hover:text-white transition-colors">Asegurar Cupo</a>
-          <a href="https://wa.me/5491127887093" target="_blank" class="hover:text-emerald-400 transition-colors">Atención Directa</a>
+          <a href="https://wa.me/5491127887093" target="_blank" onclick="trackMetaContact('Footer WhatsApp Link')" class="hover:text-emerald-400 transition-colors">Atención Directa</a>
         </div>
       </div>
 
@@ -702,7 +761,7 @@
       </div>
       <span class="text-[10px] text-emerald-400 font-bold truncate">🛡️ 500 Leads o Gratis</span>
     </div>
-    <a href="https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=3724152558-04c4dcd1-4592-4c02-8ac1-504c13b09ead" target="_blank" class="px-5 py-2.5 rounded-xl btn-shimmer text-slate-950 font-black text-xs uppercase tracking-wider shadow-lg flex items-center gap-1.5 whitespace-nowrap shrink-0 active:scale-95 transition-transform">
+    <a href="https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=3724152558-04c4dcd1-4592-4c02-8ac1-504c13b09ead" target="_blank" onclick="trackMetaCheckout('Mobile Sticky Dock - Seña $350k', 350000)" class="px-5 py-2.5 rounded-xl btn-shimmer text-slate-950 font-black text-xs uppercase tracking-wider shadow-lg flex items-center gap-1.5 whitespace-nowrap shrink-0 active:scale-95 transition-transform">
       <span>Bloquear Cupo</span>
       <span>→</span>
     </a>
@@ -711,6 +770,7 @@
   <!-- SCRIPT PARA CALCULADORA INTERACTIVA DE ROI -->
   <script>
     function updateRoiCalculation() {
+      if (typeof trackMetaRoiEngagement === "function") trackMetaRoiEngagement();
       const ticket = parseFloat(document.getElementById('ticketSlider').value);
       const closeRate = parseFloat(document.getElementById('closeRateSlider').value) / 100;
       
