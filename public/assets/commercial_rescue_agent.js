@@ -320,9 +320,9 @@
         🚀 SEÑAR AHORA Y BLOQUEAR MI ZONA ($350.000 ARS) →
       </a>
 
-      <a href="https://wa.me/${WHATSAPP_PHONE}?text=Hola%20Alan,%20estoy%20en%20la%20p%C3%A1gina%20de%20los%20500%20leads%20y%20quiero%20asegurar%20mi%20zona%20con%20la%20se%C3%B1a%20de%20$350.000%20antes%20de%20que%20se%20libere" target="_blank" onclick="if(typeof fbq==='function'){fbq('track','Contact',{content_name:'Rescue Modal WhatsApp'});fbq('track','Lead',{content_name:'Rescue Modal WhatsApp Lead',value:350000,currency:'ARS'});}" class="rescue-btn-wa" id="btnRescueWa">
-        <span>💬</span> Hablar directo con Alan por WhatsApp (+54 9 11 2788-7093)
-      </a>
+      <button type="button" onclick="document.getElementById('commercialRescueModal').classList.remove('active'); if(typeof window.openHumanAdvisorModal==='function') window.openHumanAdvisorModal('Modal de Rescate');" class="rescue-btn-wa" id="btnRescueWa" style="cursor:pointer; width:100%; border:none; outline:none; text-decoration:none;">
+        <span>👤</span> Contactarme con un asesor humano directamente →
+      </button>
 
       <div style="text-align:center; margin-top:10px; font-size:10.5px; color:#64748b;">
         🔒 Respaldado por contrato legal mutuo • Checkout oficial Mercado Pago SSL 256-Bit

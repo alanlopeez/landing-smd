@@ -462,9 +462,9 @@
         <a href="${config.reservationUrl}" target="_blank" onclick="if(typeof fbq==='function'){fbq('track','InitiateCheckout',{content_name:'Chatbot Mateo - Bloquear Cupo',value:350000,currency:'ARS'});}" style="display:block; background:linear-gradient(135deg, #10b981, #059669); color:#020617; font-weight:900; text-align:center; padding:12px; border-radius:12px; text-decoration:none; margin-bottom:8px; box-shadow:0 6px 18px rgba(16,185,129,0.35); font-size:12.5px; text-transform:uppercase;">
           💳 BLOQUEAR CUPO ($350.000 ARS) →
         </a>
-        <a href="https://wa.me/${config.whatsappPhone}?text=Hola%20${config.personaName},%20califiqu%C3%A9%20para%20los%20500%20leads%20garantizados%20de%20${encodeURIComponent(config.agencyName)}%20y%20quiero%20asegurar%20mi%20zona" target="_blank" onclick="if(typeof fbq==='function'){fbq('track','Contact',{content_name:'Chatbot Mateo WhatsApp'});fbq('track','Lead',{content_name:'Chatbot Mateo WhatsApp Lead',value:350000,currency:'ARS'});}" style="display:flex; align-items:center; justify-content:center; gap:6px; background:rgba(30,41,59,0.9); color:#38bdf8; border:1px solid rgba(56,189,248,0.5); font-weight:800; text-align:center; padding:10px; border-radius:12px; text-decoration:none; font-size:12px;">
-          💬 Hablar con ${config.personaName} por WhatsApp
-        </a>
+        <button type="button" onclick="if(typeof window.openHumanAdvisorModal==='function'){window.openHumanAdvisorModal('Chatbot Mateo');}else{window.open('https://wa.me/' + config.whatsappPhone,'_blank');}" style="display:flex; align-items:center; justify-content:center; gap:6px; background:rgba(30,41,59,0.9); color:#34d399; border:1px solid rgba(52,211,153,0.5); font-weight:800; text-align:center; padding:10px; border-radius:12px; font-size:12px; width:100%; cursor:pointer;">
+          👤 Contactarme con un asesor humano directamente →
+        </button>
       `;
       chat.appendChild(botFinal);
       chat.scrollTop = chat.scrollHeight;
