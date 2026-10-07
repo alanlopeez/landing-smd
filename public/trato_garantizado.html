@@ -191,6 +191,23 @@
   <!-- PATRON DE TEXTURA DE FONDO -->
   <div class="fixed inset-0 bg-grid-pattern opacity-60 pointer-events-none z-0"></div>
 
+  <!-- ELEMENTO 3D DE FONDO AMBIENTAL (TRIANGULO DE PENROSE CON EFECTO PARALLAX SUTIL) -->
+  <div id="ambient3dContainer" class="fixed inset-0 pointer-events-none -z-10 overflow-hidden flex items-center justify-center select-none" style="opacity: 0.22;">
+    <video
+      id="ambient3dVideo"
+      src="/assets/triangle_3d.mp4"
+      autoplay
+      loop
+      muted
+      playsinline
+      preload="metadata"
+      class="w-[600px] sm:w-[800px] lg:w-[1000px] max-w-none h-auto object-contain filter drop-shadow-[0_0_90px_rgba(16,185,129,0.12)] will-change-transform transform-gpu"
+      style="transform: translateY(0px) scale(1);"
+    ></video>
+    <!-- Máscara radial de viñeteado profundo para fusión estética 100% natural con el fondo oscuro -->
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_25%,#020617_85%)] pointer-events-none"></div>
+  </div>
+
   <!-- NAVEGACION FLOTANTE ESTILO NAVBAR GALLERY -->
   <header class="sticky top-4 z-50 max-w-5xl mx-auto px-4">
     <div class="backdrop-blur-xl bg-slate-900/85 border border-slate-700/60 rounded-2xl px-4 sm:px-5 py-3 shadow-2xl flex items-center justify-between">
@@ -987,5 +1004,33 @@
     }
   </script>
 
+  <!-- SCRIPT PARALLAX DE ALTO RENDIMIENTO (60 FPS / GPU ACCELERATED) -->
+  <script>
+    (function() {
+      const video = document.getElementById('ambient3dVideo');
+      if (!video) return;
+
+      // Respetar preferencias de accesibilidad del usuario (prefers-reduced-motion)
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        return;
+      }
+
+      let ticking = false;
+      function onScroll() {
+        if (!ticking) {
+          window.requestAnimationFrame(() => {
+            const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+            // Desplazamiento parallax sutil y fluido (factor 0.07)
+            const translateY = (scrollY * 0.07);
+            video.style.transform = "translate3d(0, " + translateY + "px, 0)";
+            ticking = false;
+          });
+          ticking = true;
+        }
+      }
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+    })();
+  </script>
 </body>
 </html>
