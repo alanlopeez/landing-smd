@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+  <title>SolarB2B Engine | 500 Clientes Calificados en 90 Días Garantizados</title>
+  <meta name="description" content="Ponemos a tu empresa frente a dueños de plantas industriales, frigoríficos y bodegas que sufren aumentos tarifarios y buscan amortizar paneles solares de inmediato. Garantía por contrato: si no conseguimos los 500 decisores dentro de los 3 meses, seguimos trabajando sin cargo hasta alcanzarlos (completamente gratis) o devolución de tu dinero.">
+  
+  <!-- SEO & Open Graph -->
+  <meta property="og:title" content="SolarB2B Engine • 500 Clientes con Presupuesto Verificado">
+  <meta property="og:description" content="Ponemos a tu empresa frente a dueños de plantas industriales, frigoríficos y bodegas que sufren aumentos tarifarios y buscan amortizar paneles solares de inmediato. Garantía por contrato: si no conseguimos los 500 decisores dentro de los 3 meses, seguimos trabajando sin cargo hasta alcanzarlos (completamente gratis) o devolución de tu dinero.">
+  <meta property="og:type" content="website">
+  <meta name="robots" content="index, follow">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Canvas Confetti CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <!-- Google Fonts: Outfit & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+            display: ['Outfit', 'sans-serif']
+          },
+          colors: {
+            slate: { 950: '#020617', 900: '#0f172a', 850: '#111827', 800: '#1e293b' }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #020617;
+      color: #f8fafc;
+      overflow-x: hidden;
+    }
+    .bg-grid-pattern {
+      background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+      background-size: 32px 32px;
+    }
+    .ambient-glow {
+      position: absolute;
+      width: 650px;
+      height: 650px;
+      background: radial-gradient(circle, rgba(16, 185, 129, 0.12) 0%, rgba(2, 6, 23, 0) 70%);
+      top: -150px;
+      left: 50%;
+      transform: translateX(-50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .spotlight-card {
+      background: rgba(15, 23, 42, 0.7);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(51, 65, 85, 0.6);
+      transition: all 0.3s ease;
+    }
+    .spotlight-card:hover {
+      border-color: rgba(16, 185, 129, 0.5);
+      box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.5);
+    }
+    .btn-shimmer {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .btn-shimmer:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4);
+    }
+    @supports (padding: max(0px)) {
+      .safe-pb {
+        padding-bottom: max(14px, env(safe-area-inset-bottom));
+      }
+    }
+  </style>
+</head>
+<body class="font-sans antialiased relative min-h-screen selection:bg-emerald-500 selection:text-slate-950 pb-28 sm:pb-0 overflow-x-hidden">
+
+  <!-- FONDO CON EFECTO LUMINOSO AMBIENTAL -->
+  <div class="ambient-glow"></div>
+  <div class="fixed inset-0 bg-grid-pattern pointer-events-none opacity-40 z-0"></div>
+
+  <!-- NAVEGACIÓN SUPERIOR ESTRATÉGICA (100% AISLADA DE MARCA Y RESPONSIVA) -->
+  <header class="sticky top-0 z-50 bg-slate-950/90 backdrop-blur-xl border-b border-slate-800/80 px-3 sm:px-8 py-3 transition-all">
+    <div class="max-w-6xl mx-auto flex items-center justify-between gap-2">
+      <div class="flex items-center gap-2 sm:gap-3 min-w-0">
+        <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-orange-500 to-amber-400 flex items-center justify-center text-slate-950 font-black text-xs sm:text-sm shadow-md shrink-0">
+          SO
+        </div>
+        <div class="min-w-0">
+          <div class="flex items-center gap-1.5 sm:gap-2">
+            <span class="font-black text-white text-sm sm:text-base tracking-tight font-display truncate">SolarB2B Engine</span>
+            <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-orange-500/10 border border-orange-500/30 text-orange-400 text-[10px] sm:text-[11px] font-bold shrink-0">
+              <span class="w-1.5 h-1.5 rounded-full bg-orange-400 animate-pulse"></span>
+              Exclusividad
+            </span>
+          </div>
+          <span class="text-[10px] sm:text-[11px] text-slate-400 block font-medium truncate">500 Leads en 3 Meses o Trabajamos GRATIS</span>
+        </div>
+      </div>
+
+      <!-- Enlaces internos de propuesta de valor -->
+      <nav class="hidden lg:flex items-center gap-6 text-xs font-bold text-slate-300">
+        <a href="#garantia-gratis" class="hover:text-emerald-400 transition-colors">Garantía 3 Meses</a>
+        <a href="#comparativa" class="hover:text-white transition-colors">La Forma Tradicional vs. Tu Sistema</a>
+        <a href="#como-funciona" class="hover:text-white transition-colors">Cómo Funciona</a>
+        <a href="#calculadora" class="hover:text-white transition-colors">Calculadora de Crecimiento</a>
+        <a href="#preguntas-clave" class="hover:text-white transition-colors">Preguntas Frecuentes</a>
+      </nav>
+
+      <div class="flex items-center gap-2 shrink-0">
+        <a href="#cuadro-de-pago" class="px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-xl btn-shimmer text-slate-950 font-black text-[11px] sm:text-xs shadow-lg uppercase tracking-wider whitespace-nowrap">
+          <span class="sm:hidden">Cupo ($350k)</span>
+          <span class="hidden sm:inline">Asegurar Cupo ($350k)</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 sm:mt-16 relative z-10 space-y-16 sm:space-y-20">
+    
+    <!-- HERO SECTION - PROPUESTA DE VALOR Y PAIN POINT COMERCIAL -->
+    <section class="text-center space-y-4 sm:space-y-6 max-w-4xl mx-auto">
+      <div class="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 rounded-full bg-orange-500/10 border border-orange-500/30 text-orange-400 text-[11px] sm:text-xs font-extrabold uppercase tracking-widest shadow-sm">
+        <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+        </svg>
+        1 Solo Cupo Disponible por Zona
+      </div>
+      
+      <p class="text-sm sm:text-xl font-bold text-slate-400 max-w-3xl mx-auto px-2">
+        "¿Cansado de presupuestar parques solares a industrias que postergan la decisión indefinidamente?"
+      </p>
+
+      <h1 class="text-3xl sm:text-5xl lg:text-7xl font-black text-white font-display tracking-tight leading-[1.12]">
+        500 Fábricas y Naves Industriales con Alto Consumo Eléctrico en 90 Días. <br>
+        <span class="bg-gradient-to-r from-orange-500 via-white to-amber-400 bg-clip-text text-transparent">
+          Garantizados por Contrato Legal.
+        </span>
+      </h1>
+
+      <p class="text-slate-300 text-xs sm:text-base max-w-3xl mx-auto leading-relaxed font-normal px-2">
+        Ponemos a tu empresa frente a dueños de plantas industriales, frigoríficos y bodegas que sufren aumentos tarifarios y buscan amortizar paneles solares de inmediato. Garantía por contrato: si no conseguimos los 500 decisores dentro de los 3 meses, seguimos trabajando sin cargo hasta alcanzarlos (completamente gratis) o devolución de tu dinero.
+      </p>
+
+      <!-- ELEMENTOS DE CONFIANZA Y SEGURIDAD COMERCIAL -->
+      <div class="flex flex-wrap items-center justify-center gap-4 pt-3 text-xs text-slate-300 font-semibold">
+        <div class="flex items-center gap-2 bg-emerald-950/40 border border-emerald-500/50 px-4 py-2 rounded-full text-emerald-300">
+          <span class="text-emerald-400 font-black">🛡️</span> <strong>Garantía Incondicional:</strong> Si en 3 meses no conseguimos los 500 leads, trabajamos 100% GRATIS hasta alcanzarlos
+        </div>
+        <div class="flex items-center gap-2 bg-slate-900/80 border border-slate-800 px-4 py-2 rounded-full">
+          <span class="text-cyan-400">✓</span> Puesta en Marcha Llave en Mano en 72 Horas
+        </div>
+        <div class="flex items-center gap-2 bg-slate-900/80 border border-slate-800 px-4 py-2 rounded-full">
+          <span class="text-teal-400">✓</span> Respaldo Oficial de Mercado Pago
+        </div>
+      </div>
+    </section>
+
+    <!-- REPRODUCTOR VSL CON MARCO CINEMA -->
+    <section class="relative">
+      <div class="relative rounded-3xl overflow-hidden border border-slate-700/80 bg-slate-900 shadow-2xl group">
+        <div class="bg-slate-950/95 border-b border-slate-800 px-5 py-3 flex items-center justify-between text-xs text-slate-400">
+          <div class="flex items-center gap-2 font-bold text-white">
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+            Demostración en Video: Cómo llenamos tu agenda con 500 compradores
+          </div>
+          <span class="text-[11px] text-orange-400 font-semibold">Duración: 5 Minutos • Alto Impacto</span>
+        </div>
+
+        <div class="relative w-full" style="padding-top: 56.25%;">
+          <iframe 
+            class="absolute top-0 left-0 w-full h-full"
+            src="https://www.youtube.com/embed/GKWbOp0snqo?si=u6ksTYmcX0lOm6YQ&rel=0" 
+            title="Video Demostrativo del Sistema de 500 Leads" 
+            frameborder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+            referrerpolicy="strict-origin-when-cross-origin" 
+            allowfullscreen>
+          </iframe>
+        </div>
+      </div>
+
+      <!-- BOTÓN DE ACCIÓN INMEDIATA -->
+      <div class="mt-8 text-center max-w-xl mx-auto space-y-2">
+        <a href="#cuadro-de-pago" class="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-10 py-5 rounded-2xl btn-shimmer text-slate-950 font-black text-sm sm:text-base transition-all shadow-2xl uppercase tracking-wider">
+          <span>🚀 QUIERO ASEGURAR EL CUPO EN MI ZONA CON $350.000 ARS</span>
+        </a>
+        <p class="text-xs text-slate-400 font-medium">
+          Contrato mutuo digital instantáneo • El saldo restante se cancela contra entrega de prospectos
+        </p>
+      </div>
+    </section>
+
+    <!-- CLÁUSULA DESTACADA DE GARANTÍA CONTRACTUAL (TRABAJO GRATIS SI NO SE ALCANZA EN 3 MESES) -->
+    <section id="garantia-gratis" class="p-6 sm:p-10 rounded-3xl bg-gradient-to-r from-emerald-950/60 via-slate-900 to-teal-950/60 border-2 border-emerald-500 shadow-2xl shadow-emerald-500/20 relative overflow-hidden scroll-mt-24">
+      <div class="flex flex-col md:flex-row items-center gap-6 sm:gap-8">
+        <div class="w-16 h-16 sm:w-24 sm:h-24 rounded-2xl bg-emerald-500/20 border-2 border-emerald-500/60 flex items-center justify-center text-3xl sm:text-5xl shrink-0 shadow-xl shadow-emerald-500/20">
+          🛡️
+        </div>
+        <div class="space-y-3 text-center md:text-left">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-500/20 border border-emerald-500/50 text-emerald-300 text-xs font-black uppercase tracking-wider">
+            Garantía Escrita de Cumplimiento Total por Contrato
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-black text-white font-display">
+            ¿Qué pasa si no conseguimos los 500 leads dentro de los 3 meses?
+          </h2>
+          <p class="text-sm sm:text-base text-slate-200 leading-relaxed font-normal">
+            Si dentro de los primeros <strong>3 meses (90 días)</strong> no alcanzamos la entrega exacta de los <strong>500 prospectos calificados</strong> para tu empresa, <span class="text-emerald-400 font-black underline decoration-emerald-400 decoration-2 underline-offset-4">seguimos trabajando 100% sin cargo y a costo cero hasta alcanzarlos en su totalidad (completamente gratis)</span>. O si lo prefieres, te reembolsamos el 100% de tu dinero por contrato legal. Nosotros asumimos todo el riesgo operativo y comercial.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TABLA COMPARATIVA: LA FORMA TRADICIONAL VS TU NUEVO SISTEMA -->
+    <section id="comparativa" class="spotlight-card rounded-3xl p-6 sm:p-10 space-y-8 scroll-mt-24">
+      <div class="text-center max-w-2xl mx-auto space-y-2">
+        <span class="text-xs font-black uppercase tracking-widest text-emerald-400">Diferencia Radical de Resultados</span>
+        <h2 class="text-2xl sm:text-4xl font-black text-white font-display">La Forma Tradicional vs. Tu Nuevo Sistema Garantizado</h2>
+        <p class="text-xs sm:text-sm text-slate-400">Por qué los líderes de Empresas Instaladoras de Energía Solar, Parques Fotovoltaicos y Eficiencia Energética Industrial dejan de depender del azar y eligen certeza comercial.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- FORMA ANTIGUA -->
+        <div class="p-6 sm:p-8 rounded-2xl bg-rose-950/20 border border-rose-900/40 space-y-4">
+          <div class="flex items-center gap-2 text-rose-400 font-black text-base uppercase tracking-wider">
+            <span>❌</span> La Forma Tradicional (Lenta e Incierta)
+          </div>
+          <ul class="text-xs sm:text-sm text-slate-300 space-y-3 leading-relaxed">
+            <li class="flex items-start gap-2">
+              <span class="text-rose-400 font-bold shrink-0">•</span>
+              <span>Depender del boca a boca o esperar que suene el teléfono sin ningún control sobre tus ingresos mensuales.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-rose-400 font-bold shrink-0">•</span>
+              <span>Pagar miles de dólares a agencias de marketing que cobran por 'likes', 'clics' o 'visitas' sin comprometerse con una sola venta.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-rose-400 font-bold shrink-0">•</span>
+              <span>Perder días enteros atendiendo a personas curiosas que piden cotizaciones pero no tienen el dinero para pagar tus tarifas.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-rose-400 font-bold shrink-0">•</span>
+              <span>Tú asumes todo el riesgo financiero: si la campaña no funciona, la agencia cobra igual y tú pierdes tu dinero.</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- FORMA NUEVA GARANTIZADA -->
+        <div class="p-6 sm:p-8 rounded-2xl bg-emerald-950/20 border border-emerald-500/50 space-y-4 shadow-xl">
+          <div class="flex items-center gap-2 text-emerald-400 font-black text-base uppercase tracking-wider">
+            <span>✅</span> Tu Nuevo Sistema (Predecible y Rentable)
+          </div>
+          <ul class="text-xs sm:text-sm text-slate-200 space-y-3 leading-relaxed">
+            <li class="flex items-start gap-2">
+              <span class="text-emerald-400 font-bold shrink-0">•</span>
+              <span><strong>500 Compradores Reales:</strong> Un flujo continuo y predecible de decisores interesados directamente en tus servicios.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-emerald-400 font-bold shrink-0">•</span>
+              <span><strong>Filtro Riguroso de Solvencia:</strong> Solo recibes contactos con presupuesto comprobado y urgencia real de compra.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-emerald-400 font-bold shrink-0">•</span>
+              <span><strong>Exclusividad Territorial:</strong> Bloqueamos a tus competidores directos; todo el mercado de tu zona es 100% para ti.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-emerald-400 font-bold shrink-0">•</span>
+              <span><strong>Garantía Escrita por Contrato:</strong> Si no entregamos los 500 prospectos acordados, te devolvemos el 100% de tu dinero.</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- EL PROCESO LLAVE EN MANO EN 3 PASOS SIMPLES -->
+    <section id="como-funciona" class="space-y-8 scroll-mt-24">
+      <div class="text-center max-w-2xl mx-auto space-y-2">
+        <span class="text-xs font-black uppercase tracking-widest text-emerald-400">Simplicidad Absoluta</span>
+        <h2 class="text-3xl sm:text-4xl font-black text-white font-display">El Proceso Llave en Mano en 3 Pasos</h2>
+        <p class="text-xs sm:text-sm text-slate-400">Tú no tienes que configurar nada ni aprender software. Nosotros nos encargamos de todo.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="spotlight-card rounded-2xl p-6 sm:p-8 space-y-3">
+          <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 font-black text-lg">
+            1
+          </div>
+          <h3 class="text-lg font-black text-white font-display">Bloqueo de Zona y Activación</h3>
+          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+            Reservas tu cupo con la seña de $350.000 ARS. En menos de 72 horas montamos y dejamos operativo todo tu canal de captación exclusivo.
+          </p>
+        </div>
+
+        <div class="spotlight-card rounded-2xl p-6 sm:p-8 space-y-3">
+          <div class="w-12 h-12 rounded-xl bg-teal-500/10 border border-teal-500/30 flex items-center justify-center text-teal-400 font-black text-lg">
+            2
+          </div>
+          <h3 class="text-lg font-black text-white font-display">Filtro Riguroso de Solvencia</h3>
+          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+            Solo te presentamos empresas con techos aptos y facturación eléctrica suficiente para que el repago de la instalación solar ocurra en menos de 24 meses. Llegan a tu mesa con el convencimiento financiero ya resuelto.
+          </p>
+        </div>
+
+        <div class="spotlight-card rounded-2xl p-6 sm:p-8 space-y-3">
+          <div class="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 font-black text-lg">
+            3
+          </div>
+          <h3 class="text-lg font-black text-white font-display">Cierre de Ventas y Facturación</h3>
+          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+            Recibes las oportunidades en tu WhatsApp corporativo. Tu único trabajo es presentar tu propuesta comercial y cobrar las operaciones.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CALCULADORA INTERACTIVA DE CRECIMIENTO COMERCIAL -->
+    <section id="calculadora" class="spotlight-card rounded-3xl p-6 sm:p-10 space-y-6 scroll-mt-24 border-2 border-emerald-500/30">
+      <div class="border-b border-slate-800 pb-4">
+        <div class="flex items-center gap-3">
+          <span class="w-10 h-10 rounded-xl bg-orange-500/10 border border-orange-500/30 flex items-center justify-center text-orange-400 font-black text-base">
+            $
+          </span>
+          <div>
+            <h2 class="text-xl sm:text-3xl font-black text-white font-display">Calculadora de Crecimiento para Empresas Instaladoras de Energía Solar, Parques Fotovoltaicos y Eficiencia Energética Industrial</h2>
+            <p class="text-xs text-slate-400">Mueve los controles para ver la facturación proyectada que generarán tus 500 compradores.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+        <!-- CONTROLES -->
+        <div class="space-y-6">
+          <div>
+            <div class="flex justify-between text-xs font-bold text-slate-200 mb-2">
+              <span>Gasto Eléctrico Mensual de la Fábrica:</span>
+              <span id="ticketLabel" class="text-orange-400 font-mono text-sm font-black">$6,000,000 ARS</span>
+            </div>
+            <input 
+              type="range" 
+              id="ticketSlider" 
+              min="1500000" 
+              max="20000000" 
+              step="500000" 
+              value="6000000"
+              class="w-full h-2.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-emerald-500"
+              oninput="updateRoiCalculation()"
+            >
+            <div class="flex justify-between text-[11px] text-slate-500 font-mono mt-1">
+              <span>$1,500,000</span>
+              <span>$20,000,000</span>
+            </div>
+          </div>
+
+          <div>
+            <div class="flex justify-between text-xs font-bold text-slate-200 mb-2">
+              <span>Tasa de Cierre Estimada:</span>
+              <span id="closeRateLabel" class="text-cyan-400 font-mono text-sm font-black">4%</span>
+            </div>
+            <input 
+              type="range" 
+              id="closeRateSlider" 
+              min="1" 
+              max="10" 
+              step="0.5" 
+              value="4"
+              class="w-full h-2.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-cyan-500"
+              oninput="updateRoiCalculation()"
+            >
+            <div class="flex justify-between text-[11px] text-slate-500 font-mono mt-1">
+              <span>1% (Muy Conservador)</span>
+              <span>10% (Equipo Experto)</span>
+            </div>
+          </div>
+
+          <div class="p-4 rounded-xl bg-slate-950/80 border border-slate-800 text-xs text-slate-300 space-y-1">
+            <span class="text-emerald-400 font-bold block">💡 Realidad Financiera:</span>
+            <p>Una sola instalación fotovoltaica industrial cerrada cubre con creces el costo del programa y asegura contratos de mantenimiento.</p>
+          </div>
+        </div>
+
+        <!-- RESULTADOS DINAMICOS -->
+        <div class="p-6 sm:p-8 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-950 border border-emerald-500/40 space-y-5 shadow-2xl">
+          <div class="border-b border-slate-800 pb-3">
+            <span class="text-[11px] font-black uppercase text-slate-400 tracking-wider">Facturación Adicional Proyectada</span>
+            <div id="projectedRevenue" class="text-3xl sm:text-5xl font-black text-emerald-400 font-mono mt-1">$0 ARS</div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3 text-xs">
+            <div class="p-3.5 rounded-xl bg-slate-950/80 border border-slate-800">
+              <span class="text-slate-400 block text-[11px]">Nuevos Clientes:</span>
+              <strong id="newClientsCount" class="text-xl font-black text-white font-mono">20 Ventas</strong>
+            </div>
+            <div class="p-3.5 rounded-xl bg-slate-950/80 border border-slate-800">
+              <span class="text-slate-400 block text-[11px]">Múltiplo de Retorno:</span>
+              <strong id="roiMultiple" class="text-xl font-black text-cyan-400 font-mono">0x</strong>
+            </div>
+          </div>
+
+          <div class="pt-2 text-xs text-slate-300 leading-relaxed border-t border-slate-800">
+            Ganancia Neta tras deducir la inversión de <strong class="text-white">$3.500.000 ARS</strong>: <br>
+            <strong id="netProfit" class="text-base font-black text-emerald-400 font-mono">+$0 ARS</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PREGUNTAS CLAVE ANTES DE CONTRATAR (CERO TECNICISMOS) -->
+    <section id="preguntas-clave" class="spotlight-card rounded-3xl p-6 sm:p-10 space-y-6 scroll-mt-24">
+      <div class="border-b border-slate-800 pb-4">
+        <span class="text-xs font-black uppercase tracking-widest text-emerald-400">Total Transparencia y Tranquilidad</span>
+        <h2 class="text-2xl sm:text-3xl font-black text-white font-display mt-1">Preguntas Frecuentes de Alta Confianza</h2>
+      </div>
+
+      <div class="space-y-4 text-xs sm:text-sm">
+        <details class="group p-5 rounded-2xl bg-slate-950/80 border border-slate-800 open:border-emerald-500/50 transition-colors">
+          <summary class="font-bold text-white cursor-pointer flex items-center justify-between list-none text-base">
+            <span>¿Qué pasa si no conseguimos los 500 leads dentro de los 3 meses?</span>
+            <span class="text-emerald-400 group-open:rotate-180 transition-transform">▼</span>
+          </summary>
+          <p class="text-slate-300 mt-3 leading-relaxed">
+            Nuestro contrato mutuo de prestación establece por escrito que si al cumplirse los 3 meses (90 días) no hemos alcanzado la meta exacta de 500 prospectos calificados, <strong class="text-emerald-400 underline">seguimos trabajando 100% sin cargo adicional hasta alcanzarlos en su totalidad (completamente gratis)</strong>. O si lo prefieres, tienes el derecho legal de solicitar el reembolso total del 100% de tu dinero. Nosotros asumimos todo el riesgo operativo y comercial.
+          </p>
+        </details>
+
+        <details class="group p-5 rounded-2xl bg-slate-950/80 border border-slate-800 open:border-emerald-500/50 transition-colors">
+          <summary class="font-bold text-white cursor-pointer flex items-center justify-between list-none text-base">
+            <span>¿Cuánto tiempo y esfuerzo requiere de mi parte?</span>
+            <span class="text-emerald-400 group-open:rotate-180 transition-transform">▼</span>
+          </summary>
+          <p class="text-slate-300 mt-3 leading-relaxed">
+            Prácticamente cero en la parte operativa. El sistema es 100% llave en mano. Tú no tienes que aprender a manejar ningún sistema ni configurar anuncios. Nuestro equipo se encarga de todo. Tu único trabajo es recibir las consultas en tu WhatsApp corporativo y cerrar las ventas.
+          </p>
+        </details>
+
+        <details class="group p-5 rounded-2xl bg-slate-950/80 border border-slate-800 open:border-emerald-500/50 transition-colors">
+          <summary class="font-bold text-white cursor-pointer flex items-center justify-between list-none text-base">
+            <span>¿Por qué limitan el cupo a un solo cliente por zona o rubro?</span>
+            <span class="text-emerald-400 group-open:rotate-180 transition-transform">▼</span>
+          </summary>
+          <p class="text-slate-300 mt-3 leading-relaxed">
+            Por ética comercial y protección fiduciaria de tu inversión. No podemos trabajar con tus competidores directos en la misma área geográfica; toda la demanda y todos los compradores calificados que generamos se canalizan de forma exclusiva y prioritaria hacia tu empresa.
+          </p>
+        </details>
+
+        <details class="group p-5 rounded-2xl bg-slate-950/80 border border-slate-800 open:border-emerald-500/50 transition-colors">
+          <summary class="font-bold text-white cursor-pointer flex items-center justify-between list-none text-base">
+            <span>¿Cómo inicio el proceso hoy mismo?</span>
+            <span class="text-emerald-400 group-open:rotate-180 transition-transform">▼</span>
+          </summary>
+          <p class="text-slate-300 mt-3 leading-relaxed">
+            Bloqueando tu zona exclusiva a través de la Seña de Reserva de $350.000 ARS en Mercado Pago. En cuanto el sistema registra tu pago, te contactamos de inmediato para emitir el contrato de garantía y comenzar la configuración de 72 horas.
+          </p>
+        </details>
+      </div>
+    </section>
+
+    <!-- CUADRO DE DECISIÓN COMERCIAL Y PAGO -->
+    <section id="cuadro-de-pago" class="scroll-mt-24 space-y-8">
+      <div class="text-center space-y-2">
+        <span class="text-xs font-black uppercase tracking-widest text-emerald-400">Inversión y Exclusividad</span>
+        <h2 class="text-3xl sm:text-5xl font-black text-white font-display">Asegura tu Cupo Territorial Hoy</h2>
+        <p class="text-slate-400 text-xs sm:text-base">Garantía formal: 500 prospectos en 3 meses o trabajamos gratis hasta alcanzarlos / reintegro total.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+        
+        <!-- OPCIÓN 1: SEÑA DE RESERVA (RECOMENDADA) -->
+        <div class="spotlight-card rounded-3xl p-6 sm:p-8 flex flex-col justify-between relative border-2 border-emerald-500 shadow-2xl shadow-emerald-500/20">
+          <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-emerald-500 to-teal-400 text-slate-950 text-[10px] font-black uppercase tracking-wider px-4 py-1 rounded-full shadow-lg">
+            Opción Más Elegida • Inicio Inmediato
+          </div>
+
+          <div class="space-y-4 pt-2">
+            <div>
+              <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Entrada Inicial (10%)</span>
+              <h3 class="text-2xl font-black text-white font-display mt-0.5">Seña de Reserva</h3>
+            </div>
+            
+            <div class="py-3 border-y border-slate-800">
+              <span class="text-4xl font-black text-white font-mono">$350.000</span>
+              <span class="text-xs text-slate-400 font-semibold block mt-0.5">ARS • Pago único de reserva</span>
+            </div>
+
+            <p class="text-xs text-slate-300 leading-relaxed">
+              Bloquea tu cupo y garantiza la exclusividad en tu zona. Montamos todo tu sistema en 72 horas y abonas el saldo restante contra entrega de los primeros compradores.
+            </p>
+
+            <ul class="text-xs text-slate-200 space-y-2.5 pt-2">
+              <li class="flex items-center gap-2"><span class="text-emerald-400 font-bold">✓</span> <strong>Garantía 3 Meses:</strong> Si no conseguimos los 500 leads en 3 meses, seguimos trabajando sin cargo hasta alcanzarlos (gratis)</li>
+              <li class="flex items-center gap-2"><span class="text-emerald-400 font-bold">✓</span> Bloqueo de nicho y exclusividad de zona</li>
+              <li class="flex items-center gap-2"><span class="text-emerald-400 font-bold">✓</span> Puesta en marcha llave en mano en 72hs</li>
+              <li class="flex items-center gap-2"><span class="text-emerald-400 font-bold">✓</span> Saldo restante contra entrega de prospectos</li>
+              <li class="flex items-center gap-2"><span class="text-emerald-400 font-bold">✓</span> Opción alternativa de reembolso total del 100%</li>
+            </ul>
+          </div>
+
+          <div class="mt-8 pt-4 border-t border-slate-800">
+            <a href="https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=3724152558-04c4dcd1-4592-4c02-8ac1-504c13b09ead" target="_blank" class="w-full py-4 rounded-xl btn-shimmer text-slate-950 font-black text-xs sm:text-sm text-center block shadow-lg uppercase tracking-wider">
+              Bloquear Cupo ($350.000) →
+            </a>
+          </div>
+        </div>
+
+        <!-- OPCIÓN 2: PLAN 2 CUOTAS -->
+        <div class="spotlight-card rounded-3xl p-6 sm:p-8 flex flex-col justify-between">
+          <div class="space-y-4">
+            <div>
+              <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Plan Financiado</span>
+              <h3 class="text-2xl font-black text-white font-display mt-0.5">2 Cuotas Fijas</h3>
+            </div>
+            
+            <div class="py-3 border-y border-slate-800">
+              <span class="text-4xl font-black text-indigo-300 font-mono">$1.750.000</span>
+              <span class="text-xs text-slate-400 font-semibold block mt-0.5">ARS • Cuota 1 de 2</span>
+            </div>
+
+            <p class="text-xs text-slate-300 leading-relaxed">
+              50% al comenzar la campaña y 50% al completar los primeros 250 compradores calificados.
+            </p>
+
+            <ul class="text-xs text-slate-200 space-y-2.5 pt-2">
+              <li class="flex items-center gap-2"><span class="text-emerald-400 font-bold">✓</span> <strong>Garantía 3 Meses:</strong> Si no conseguimos los 500 leads en 3 meses, seguimos trabajando sin cargo hasta alcanzarlos (gratis)</li>
+              <li class="flex items-center gap-2"><span class="text-emerald-400 font-bold">✓</span> Inicio inmediato de campañas</li>
+              <li class="flex items-center gap-2"><span class="text-emerald-400 font-bold">✓</span> Entrega de primeros 250 compradores</li>
+              <li class="flex items-center gap-2"><span class="text-emerald-400 font-bold">✓</span> Filtro de solvencia riguroso</li>
+              <li class="flex items-center gap-2"><span class="text-emerald-400 font-bold">✓</span> Segunda cuota atada a resultados</li>
+            </ul>
+          </div>
+
+          <div class="mt-8 pt-4 border-t border-slate-800">
+            <a href="https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=3724152558-06a49a53-dccb-4e5b-9761-6dd9ca10ab73" target="_blank" class="w-full py-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-black text-xs sm:text-sm text-center block border border-slate-700 transition-all uppercase tracking-wider">
+              Abonar Cuota 1 ($1.750.000) →
+            </a>
+          </div>
+        </div>
+
+        <!-- OPCIÓN 3: PAGO TOTAL BONIFICADO -->
+        <div class="spotlight-card rounded-3xl p-6 sm:p-8 flex flex-col justify-between">
+          <div class="space-y-4">
+            <div>
+              <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Acompañamiento VIP</span>
+              <h3 class="text-2xl font-black text-white font-display mt-0.5">Pago Integral</h3>
+            </div>
+            
+            <div class="py-3 border-y border-slate-800">
+              <span class="text-4xl font-black text-emerald-400 font-mono">$3.500.000</span>
+              <span class="text-xs text-slate-400 font-semibold block mt-0.5">ARS • Inversión total bonificada</span>
+            </div>
+
+            <p class="text-xs text-slate-300 leading-relaxed">
+              Prioridad absoluta de activación express en 24 horas y soporte prioritario de cierre comercial.
+            </p>
+
+            <ul class="text-xs text-slate-200 space-y-2.5 pt-2">
+              <li class="flex items-center gap-2"><span class="text-emerald-400 font-bold">✓</span> <strong>Garantía 3 Meses:</strong> Si no conseguimos los 500 leads en 3 meses, seguimos trabajando sin cargo hasta alcanzarlos (gratis)</li>
+              <li class="flex items-center gap-2"><span class="text-emerald-400 font-bold">✓</span> Activación prioritaria en 24 horas</li>
+              <li class="flex items-center gap-2"><span class="text-emerald-400 font-bold">✓</span> Auditoría comercial personalizada de cierre</li>
+              <li class="flex items-center gap-2"><span class="text-emerald-400 font-bold">✓</span> Garantía de 500 compradores o reintegro</li>
+              <li class="flex items-center gap-2"><span class="text-emerald-400 font-bold">✓</span> Exclusividad garantizada por 12 meses</li>
+            </ul>
+          </div>
+
+          <div class="mt-8 pt-4 border-t border-slate-800">
+            <a href="https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=3724152558-ace51496-f51a-41da-9b9b-2d6158225ca2" target="_blank" class="w-full py-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-black text-xs sm:text-sm text-center block border border-slate-700 transition-all uppercase tracking-wider">
+              Abonar Plan Completo ($3.5M) →
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- CONTACTO DIRECTO POR WHATSAPP CON EL ASESOR -->
+    <section class="p-8 sm:p-12 rounded-3xl bg-slate-900/90 border border-slate-800 flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="space-y-2 text-center md:text-left">
+        <h3 class="text-xl sm:text-2xl font-black text-white font-display">¿Preferís hablar con tu asesor antes de señar?</h3>
+        <p class="text-xs sm:text-sm text-slate-300 max-w-xl">
+          Ing. Lucas responderá tus dudas directamente por WhatsApp y verificará la disponibilidad de tu zona en menos de 10 minutos.
+        </p>
+      </div>
+
+      <a href="https://wa.me/5491127887093?text=Hola%20Ing.%20Lucas,%20quiero%20asegurar%20el%20cupo%20exclusivo%20de%20500%20compradores%20garantizados%20para%20SolarB2B%20Engine%20(Empresas%20Instaladoras%20de%20Energía%20Solar,%20Parques%20Fotovoltaicos%20y%20Eficiencia%20Energética%20Industrial)" target="_blank" class="px-8 py-4 rounded-xl bg-emerald-500/15 border border-emerald-500/40 text-emerald-300 hover:bg-emerald-500 hover:text-slate-950 font-black text-xs sm:text-sm whitespace-nowrap transition-all shadow-lg shadow-emerald-500/10 flex items-center gap-2">
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.698c.995.578 1.956.883 3.013.883 3.182 0 5.767-2.586 5.768-5.768zm0-2.172c4.418 0 8 3.582 8 8s-3.582 8-8 8c-1.391 0-2.695-.361-3.834-.993l-4.197 1.101 1.12-4.092c-.696-1.182-1.089-2.55-1.089-4.016 0-4.418 3.582-8 8-8z"></path></svg>
+        <span>Hablar por WhatsApp con Ing. Lucas</span>
+      </a>
+    </section>
+
+  </main>
+
+  <!-- FOOTER AISLADO DE MARCA (SIN ENLACES EXTERNOS NI FUGAS) -->
+  <footer class="border-t border-slate-800/80 bg-slate-950 mt-24 py-12 px-4 relative z-10 text-xs text-slate-400">
+    <div class="max-w-5xl mx-auto space-y-8">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 font-bold text-xs">
+            SO
+          </div>
+          <div>
+            <span class="font-bold text-white block">SolarB2B Engine</span>
+            <span class="text-[11px] text-slate-500">Programa Comercial de 500 Compradores para Empresas Instaladoras de Energía Solar, Parques Fotovoltaicos y Eficiencia Energética Industrial</span>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap items-center justify-center gap-6 font-semibold">
+          <a href="#comparativa" class="hover:text-white transition-colors">La Forma Tradicional vs. Tu Sistema</a>
+          <a href="#calculadora" class="hover:text-white transition-colors">Calculadora de Crecimiento</a>
+          <a href="#preguntas-clave" class="hover:text-white transition-colors">Preguntas Frecuentes</a>
+          <a href="#cuadro-de-pago" class="hover:text-emerald-400 transition-colors">Garantía Escrita</a>
+        </div>
+      </div>
+
+      <div class="border-t border-slate-800/80 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-slate-500 text-[11px]">
+        <div>
+          © 2026 SolarB2B Engine. Todos los derechos reservados. CUIT: 20-39128912-4.
+        </div>
+        <div class="flex items-center gap-3">
+          <span class="inline-flex items-center gap-1.5 text-emerald-400">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+            Cupo disponible: 1 exclusivo en tu zona
+          </span>
+          <span>•</span>
+          <span>Mercado Pago SSL 256-Bit</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- BARRA FIJA MÓVIL DE CONVERSIÓN INMEDIATA (STICKY BOTTOM DOCK) -->
+  <aside class="fixed bottom-0 left-0 right-0 z-40 sm:hidden bg-slate-950/95 backdrop-blur-2xl border-t border-slate-800/90 px-4 py-3 pb-[calc(10px+env(safe-area-inset-bottom))] flex items-center justify-between gap-3 shadow-2xl">
+    <div class="flex flex-col min-w-0">
+      <div class="flex items-center gap-1.5">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span class="text-xs font-black text-white font-mono">$350.000 ARS</span>
+      </div>
+      <span class="text-[10px] text-emerald-400 font-bold truncate">🛡️ 500 Leads o Gratis</span>
+    </div>
+    <a href="https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=3724152558-04c4dcd1-4592-4c02-8ac1-504c13b09ead" target="_blank" class="px-5 py-2.5 rounded-xl btn-shimmer text-slate-950 font-black text-xs uppercase tracking-wider shadow-lg flex items-center gap-1.5 whitespace-nowrap shrink-0">
+      <span>Bloquear Cupo</span>
+      <span>→</span>
+    </a>
+  </aside>
+
+  <!-- SCRIPT DE CALCULADORA DE CRECIMIENTO COMERCIAL -->
+  <script>
+    function updateRoiCalculation() {
+      const ticket = parseFloat(document.getElementById('ticketSlider').value);
+      const closeRate = parseFloat(document.getElementById('closeRateSlider').value) / 100;
+      
+      document.getElementById('ticketLabel').innerText = '$' + ticket.toLocaleString('es-AR') + ' ARS';
+      document.getElementById('closeRateLabel').innerText = (closeRate * 100).toFixed(1) + '%';
+      
+      const leads = 500;
+      const newClients = Math.round(leads * closeRate);
+      const projectedRev = newClients * ticket;
+      const cost = 3500000;
+      const profit = projectedRev - cost;
+      const multiple = (projectedRev / cost).toFixed(1);
+      
+      document.getElementById('newClientsCount').innerText = newClients + ' Ventas';
+      document.getElementById('projectedRevenue').innerText = '$' + projectedRev.toLocaleString('es-AR') + ' ARS';
+      document.getElementById('roiMultiple').innerText = multiple + 'x';
+      
+      const profitEl = document.getElementById('netProfit');
+      if (profit >= 0) {
+        profitEl.innerText = '+$' + profit.toLocaleString('es-AR') + ' ARS';
+        profitEl.className = 'text-base font-black text-emerald-400 font-mono';
+      } else {
+        profitEl.innerText = '-$' + Math.abs(profit).toLocaleString('es-AR') + ' ARS';
+        profitEl.className = 'text-base font-black text-rose-400 font-mono';
+      }
+    }
+    updateRoiCalculation();
+  </script>
+
+  <!-- CONFIGURACIÓN DEL ASESOR CONCIERGE INTERACTIVO (100% VALOR COMERCIAL) -->
+  <script>
+    window.__AGENCY_BOT_CONFIG__ = {
+      personaName: "Ing. Lucas",
+      personaRole: "Consultor de Eficiencia Energética Industrial",
+      personaAvatar: "./assets/mateo_avatar.jpg",
+      agencyName: "SolarB2B Engine",
+      niche: "Empresas Instaladoras de Energía Solar, Parques Fotovoltaicos y Eficiencia Energética Industrial",
+      reservationUrl: "https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=3724152558-04c4dcd1-4592-4c02-8ac1-504c13b09ead",
+      whatsappPhone: "5491127887093"
+    };
+  </script>
+  <script src="./assets/agency_persona_bot.js"></script>
+  
+  <!-- AGENTE DE RESCATE COMERCIAL (ANTI-ABANDONO & CONVERSIÓN DE SEÑA) -->
+  <script src="./assets/commercial_rescue_agent.js"></script>
+
+</body>
+</html>

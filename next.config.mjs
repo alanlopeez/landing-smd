@@ -70,6 +70,28 @@ const nextConfig = {
       },
     ],
   },
+    async rewrites() {
+    return [
+      {
+        has: [
+          {
+            type: 'host',
+            value: '(?<subdomain>.*)500\\.serviciodemarketingdigital\\.com',
+          },
+        ],
+        source: '/',
+        destination: '/500/index.html',
+      },
+      {
+        source: '/trato_garantizado',
+        destination: '/500/index.html',
+      },
+      {
+        source: '/500',
+        destination: '/500/index.html',
+      },
+    ];
+  },
   async redirects() {
     return [
       {
