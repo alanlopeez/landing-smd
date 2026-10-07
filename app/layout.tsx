@@ -285,7 +285,7 @@ export default function RootLayout({
         {/* Google tag (gtag.js) */}
         <script
           async
-          src="https://www.googletagmanager.com/gtag/js?id=G-BN895RKRF7"
+          src="https://www.googletagmanager.com/gtag/js?id=G-CP8GEZFVQP"
         />
         <script
           dangerouslySetInnerHTML={{
@@ -293,7 +293,7 @@ export default function RootLayout({
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
-              gtag('config', 'G-BN895RKRF7');
+              gtag('config', 'G-CP8GEZFVQP');
               ${process.env.NEXT_PUBLIC_GOOGLE_ADS_ID ? `gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ADS_ID}');` : ""}
             `,
           }}
