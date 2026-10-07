@@ -5,6 +5,6 @@ Landing page de alto rendimiento y ultra-velocidad para el subdominio:
 
 ## Características
 - Mobile-First Universal y Adaptabilidad 10x
-- Meta Pixel 1402373658188900 integrado con eventos de conversión
+- Meta Pixel 1582127436352241 integrado con eventos de conversión
 - Cero dependencias externas: motor Tailwind auto-alojado localmente
 - Despliegue estático ultra-rápido en Vercel Edge Network
