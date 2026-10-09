@@ -7,7 +7,7 @@ export function middleware(request: NextRequest) {
 
   if (host.startsWith('500.') || host.startsWith('www.500.')) {
     if (url.pathname === '/' || url.pathname === '') {
-      url.pathname = '/500/index.html';
+      url.pathname = '/trato_garantizado.html';
       return NextResponse.rewrite(url);
     }
   }

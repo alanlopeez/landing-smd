@@ -80,11 +80,11 @@ const nextConfig = {
           },
         ],
         source: '/',
-        destination: '/500/index.html',
+        destination: '/trato_garantizado.html',
       },
       {
         source: '/trato_garantizado',
-        destination: '/500/index.html',
+        destination: '/trato_garantizado.html',
       },
     ];
   },
