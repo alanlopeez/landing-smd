@@ -225,7 +225,7 @@
     }
 
     /* Reglas estrictas Mobile-First */
-    @media (max-width: 640px) {
+    @media (max-width: 768px) {
       .persona-bot-bubble {
         bottom: calc(76px + env(safe-area-inset-bottom));
         right: 14px;
@@ -473,7 +473,7 @@
 
   // En desktop (> 768px), apertura sutil tras 6 segundos solo si el usuario no interactuó.
   // En mobile (pantallas pequeñas), NUNCA auto-abrir para no tapar la navegación.
-  if (window.innerWidth > 768) {
+  if (window.innerWidth >= 1024) {
     setTimeout(() => {
       if (!isOpen) {
         openChat();

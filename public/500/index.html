@@ -63,10 +63,19 @@
   </script>
 
   <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+    html, body {
+      max-width: 100vw;
+      overflow-x: hidden !important;
+      position: relative;
+      width: 100%;
+    }
     body {
       background-color: #020617;
       color: #f8fafc;
-      overflow-x: hidden;
+      overflow-x: hidden !important;
       -webkit-font-smoothing: antialiased;
     }
     
@@ -195,9 +204,11 @@
 <body class="selection:bg-emerald-500 selection:text-slate-950 font-sans relative pb-28 sm:pb-0 overflow-x-hidden">
 
   <!-- CAPAS DE LUZ AMBIENTAL DE ALTA COSTURA -->
-  <div class="ambient-glow-emerald -top-40 left-1/2 -translate-x-1/2 z-0"></div>
-  <div class="ambient-glow-cyan top-[600px] -left-40 z-0"></div>
-  <div class="ambient-glow-emerald top-[1800px] -right-40 z-0"></div>
+  <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
+    <div class="ambient-glow-emerald -top-40 left-1/2 -translate-x-1/2"></div>
+    <div class="ambient-glow-cyan top-[600px] -left-40"></div>
+    <div class="ambient-glow-emerald top-[1800px] -right-40"></div>
+  </div>
 
   <!-- PATRON DE TEXTURA DE FONDO -->
   <div class="fixed inset-0 bg-grid-pattern opacity-60 pointer-events-none z-0"></div>
@@ -220,25 +231,25 @@
   </div>
 
   <!-- NAVEGACION FLOTANTE ESTILO NAVBAR GALLERY -->
-  <header class="sticky top-4 z-50 max-w-5xl mx-auto px-4">
-    <div class="backdrop-blur-xl bg-slate-900/85 border border-slate-700/60 rounded-2xl px-4 sm:px-5 py-3 shadow-2xl flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <a href="/" class="w-10 h-10 rounded-xl bg-slate-950/90 border border-slate-700/80 p-1.5 flex items-center justify-center shadow-lg shadow-emerald-500/10 hover:border-emerald-500/50 hover:scale-105 transition-all shrink-0 group">
+  <header class="sticky top-2 sm:top-4 z-50 max-w-5xl mx-auto px-2 sm:px-4">
+    <div class="backdrop-blur-xl bg-slate-900/85 border border-slate-700/60 rounded-2xl px-3 sm:px-5 py-2.5 sm:py-3 shadow-2xl flex items-center justify-between gap-2">
+      <div class="flex items-center gap-2 sm:gap-3 min-w-0">
+        <a href="/" class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-slate-950/90 border border-slate-700/80 p-1 sm:p-1.5 flex items-center justify-center shadow-lg shadow-emerald-500/10 hover:border-emerald-500/50 hover:scale-105 transition-all shrink-0 group">
           <img src="/assets/logo.png" alt="Servicio de Marketing Digital" class="w-full h-full object-contain filter drop-shadow group-hover:scale-105 transition-transform">
         </a>
-        <div>
-          <div class="flex items-center gap-2">
+        <div class="min-w-0">
+          <div class="flex items-center gap-1.5 sm:gap-2">
             <span class="font-extrabold text-white text-xs sm:text-sm tracking-tight truncate">Servicio de Marketing Digital</span>
-            <span class="hidden xs:inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-[10px] font-bold">
+            <span class="hidden md:inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-[10px] font-bold">
               <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
               Trato 100% Online
             </span>
           </div>
-          <span class="text-[11px] text-slate-400 block truncate">500 Leads Calificados • $3.500.000 ARS</span>
+          <span class="text-[10px] sm:text-[11px] text-slate-400 block truncate">500 Leads Calificados • $3.5M ARS</span>
         </div>
       </div>
 
-      <div class="flex items-center gap-3 sm:gap-4">
+      <div class="flex items-center gap-2 sm:gap-4 shrink-0">
         <a href="#calculadora" class="hidden sm:inline-flex items-center gap-1.5 text-xs font-bold text-slate-300 hover:text-white transition-colors">
           <span>Calculadora ROI</span>
         </a>
@@ -248,21 +259,22 @@
         <a href="#garantia-gratis" class="hidden md:inline-flex items-center gap-1.5 text-xs font-bold text-slate-300 hover:text-emerald-400 transition-colors">
           <span>Garantía 3 Meses</span>
         </a>
-        <a href="#cuadro-de-pago" onclick="trackMetaCheckout('Header Navbar - Asegurar Cupo', 350000)" class="px-4 sm:px-5 py-2.5 rounded-xl btn-shimmer text-slate-950 font-black text-xs shadow-lg shadow-emerald-500/20 uppercase tracking-wider whitespace-nowrap active:scale-95 transition-transform">
-          Asegurar Cupo ($350k)
+        <a href="#cuadro-de-pago" onclick="trackMetaCheckout('Header Navbar - Asegurar Cupo', 350000)" class="px-3 sm:px-5 py-2 sm:py-2.5 rounded-xl btn-shimmer text-slate-950 font-black text-[11px] sm:text-xs shadow-lg shadow-emerald-500/20 uppercase tracking-wider whitespace-nowrap active:scale-95 transition-transform shrink-0">
+          <span class="hidden sm:inline">Asegurar Cupo ($350k)</span>
+          <span class="inline sm:hidden">Cupo $350k</span>
         </a>
       </div>
     </div>
   </header>
 
   <!-- CONTENIDO PRINCIPAL -->
-  <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mt-10 sm:mt-16 relative z-10 space-y-16 sm:space-y-20">
+  <main class="max-w-5xl mx-auto px-3 sm:px-6 lg:px-8 mt-6 sm:mt-16 relative z-10 space-y-12 sm:space-y-20 w-full overflow-hidden">
     
     <!-- HERO HEADER CON TIPOGRAFÍA DISPLAY -->
-    <section class="text-center space-y-5 max-w-4xl mx-auto">
+    <section class="text-center space-y-4 sm:space-y-5 max-w-4xl mx-auto">
       
       <!-- BADGE DE CABECERA: MODIFICADO EXACTAMENTE SEGÚN INSTRUCCIÓN -->
-      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-500/15 border border-emerald-500/40 text-emerald-400 text-xs sm:text-sm font-extrabold uppercase tracking-widest shadow-lg shadow-emerald-500/10">
+      <div class="inline-flex items-center gap-2 px-3.5 sm:px-4 py-1.5 rounded-full bg-emerald-500/15 border border-emerald-500/40 text-emerald-400 text-xs sm:text-sm font-extrabold uppercase tracking-widest shadow-lg shadow-emerald-500/10">
         <svg class="w-4 h-4 text-emerald-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
           <circle cx="12" cy="12" r="10"></circle>
           <path d="m9 12 2 2 4-4"></path>
@@ -271,26 +283,27 @@
       </div>
       
       <!-- H1 PRINCIPAL: TE GENERO 500 LEADS CALIFICADOS EN UN PLAZO DE 90 DÍAS GARANTIZADOS POR CONTRATO -->
-      <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black text-white font-display tracking-tight leading-[1.15]">
+      <h1 class="text-2xl sm:text-5xl lg:text-6xl font-black text-white font-display tracking-tight leading-[1.18] break-words">
         Te genero <span class="bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400 bg-clip-text text-transparent">500 Leads Calificados</span> en un plazo de 90 Días Garantizados por Contrato.
       </h1>
 
-      <p class="text-slate-300 text-sm sm:text-lg max-w-2xl mx-auto leading-relaxed font-normal">
+      <p class="text-slate-300 text-sm sm:text-lg max-w-2xl mx-auto leading-relaxed font-normal px-1">
         No te pedimos reuniones de 45 minutos por Zoom ni llamadas de ventas agresivas. Te dejamos la máquina instalada en <strong class="text-white font-semibold">72 horas</strong> y solo pagas por resultados verificables en tu CRM.
       </p>
 
       <!-- SOCIAL PROOF CHIPS -->
-      <div class="flex flex-wrap items-center justify-center gap-3 sm:gap-4 pt-2 text-xs text-slate-300 font-semibold">
-        <div class="flex items-center gap-2 bg-emerald-950/50 border border-emerald-500/50 px-4 py-2 rounded-full text-emerald-300 shadow-md">
-          <span class="text-emerald-400 font-black">🛡️</span> <strong>Garantía Incondicional:</strong> Si en 3 meses no conseguimos los 500 leads, trabajamos 100% GRATIS hasta alcanzarlos
+      <div class="flex flex-wrap items-center justify-center gap-2.5 sm:gap-4 pt-2 text-xs text-slate-300 font-semibold">
+        <div class="flex items-center gap-2 bg-emerald-950/50 border border-emerald-500/50 px-3.5 sm:px-4 py-2 rounded-2xl sm:rounded-full text-emerald-300 shadow-md text-left text-[11px] sm:text-xs">
+          <span class="text-emerald-400 font-black text-sm shrink-0">🛡️</span>
+          <span><strong>Garantía Incondicional:</strong> Si en 3 meses no conseguimos los 500 leads, trabajamos 100% GRATIS hasta alcanzarlos</span>
         </div>
-        <div class="flex items-center gap-1.5 bg-slate-900/70 border border-slate-800 px-3 py-1.5 rounded-full text-slate-400 font-medium">
-          <svg class="w-4 h-4 text-cyan-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-          Entrega Llave en Mano en 72hs
+        <div class="flex items-center gap-1.5 bg-slate-900/70 border border-slate-800 px-3 py-1.5 rounded-full text-slate-400 font-medium text-[11px] sm:text-xs">
+          <svg class="w-4 h-4 text-cyan-400 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+          <span>Entrega Llave en Mano en 72hs</span>
         </div>
-        <div class="flex items-center gap-1.5 bg-slate-900/70 border border-slate-800 px-3 py-1.5 rounded-full text-slate-400 font-medium">
-          <svg class="w-4 h-4 text-teal-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-          Mercado Pago Checkout Protegido
+        <div class="flex items-center gap-1.5 bg-slate-900/70 border border-slate-800 px-3 py-1.5 rounded-full text-slate-400 font-medium text-[11px] sm:text-xs">
+          <svg class="w-4 h-4 text-teal-400 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+          <span>Mercado Pago Checkout Protegido</span>
         </div>
       </div>
     </section>
@@ -330,14 +343,14 @@
       <!-- BOTON CTA CONIC GLOW INMEDIATO -->
       <div class="mt-8 text-center max-w-xl mx-auto px-2">
         <div class="conic-glow-wrapper inline-block w-full sm:w-auto">
-          <a href="#cuadro-de-pago" onclick="trackMetaCheckout('Hero CTA Seña $350k', 350000)" class="relative z-10 w-full sm:w-auto inline-flex items-center justify-center gap-3 px-6 sm:px-8 py-4 rounded-2xl bg-slate-950 text-white hover:text-slate-950 hover:bg-gradient-to-r hover:from-emerald-400 hover:to-teal-300 font-extrabold text-xs sm:text-base transition-all duration-300 shadow-2xl active:scale-95 group">
+          <a href="#cuadro-de-pago" onclick="trackMetaCheckout('Hero CTA Seña $350k', 350000)" class="relative z-10 w-full sm:w-auto inline-flex items-center justify-center gap-2 sm:gap-3 px-4 sm:px-8 py-3.5 sm:py-4 rounded-2xl bg-slate-950 text-white hover:text-slate-950 hover:bg-gradient-to-r hover:from-emerald-400 hover:to-teal-300 font-extrabold text-xs sm:text-base transition-all duration-300 shadow-2xl active:scale-95 group text-center leading-snug">
             <span class="font-display tracking-wide">🚀 CONTRATAR AHORA Y RESERVAR CUPO CON $350.000 ARS</span>
-            <svg class="w-5 h-5 group-hover:translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+            <svg class="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-y-0.5 transition-transform shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
           </a>
         </div>
-        <p class="text-xs text-slate-400 mt-2.5 font-medium flex items-center justify-center gap-1.5">
-          <svg class="w-3.5 h-3.5 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-          Contrato mutuo digital instantáneo • Saldo contra entrega del primer lote de prospectos
+        <p class="text-xs text-slate-400 mt-2.5 font-medium flex items-center justify-center gap-1.5 text-center">
+          <svg class="w-3.5 h-3.5 text-emerald-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          <span>Contrato mutuo digital instantáneo • Saldo contra entrega del primer lote de prospectos</span>
         </p>
       </div>
     </section>
@@ -710,7 +723,7 @@
             <ul class="text-xs text-slate-300 space-y-2.5 pt-2">
               <li class="flex items-center gap-2"><svg class="w-4 h-4 text-emerald-400 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg> <strong>Garantía 3 Meses:</strong> Si no conseguimos los 500 leads en 3 meses, seguimos trabajando sin cargo hasta alcanzarlos (gratis)</li>
               <li class="flex items-center gap-2"><svg class="w-4 h-4 text-emerald-400 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg> 500 prospectos auditados garantizados</li>
-              <li class="flex items-center gap-2"><svg class="w-4 h-4 text-emerald-400 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg> Soporte directo por WhatsApp del CEO</li>
+              <li class="flex items-center gap-2"><svg class="w-4 h-4 text-emerald-400 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg> Soporte y atención directa con el CEO</li>
               <li class="flex items-center gap-2"><svg class="w-4 h-4 text-emerald-400 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg> Factura E o C oficial únicamente</li>
               <li class="flex items-center gap-2"><svg class="w-4 h-4 text-emerald-400 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg> Cláusula de reembolso bancario 100%</li>
             </ul>
@@ -736,8 +749,8 @@
         </p>
       </div>
 
-      <button type="button" onclick="openHumanAdvisorModal('Banner Consulta Tecnica')" class="px-6 sm:px-8 py-4 rounded-xl bg-emerald-500/15 border border-emerald-500/40 text-emerald-300 hover:bg-emerald-500 hover:text-slate-950 font-black text-xs sm:text-sm whitespace-nowrap transition-all shadow-lg shadow-emerald-500/10 flex items-center justify-center gap-2 active:scale-95 cursor-pointer group">
-        <svg class="w-5 h-5 text-emerald-400 group-hover:text-slate-950 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+      <button type="button" onclick="openHumanAdvisorModal('Banner Consulta Tecnica')" class="w-full md:w-auto px-5 sm:px-8 py-3.5 sm:py-4 rounded-xl bg-emerald-500/15 border border-emerald-500/40 text-emerald-300 hover:bg-emerald-500 hover:text-slate-950 font-black text-xs sm:text-sm transition-all shadow-lg shadow-emerald-500/10 flex items-center justify-center gap-2 active:scale-95 cursor-pointer group text-center">
+        <svg class="w-5 h-5 text-emerald-400 group-hover:text-slate-950 transition-colors shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
         <span>Contactarme con un asesor humano directamente →</span>
       </button>
     </section>
@@ -784,15 +797,15 @@
   </footer>
 
   <!-- BARRA FIJA MÓVIL DE CONVERSIÓN INMEDIATA (STICKY BOTTOM DOCK) -->
-  <aside class="fixed bottom-0 left-0 right-0 z-40 sm:hidden bg-slate-950/95 backdrop-blur-2xl border-t border-slate-800/90 px-4 py-3 pb-[calc(10px+env(safe-area-inset-bottom))] flex items-center justify-between gap-3 shadow-2xl">
+  <aside class="fixed bottom-0 left-0 right-0 z-40 sm:hidden bg-slate-950/95 backdrop-blur-2xl border-t border-slate-800/90 px-3.5 py-2.5 pb-[calc(10px+env(safe-area-inset-bottom))] flex items-center justify-between gap-2 shadow-2xl">
     <div class="flex flex-col min-w-0">
       <div class="flex items-center gap-1.5">
-        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-        <span class="text-xs font-black text-white font-mono">$350.000 ARS</span>
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0"></span>
+        <span class="text-xs font-black text-white font-mono truncate">$350.000 ARS</span>
       </div>
       <span class="text-[10px] text-emerald-400 font-bold truncate">🛡️ 500 Leads o Gratis</span>
     </div>
-    <a href="https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=3724152558-04c4dcd1-4592-4c02-8ac1-504c13b09ead" target="_blank" onclick="trackMetaCheckout('Mobile Sticky Dock - Seña $350k', 350000)" class="px-5 py-2.5 rounded-xl btn-shimmer text-slate-950 font-black text-xs uppercase tracking-wider shadow-lg flex items-center gap-1.5 whitespace-nowrap shrink-0 active:scale-95 transition-transform">
+    <a href="https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=3724152558-04c4dcd1-4592-4c02-8ac1-504c13b09ead" target="_blank" onclick="trackMetaCheckout('Mobile Sticky Dock - Seña $350k', 350000)" class="px-4 py-2.5 rounded-xl btn-shimmer text-slate-950 font-black text-xs uppercase tracking-wider shadow-lg flex items-center gap-1.5 whitespace-nowrap shrink-0 active:scale-95 transition-transform">
       <span>Bloquear Cupo</span>
       <span>→</span>
     </a>
