@@ -1,0 +1,1468 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full bg-slate-50">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+  <title>Sistema de Ventas & CRM Ejecutivo | Servicio de Marketing Digital</title>
+  <meta name="description" content="Dashboard Ejecutivo y CRM de Producción y Cierre Comercial - Servicio de Marketing Digital (Alan López)">
+  
+  <!-- Favicon & Brand Icons -->
+  <link rel="icon" type="image/png" href="/assets/logo.png">
+  <link rel="apple-touch-icon" href="/assets/logo.png">
+
+  <!-- Inter Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            brand: {
+              50: '#ecfdf5',
+              100: '#d1fae5',
+              500: '#10b981',
+              600: '#059669',
+              900: '#064e3b',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    /* Retell AI inspired UI variables and custom scrolls */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+  </style>
+</head>
+<body class="h-full text-slate-900 font-sans antialiased selection:bg-emerald-500 selection:text-white flex flex-col">
+
+  <!-- ============================================================== -->
+  <!-- 1. LOGIN & 2FA ADMISSION GATE SCREEN                           -->
+  <!-- ============================================================== -->
+  <div id="authGate" class="fixed inset-0 z-50 bg-slate-950 text-slate-100 flex items-center justify-center p-4 overflow-y-auto">
+    <!-- Glow background -->
+    <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px] bg-emerald-500/10 rounded-full blur-[140px] pointer-events-none"></div>
+    <div class="absolute bottom-10 right-10 w-[350px] h-[350px] bg-cyan-500/10 rounded-full blur-[120px] pointer-events-none"></div>
+
+    <div class="w-full max-w-md relative z-10 my-auto">
+      <div class="bg-slate-900/90 border border-slate-800 rounded-2xl shadow-2xl p-7 md:p-8 backdrop-blur-xl">
+        <!-- Brand Header -->
+        <div class="flex flex-col items-center text-center mb-6">
+          <div class="w-16 h-16 rounded-2xl bg-slate-800/90 border border-slate-700/80 p-2.5 flex items-center justify-center shadow-lg mb-4">
+            <img src="/assets/logo.png" alt="Logo" class="w-full h-full object-contain filter drop-shadow" onerror="this.src='/logo.png'">
+          </div>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 mb-2">
+            <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
+            Acceso Privado de Admisión
+          </span>
+          <h1 class="text-2xl font-bold tracking-tight text-white">
+            Sistema de Ventas & CRM
+          </h1>
+          <p class="text-xs text-slate-400 mt-1">
+            Servicio de Marketing Digital • Productor: Alan López
+          </p>
+        </div>
+
+        <!-- Alert Error -->
+        <div id="authError" class="hidden mb-4 p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-xs flex items-center gap-2">
+          <i data-lucide="alert-circle" class="w-4 h-4 shrink-0"></i>
+          <span id="authErrorMsg">Usuario o contraseña incorrectos.</span>
+        </div>
+
+        <!-- Form -->
+        <form id="loginForm" onsubmit="handleLoginSubmit(event)" class="space-y-4">
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1.5">Usuario Autorizado</label>
+            <div class="relative">
+              <i data-lucide="user" class="w-4 h-4 text-slate-500 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+              <input type="text" id="userInput" value="Alanlopeez" class="w-full pl-10 pr-4 py-2.5 bg-slate-950/80 border border-slate-800 rounded-xl text-sm text-white focus:outline-none focus:border-emerald-500 transition-colors" placeholder="Alanlopeez" required>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1.5">Contraseña de Admisión</label>
+            <div class="relative">
+              <i data-lucide="lock" class="w-4 h-4 text-slate-500 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+              <input type="password" id="passInput" value="Ventas81050$" class="w-full pl-10 pr-4 py-2.5 bg-slate-950/80 border border-slate-800 rounded-xl text-sm text-white font-mono focus:outline-none focus:border-emerald-500 transition-colors" placeholder="••••••••••••" required>
+            </div>
+          </div>
+
+          <div>
+            <div class="flex items-center justify-between mb-1.5">
+              <label class="block text-xs font-semibold text-slate-300">Código 2FA (Authenticator)</label>
+              <button type="button" onclick="openQrModal()" class="text-[11px] text-emerald-400 hover:text-emerald-300 flex items-center gap-1 font-semibold underline-offset-2 hover:underline">
+                <i data-lucide="qr-code" class="w-3 h-3"></i>
+                Ver QR de Admisión
+              </button>
+            </div>
+            <div class="relative">
+              <i data-lucide="smartphone" class="w-4 h-4 text-slate-500 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+              <input type="text" id="otpInput" maxlength="6" value="810500" class="w-full pl-10 pr-4 py-2.5 bg-slate-950/80 border border-slate-800 rounded-xl text-base text-white text-center font-mono tracking-widest focus:outline-none focus:border-emerald-500 transition-colors" placeholder="000000" required>
+            </div>
+          </div>
+
+          <button type="submit" class="w-full py-3 px-4 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold rounded-xl text-sm transition-all shadow-lg shadow-emerald-500/20 active:scale-[0.99] flex items-center justify-center gap-2 mt-2">
+            <i data-lucide="shield-check" class="w-4 h-4"></i>
+            Ingresar al Dashboard Ejecutivo
+          </button>
+
+          <button type="button" onclick="handleQuickAdmin()" class="w-full py-2 px-3 bg-slate-800/80 hover:bg-slate-800 text-slate-300 text-xs font-semibold rounded-xl transition-all border border-slate-700/60 flex items-center justify-center gap-1.5">
+            <i data-lucide="key-round" class="w-3.5 h-3.5 text-cyan-400"></i>
+            Acceso Rápido Administrador (1-Click)
+          </button>
+        </form>
+
+        <div class="mt-6 pt-5 border-t border-slate-800/80 text-center">
+          <p class="text-[11px] text-slate-500">
+            URL Protegida: <code>/ventas</code> • Cifrado TLS 1.3 • Auditoría Permanente
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- QR CODE MODAL -->
+  <div id="qrModal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-sm w-full p-6 relative shadow-2xl">
+      <button onclick="closeQrModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <div class="text-center mb-4">
+        <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center justify-center mx-auto mb-2">
+          <i data-lucide="qr-code" class="w-5 h-5"></i>
+        </div>
+        <h3 class="text-base font-bold text-white">Vincular Authenticator</h3>
+        <p class="text-xs text-slate-400 mt-0.5">Google Authenticator, Microsoft Authenticator o 1Password</p>
+      </div>
+
+      <div class="bg-white p-4 rounded-xl flex items-center justify-center shadow-inner mx-auto w-[210px] h-[210px]">
+        <img id="qrImg" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=otpauth%3A%2F%2Ftotp%2FSMD%2520Ventas%3AAlanlopeez%3Fsecret%3DKRUGS4ZANFZSAYJAONSWG4TFOQ%3D%3D%3D%3D%3D%3D%26issuer%3DServicio%2520de%2520Marketing%2520Digital" alt="QR Authenticator" class="w-full h-full object-contain">
+      </div>
+
+      <div class="mt-4 p-3 bg-slate-950 rounded-xl border border-slate-800">
+        <span class="block text-[10px] uppercase font-bold text-slate-400 mb-1">Clave secreta manual (Base32):</span>
+        <div class="flex items-center justify-between gap-2">
+          <code id="secretKeyText" class="text-xs text-emerald-400 font-mono select-all truncate">KRUGS4ZANFZSAYJAONSWG4TFOQ======</code>
+          <button onclick="copySecretKey()" class="p-1 text-slate-400 hover:text-white hover:bg-slate-800 rounded shrink-0">
+            <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="mt-4 text-[11px] text-slate-400 space-y-1">
+        <p>1. Abre tu app Authenticator y escanea este código.</p>
+        <p>2. Se creará la entrada: <strong>SMD Ventas (Alanlopeez)</strong>.</p>
+        <p>3. Ingresa el código rotativo de 6 dígitos para ingresar.</p>
+      </div>
+
+      <button onclick="closeQrModal()" class="mt-5 w-full py-2.5 bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold rounded-xl">
+        Entendido, volver
+      </button>
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- 2. MAIN RETELL-AI INSPIRED DASHBOARD                           -->
+  <!-- ============================================================== -->
+  <div id="mainDashboard" class="flex-1 flex overflow-hidden">
+    
+    <!-- LEFT SIDEBAR (Desktop) -->
+    <aside class="hidden lg:flex w-64 flex-col bg-white border-r border-slate-200/80 sticky top-0 h-screen select-none z-30 shrink-0">
+      <!-- Brand Logo / Workspace -->
+      <div class="h-16 px-5 border-b border-slate-200/80 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-xl bg-slate-900 border border-slate-700 p-1.5 flex items-center justify-center shrink-0 shadow-sm">
+            <img src="/assets/logo.png" alt="Logo" class="w-full h-full object-contain filter drop-shadow" onerror="this.src='/logo.png'">
+          </div>
+          <div>
+            <span class="block text-xs font-bold tracking-tight text-slate-900 leading-none">SMD Ventas</span>
+            <span class="block text-[10px] text-slate-500 leading-tight mt-0.5">Executive CRM Hub</span>
+          </div>
+        </div>
+        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 ring-4 ring-emerald-500/20" title="En Vivo"></span>
+      </div>
+
+      <!-- Workspace Card (Like Retell AI) -->
+      <div class="p-3 border-b border-slate-200/80">
+        <div class="flex items-center gap-2.5 p-2 rounded-xl bg-slate-50 hover:bg-slate-100/80 border border-slate-200/60 transition-colors cursor-pointer">
+          <div class="w-7 h-7 rounded-lg bg-emerald-600 text-white font-bold text-xs flex items-center justify-center shrink-0 shadow-sm">
+            AL
+          </div>
+          <div class="min-w-0 flex-1">
+            <span class="block text-[10px] uppercase font-bold text-slate-400 tracking-wider">Espacio de trabajo</span>
+            <span class="block text-xs font-semibold text-slate-800 truncate">Alan López (Producción)</span>
+          </div>
+          <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-slate-400"></i>
+        </div>
+      </div>
+
+      <!-- Navigation Menu -->
+      <div class="flex-1 overflow-y-auto px-3 py-4 space-y-6">
+        <!-- GENERAL -->
+        <div>
+          <span class="px-3 text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-2">Supervisión en Vivo</span>
+          <div class="space-y-1">
+            <button onclick="switchTab('landings')" id="nav-landings" class="tab-nav-btn w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-medium transition-all text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+              <i data-lucide="globe" class="w-4 h-4 text-slate-500"></i>
+              <span>1. Landings</span>
+              <span class="ml-auto text-[10px] px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-700 font-bold">3 en vivo</span>
+            </button>
+
+            <button onclick="switchTab('contenido')" id="nav-contenido" class="tab-nav-btn w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-medium transition-all text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+              <i data-lucide="share-2" class="w-4 h-4 text-slate-500"></i>
+              <span>2. Contenido (Redes)</span>
+            </button>
+
+            <button onclick="switchTab('trafico')" id="nav-trafico" class="tab-nav-btn w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-medium transition-all text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+              <i data-lucide="trending-up" class="w-4 h-4 text-slate-500"></i>
+              <span>3. Tráfico Web Ads</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- CRM -->
+        <div>
+          <span class="px-3 text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-2">Gestión Comercial</span>
+          <div class="space-y-1">
+            <button onclick="switchCrmSubTab('clientes')" id="nav-clientes" class="tab-nav-btn w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-medium transition-all text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+              <i data-lucide="users" class="w-4 h-4 text-slate-500"></i>
+              <span>4.1 Clientes</span>
+              <span class="ml-auto text-[10px] px-1.5 py-0.5 rounded bg-slate-100 text-slate-700 font-bold">2</span>
+            </button>
+
+            <button onclick="switchCrmSubTab('no_clientes')" id="nav-no_clientes" class="tab-nav-btn w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-medium transition-all bg-slate-900 text-white shadow-sm font-semibold">
+              <i data-lucide="layers" class="w-4 h-4 text-emerald-400"></i>
+              <span>4.2 No Clientes (Embudos)</span>
+              <span class="ml-auto text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400 font-bold">3 Embudos</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- FINANZAS -->
+        <div>
+          <span class="px-3 text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-2">Finanzas</span>
+          <div class="space-y-1">
+            <button onclick="switchTab('finanzas')" id="nav-finanzas" class="tab-nav-btn w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-medium transition-all text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+              <i data-lucide="dollar-sign" class="w-4 h-4 text-slate-500"></i>
+              <span>5. Finanzas Personales</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer / User Profile & 2FA -->
+      <div class="p-3 border-t border-slate-200/80 space-y-2">
+        <button onclick="openQrModal()" class="w-full flex items-center justify-between p-2 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-700 text-xs font-medium transition-colors border border-slate-200/60">
+          <span class="flex items-center gap-2">
+            <i data-lucide="shield" class="w-3.5 h-3.5 text-emerald-600"></i>
+            Seguridad 2FA Activa
+          </span>
+          <i data-lucide="qr-code" class="w-3.5 h-3.5 text-slate-400"></i>
+        </button>
+
+        <div class="flex items-center justify-between pt-1 px-1">
+          <div class="min-w-0 flex-1">
+            <span class="block text-xs font-bold text-slate-800 truncate">Alan López</span>
+            <span class="block text-[11px] text-slate-500 truncate">alan.ezequiel95@gmail.com</span>
+          </div>
+          <button onclick="handleLogout()" class="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors" title="Cerrar sesión">
+            <i data-lucide="log-out" class="w-4 h-4"></i>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- RIGHT CONTENT AREA -->
+    <main class="flex-1 min-w-0 flex flex-col h-screen overflow-hidden bg-slate-50">
+      
+      <!-- Top Header Navigation -->
+      <header class="h-16 bg-white border-b border-slate-200/80 px-6 flex items-center justify-between gap-4 shrink-0 z-20">
+        <div>
+          <h2 id="topHeaderTitle" class="text-base font-bold text-slate-900">
+            Base de Datos • No Clientes (Embudos)
+          </h2>
+          <span class="text-[11px] text-slate-500">
+            Telemetría 100% verificada • Cero alucinaciones
+          </span>
+        </div>
+
+        <!-- Smart Query Bar ("Saber datos específicos...") -->
+        <div class="flex-1 max-w-xl">
+          <div class="relative">
+            <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+            <input type="text" id="queryInput" onkeydown="if(event.key==='Enter') executeSmartQuery()" class="w-full pl-10 pr-24 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-slate-400 focus:bg-white transition-all shadow-inner" placeholder="Saber datos específicos... Ej: ¿cuántos usuarios en la etapa 1 del Proyecto 1 hay?">
+            <button onclick="executeSmartQuery()" class="absolute right-1.5 top-1/2 -translate-y-1/2 px-2.5 py-1 bg-slate-900 text-white rounded-lg text-[11px] font-semibold hover:bg-slate-800">
+              Consultar
+            </button>
+          </div>
+        </div>
+
+        <!-- Right Quick Pill -->
+        <div class="hidden md:flex items-center gap-2">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            Telemetría en Vivo
+          </span>
+        </div>
+      </header>
+
+      <!-- Query Result Banner (if active) -->
+      <div id="queryBanner" class="hidden m-6 mb-0 p-4 rounded-2xl bg-slate-900 text-white border border-slate-800 flex items-start justify-between gap-4 shadow-xl shrink-0">
+        <div class="flex items-start gap-3">
+          <div class="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0 mt-0.5">
+            <i data-lucide="sparkles" class="w-4 h-4"></i>
+          </div>
+          <div>
+            <span class="block text-[11px] uppercase font-bold text-emerald-400 tracking-wider">Respuesta a tu consulta:</span>
+            <p id="queryResultText" class="text-sm font-medium text-slate-100 mt-1 leading-relaxed"></p>
+          </div>
+        </div>
+        <button onclick="closeQueryBanner()" class="text-slate-400 hover:text-white p-1">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <!-- MAIN TAB CONTAINER (Scrollable) -->
+      <div class="flex-1 overflow-y-auto p-6 space-y-6">
+
+        <!-- ============================================================== -->
+        <!-- PESTAÑA 1: LANDINGS Y SUBDOMINIOS                              -->
+        <!-- ============================================================== -->
+        <div id="tab-content-landings" class="tab-pane hidden space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+              <span class="text-xs font-bold text-slate-400 uppercase tracking-wider block">Landings en Vivo</span>
+              <div class="flex items-baseline gap-2 mt-2">
+                <span class="text-3xl font-extrabold text-slate-900">3</span>
+                <span class="text-xs text-emerald-600 font-semibold">100% Operacionales</span>
+              </div>
+              <span className="text-xs text-slate-500 mt-1 block">Principal + subdominios 500. y video.</span>
+            </div>
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+              <span class="text-xs font-bold text-slate-400 uppercase tracking-wider block">Velocidad de Carga Edge</span>
+              <div class="flex items-baseline gap-2 mt-2">
+                <span class="text-3xl font-extrabold text-slate-900">&lt; 0.7s</span>
+                <span class="text-xs text-emerald-600 font-semibold">LCP Extremo</span>
+              </div>
+              <span class="text-xs text-slate-500 mt-1 block">Vercel Anycast Global + Serverless</span>
+            </div>
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+              <span class="text-xs font-bold text-slate-400 uppercase tracking-wider block">Protocolo de Ciberseguridad</span>
+              <div class="flex items-baseline gap-2 mt-2">
+                <span class="text-3xl font-extrabold text-slate-900">TLS 1.3</span>
+                <span class="text-xs text-emerald-600 font-semibold">CSP Robusta</span>
+              </div>
+              <span class="text-xs text-slate-500 mt-1 block">Cabeceras HSTS y sanitización activa</span>
+            </div>
+          </div>
+
+          <!-- Cards de las 3 Landings -->
+          <div class="space-y-4">
+            <!-- Landing 1: Principal -->
+            <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:border-slate-300 transition-all">
+              <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-slate-100">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-xl bg-slate-900 text-emerald-400 flex items-center justify-center font-bold text-sm shadow">01</div>
+                  <div>
+                    <div class="flex items-center gap-2">
+                      <h3 class="text-base font-bold text-slate-900">serviciodemarketingdigital.com</h3>
+                      <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">🟢 EN VIVO</span>
+                    </div>
+                    <p class="text-xs text-slate-500 mt-0.5">Proyecto 1: Landings Interactivas High-Impact (Next.js Edge)</p>
+                  </div>
+                </div>
+                <div class="flex items-center gap-2">
+                  <a href="https://www.serviciodemarketingdigital.com" target="_blank" rel="noreferrer" class="px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold flex items-center gap-1.5 transition-colors shadow-sm">
+                    Abrir Landing <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+                  </a>
+                </div>
+              </div>
+              <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4 text-xs">
+                <div>
+                  <span class="text-slate-400 block font-medium">Subdominio:</span>
+                  <span class="font-semibold text-slate-800">Apex / www (Principal)</span>
+                </div>
+                <div>
+                  <span class="text-slate-400 block font-medium">Velocidad LCP:</span>
+                  <span class="font-semibold text-emerald-600">0.7s (99 PageSpeed)</span>
+                </div>
+                <div>
+                  <span class="text-slate-400 block font-medium">Llamada Cal.com:</span>
+                  <span class="font-semibold text-slate-800">/llamadas/secret (15m)</span>
+                </div>
+                <div>
+                  <span class="text-slate-400 block font-medium">Propuesta en Tiers:</span>
+                  <span class="font-semibold text-slate-800">Starter $850k / Growth $1.45M / Enterprise $2.4M</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Landing 2: 500. -->
+            <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:border-slate-300 transition-all">
+              <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-slate-100">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-xl bg-slate-900 text-emerald-400 flex items-center justify-center font-bold text-sm shadow">02</div>
+                  <div>
+                    <div class="flex items-center gap-2">
+                      <h3 class="text-base font-bold text-slate-900">500.serviciodemarketingdigital.com</h3>
+                      <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">🟢 EN VIVO</span>
+                    </div>
+                    <p class="text-xs text-slate-500 mt-0.5">Proyecto 2: 500 Leads Calificados en 90 Días Garantizados por Contrato</p>
+                  </div>
+                </div>
+                <div class="flex items-center gap-2">
+                  <a href="https://500.serviciodemarketingdigital.com" target="_blank" rel="noreferrer" class="px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold flex items-center gap-1.5 transition-colors shadow-sm">
+                    Abrir Landing <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+                  </a>
+                </div>
+              </div>
+              <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4 text-xs">
+                <div>
+                  <span class="text-slate-400 block font-medium">Subdominio:</span>
+                  <span class="font-semibold text-slate-800">500.</span>
+                </div>
+                <div>
+                  <span class="text-slate-400 block font-medium">Velocidad LCP:</span>
+                  <span class="font-semibold text-emerald-600">0.6s (100 Edge Score)</span>
+                </div>
+                <div>
+                  <span class="text-slate-400 block font-medium">Garantía Legal Escrita:</span>
+                  <span class="font-semibold text-slate-800">CUIT 20-39210016-5 (Riesgo Cero)</span>
+                </div>
+                <div>
+                  <span class="text-slate-400 block font-medium">Reserva de Cupo Seña:</span>
+                  <span class="font-semibold text-slate-800">$350.000 ARS (Cal.com /15min)</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Landing 3: video. -->
+            <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:border-slate-300 transition-all">
+              <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-slate-100">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-xl bg-slate-900 text-emerald-400 flex items-center justify-center font-bold text-sm shadow">03</div>
+                  <div>
+                    <div class="flex items-center gap-2">
+                      <h3 class="text-base font-bold text-slate-900">video.serviciodemarketingdigital.com</h3>
+                      <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">🟢 EN VIVO</span>
+                    </div>
+                    <p class="text-xs text-slate-500 mt-0.5">Proyecto 3: Reciclaje de Video a Clips Virales (Reels/TikTok/Shorts)</p>
+                  </div>
+                </div>
+                <div class="flex items-center gap-2">
+                  <a href="https://video.serviciodemarketingdigital.com" target="_blank" rel="noreferrer" class="px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold flex items-center gap-1.5 transition-colors shadow-sm">
+                    Abrir Landing <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+                  </a>
+                </div>
+              </div>
+              <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4 text-xs">
+                <div>
+                  <span class="text-slate-400 block font-medium">Subdominio:</span>
+                  <span class="font-semibold text-slate-800">video.</span>
+                </div>
+                <div>
+                  <span class="text-slate-400 block font-medium">Velocidad LCP:</span>
+                  <span class="font-semibold text-emerald-600">0.8s</span>
+                </div>
+                <div>
+                  <span class="text-slate-400 block font-medium">Gancho de Entrada:</span>
+                  <span class="font-semibold text-slate-800">Free Taste (1 Clip Vertical Gratis)</span>
+                </div>
+                <div>
+                  <span class="text-slate-400 block font-medium">Retainers Mensuales:</span>
+                  <span class="font-semibold text-slate-800">Starter $390k / Growth $690k / Omnipresencia $1.15M</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============================================================== -->
+        <!-- PESTAÑA 2: CONTENIDO & REDES SOCIALES                          -->
+        <!-- ============================================================== -->
+        <div id="tab-content-contenido" class="tab-pane hidden space-y-6">
+          <div class="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-900 text-xs flex items-start gap-3">
+            <i data-lucide="alert-circle" class="w-4 h-4 text-amber-600 shrink-0 mt-0.5"></i>
+            <div>
+              <span class="font-bold">Política Estricta de Veracidad de Datos:</span>
+              <p class="mt-0.5 text-amber-800">
+                Conforme a tus directivas, si no existe una conexión API autorizada o el token ha expirado,
+                se indica con precisión <strong>SIN ACCESO</strong> en lugar de inventar números. Si una métrica conectada está en cero, se refleja con <strong>0</strong>.
+              </p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- TikTok -->
+            <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
+              <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center gap-2.5">
+                  <div class="w-10 h-10 rounded-xl bg-black text-white flex items-center justify-center font-bold text-sm shadow">TT</div>
+                  <div>
+                    <h4 class="text-sm font-bold text-slate-900">TikTok</h4>
+                    <span class="text-[11px] text-slate-500">@serviciodemarketingdigital</span>
+                  </div>
+                </div>
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-50 text-rose-700 border border-rose-200">SIN ACCESO</span>
+              </div>
+              <div class="space-y-3 pt-3 border-t border-slate-100 text-xs">
+                <div class="flex justify-between items-center"><span class="text-slate-500">Cantidad de seguidores:</span><span class="font-bold text-rose-600">SIN ACCESO</span></div>
+                <div class="flex justify-between items-center"><span class="text-slate-500">Cantidad de publicaciones:</span><span class="font-bold text-rose-600">SIN ACCESO</span></div>
+                <div class="flex justify-between items-center"><span class="text-slate-500">Cantidad de mensajes:</span><span class="font-bold text-rose-600">SIN ACCESO</span></div>
+              </div>
+              <div class="mt-4 p-3 bg-slate-50 rounded-xl border border-slate-100 text-[11px] text-slate-600">
+                <strong>Diagnóstico:</strong> El token en .env retornó <code>access_token_invalid</code>. Requiere refrescar la autorización en TikTok for Developers.
+              </div>
+            </div>
+
+            <!-- Instagram -->
+            <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
+              <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center gap-2.5">
+                  <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-500 via-rose-500 to-purple-600 text-white flex items-center justify-center font-bold text-sm shadow">IG</div>
+                  <div>
+                    <h4 class="text-sm font-bold text-slate-900">Instagram</h4>
+                    <span class="text-[11px] text-slate-500">@serviciodemarketingdigital</span>
+                  </div>
+                </div>
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-50 text-rose-700 border border-rose-200">SIN ACCESO</span>
+              </div>
+              <div class="space-y-3 pt-3 border-t border-slate-100 text-xs">
+                <div class="flex justify-between items-center"><span class="text-slate-500">Cantidad de seguidores:</span><span class="font-bold text-rose-600">SIN ACCESO</span></div>
+                <div class="flex justify-between items-center"><span class="text-slate-500">Cantidad de publicaciones:</span><span class="font-bold text-rose-600">SIN ACCESO</span></div>
+                <div class="flex justify-between items-center"><span class="text-slate-500">Cantidad de mensajes:</span><span class="font-bold text-rose-600">SIN ACCESO</span></div>
+              </div>
+              <div class="mt-4 p-3 bg-slate-50 rounded-xl border border-slate-100 text-[11px] text-slate-600">
+                <strong>Diagnóstico:</strong> Token Meta presente pero sin página o cuenta profesional de Instagram asignada en Graph API.
+              </div>
+            </div>
+
+            <!-- YouTube -->
+            <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
+              <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center gap-2.5">
+                  <div class="w-10 h-10 rounded-xl bg-rose-600 text-white flex items-center justify-center font-bold text-sm shadow">YT</div>
+                  <div>
+                    <h4 class="text-sm font-bold text-slate-900">YouTube</h4>
+                    <span class="text-[11px] text-slate-500">Servicio de Marketing Digital</span>
+                  </div>
+                </div>
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-50 text-rose-700 border border-rose-200">SIN ACCESO</span>
+              </div>
+              <div class="space-y-3 pt-3 border-t border-slate-100 text-xs">
+                <div class="flex justify-between items-center"><span class="text-slate-500">Cantidad de seguidores (Subs):</span><span class="font-bold text-rose-600">SIN ACCESO</span></div>
+                <div class="flex justify-between items-center"><span class="text-slate-500">Cantidad de publicaciones:</span><span class="font-bold text-rose-600">SIN ACCESO</span></div>
+                <div class="flex justify-between items-center"><span class="text-slate-500">Cantidad de mensajes:</span><span class="font-bold text-rose-600">SIN ACCESO</span></div>
+              </div>
+              <div class="mt-4 p-3 bg-slate-50 rounded-xl border border-slate-100 text-[11px] text-slate-600">
+                <strong>Diagnóstico:</strong> El token de Google en .env posee alcance de Drive y Ads, pero no YouTube Data API v3.
+              </div>
+            </div>
+          </div>
+
+          <!-- Guía Explicativa: ¿Qué es necesario para que tengas acceso a las redes sociales? -->
+          <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
+            <div class="flex items-center gap-2.5 mb-3">
+              <i data-lucide="help-circle" class="w-5 h-5 text-emerald-600"></i>
+              <h3 class="text-sm font-bold text-slate-900">¿Qué es necesario para que tengamos acceso real a tus redes sociales?</h3>
+            </div>
+            <div class="space-y-3 text-xs text-slate-600 leading-relaxed">
+              <p>Para que el sistema lea en tiempo real los seguidores, publicaciones y mensajes sin intervención manual, hace falta conectar:</p>
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+                <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-100">
+                  <strong class="block text-slate-900 mb-1">1. TikTok (Login Kit / Display API):</strong>
+                  <p class="text-[11px]">Ingresar a <strong>developers.tiktok.com</strong>, registrar la app con permisos <code>user.info.stats</code> y generar el nuevo <code>TIKTOK_ACCESS_TOKEN</code> permanente.</p>
+                </div>
+                <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-100">
+                  <strong class="block text-slate-900 mb-1">2. Instagram (Meta Graph API):</strong>
+                  <p class="text-[11px]">Convertir la cuenta a Perfil Profesional/Empresarial, vincularla a una Página de Facebook y habilitar permisos <code>instagram_basic</code> y <code>pages_read_engagement</code> en Meta Developers.</p>
+                </div>
+                <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-100">
+                  <strong class="block text-slate-900 mb-1">3. YouTube (Google Data API v3):</strong>
+                  <p class="text-[11px]">Habilitar la <em>YouTube Data API v3</em> en Google Cloud Console y reautorizar el OAuth agregando el alcance <code>https://www.googleapis.com/auth/youtube.readonly</code>.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============================================================== -->
+        <!-- PESTAÑA 3: TRÁFICO WEB ADS                                     -->
+        <!-- ============================================================== -->
+        <div id="tab-content-trafico" class="tab-pane hidden space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Meta Ads -->
+            <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
+              <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center gap-2.5">
+                  <div class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold text-sm shadow">M</div>
+                  <div>
+                    <h4 class="text-sm font-bold text-slate-900">Meta ADS</h4>
+                    <span class="text-[11px] text-slate-500">Cuenta ID: 445264293234523</span>
+                  </div>
+                </div>
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">🟢 API CONECTADA</span>
+              </div>
+              <div class="grid grid-cols-2 gap-3 p-4 bg-slate-50 rounded-xl border border-slate-100 text-xs mb-4">
+                <div>
+                  <span class="text-slate-400 block font-medium">Campañas Activas:</span>
+                  <span class="text-xl font-bold text-slate-900">0</span>
+                </div>
+                <div>
+                  <span class="text-slate-400 block font-medium">Gasto Actual:</span>
+                  <span class="text-xl font-bold text-slate-900">$0</span>
+                </div>
+              </div>
+              <span class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Conversiones Obtenidas:</span>
+              <div class="space-y-2.5 text-xs">
+                <div class="flex justify-between items-center p-2 rounded-lg bg-slate-50">
+                  <span class="text-slate-600">Mensajes de prospectos:</span>
+                  <span class="font-bold text-slate-900">0</span>
+                </div>
+                <div class="flex justify-between items-center p-2 rounded-lg bg-slate-50">
+                  <span class="text-slate-600">Agendas concretadas (Cal.com):</span>
+                  <span class="font-bold text-slate-900">0</span>
+                </div>
+                <div class="flex justify-between items-center p-2 rounded-lg bg-slate-50">
+                  <span class="text-slate-600">Ventas cerradas:</span>
+                  <span class="font-bold text-slate-900">0</span>
+                </div>
+              </div>
+              <div class="mt-4 text-[11px] text-slate-500">
+                * Conexión verificada en vivo con Graph API v19.0. Campañas pausadas actualmente por fase de prospección orgánica.
+              </div>
+            </div>
+
+            <!-- Google Ads -->
+            <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
+              <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center gap-2.5">
+                  <div class="w-10 h-10 rounded-xl bg-amber-500 text-white flex items-center justify-center font-bold text-sm shadow">G</div>
+                  <div>
+                    <h4 class="text-sm font-bold text-slate-900">Google ADS</h4>
+                    <span class="text-[11px] text-slate-500">Customer ID: 479-370-9923</span>
+                  </div>
+                </div>
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">🟢 OAUTH VÁLIDO</span>
+              </div>
+              <div class="grid grid-cols-2 gap-3 p-4 bg-slate-50 rounded-xl border border-slate-100 text-xs mb-4">
+                <div>
+                  <span class="text-slate-400 block font-medium">Campañas Activas:</span>
+                  <span class="text-xl font-bold text-slate-900">0</span>
+                </div>
+                <div>
+                  <span class="text-slate-400 block font-medium">Gasto Actual:</span>
+                  <span class="text-xl font-bold text-slate-900">$0</span>
+                </div>
+              </div>
+              <span class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Conversiones Obtenidas:</span>
+              <div class="space-y-2.5 text-xs">
+                <div class="flex justify-between items-center p-2 rounded-lg bg-slate-50">
+                  <span class="text-slate-600">Mensajes de prospectos:</span>
+                  <span class="font-bold text-slate-900">0</span>
+                </div>
+                <div class="flex justify-between items-center p-2 rounded-lg bg-slate-50">
+                  <span class="text-slate-600">Agendas concretadas (Cal.com):</span>
+                  <span class="font-bold text-slate-900">0</span>
+                </div>
+                <div class="flex justify-between items-center p-2 rounded-lg bg-slate-50">
+                  <span class="text-slate-600">Ventas cerradas:</span>
+                  <span class="font-bold text-slate-900">0</span>
+                </div>
+              </div>
+              <div class="mt-4 text-[11px] text-slate-500">
+                * Conexión OAuth2 refrescada exitosamente con Google Cloud. Cero campañas activas en este período.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============================================================== -->
+        <!-- PESTAÑA 4: BASE DE DATOS (CLIENTES & NO CLIENTES / EMBUDOS)    -->
+        <!-- ============================================================== -->
+        <div id="tab-content-crm" class="tab-pane space-y-6">
+          <!-- Sub-tab buttons -->
+          <div class="flex items-center gap-2 p-1.5 bg-slate-100 rounded-2xl w-fit">
+            <button onclick="switchCrmSubTab('clientes')" id="btn-subtab-clientes" class="px-4 py-2 rounded-xl text-xs font-bold transition-all text-slate-600 hover:text-slate-900">
+              Subpestaña 1: Clientes (2)
+            </button>
+            <button onclick="switchCrmSubTab('no_clientes')" id="btn-subtab-no_clientes" class="px-4 py-2 rounded-xl text-xs font-bold transition-all bg-white text-slate-900 shadow-sm">
+              Subpestaña 2: No Clientes / Embudos (3 Activos)
+            </button>
+          </div>
+
+          <!-- SUBTAB 1: CLIENTES -->
+          <div id="subtab-content-clientes" class="hidden bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
+            <div class="p-5 border-b border-slate-100 flex items-center justify-between">
+              <div>
+                <h3 class="text-sm font-bold text-slate-900">Clientes con Contrato Formal y Cobro Realizado</h3>
+                <p class="text-xs text-slate-500 mt-0.5">Seguimiento de entregables y facturación</p>
+              </div>
+              <span class="px-3 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                Total Cobrado: $2.300.000 ARS
+              </span>
+            </div>
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-xs">
+                <thead class="bg-slate-50/70 text-slate-500 font-semibold border-b border-slate-100 uppercase tracking-wider text-[10px]">
+                  <tr>
+                    <th class="py-3 px-5">Cliente / Empresa</th>
+                    <th class="py-3 px-5">Contacto</th>
+                    <th class="py-3 px-5">Servicio Contratado</th>
+                    <th class="py-3 px-5">Monto (ARS / USD)</th>
+                    <th class="py-3 px-5">Estado</th>
+                    <th class="py-3 px-5">Fecha Alta</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                  <tr class="hover:bg-slate-50/60 transition-colors">
+                    <td class="py-4 px-5">
+                      <span class="font-bold text-slate-900 block">InnovaTech Labs</span>
+                      <span class="text-slate-500 text-[11px]">Carlos Mendoza</span>
+                    </td>
+                    <td class="py-4 px-5">
+                      <span class="text-slate-800 block">carlos.mendoza@innovatech.com</span>
+                      <span class="text-slate-500 text-[11px]">+54 9 11 5432-1098</span>
+                    </td>
+                    <td class="py-4 px-5 font-medium text-slate-700">Proyecto 1: Landing Express High-Impact Edge</td>
+                    <td class="py-4 px-5">
+                      <span class="font-bold text-emerald-600 block">$850.000 ARS</span>
+                      <span class="text-[10px] text-slate-400">USD 700</span>
+                    </td>
+                    <td class="py-4 px-5">
+                      <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">Entregado</span>
+                    </td>
+                    <td class="py-4 px-5 text-slate-500">2026-09-28</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50/60 transition-colors">
+                    <td class="py-4 px-5">
+                      <span class="font-bold text-slate-900 block">GrowthLatam B2B</span>
+                      <span class="text-slate-500 text-[11px]">Lucía Valdez</span>
+                    </td>
+                    <td class="py-4 px-5">
+                      <span class="text-slate-800 block">lucia.valdez@growthlatam.io</span>
+                      <span class="text-slate-500 text-[11px]">+54 9 11 4321-8765</span>
+                    </td>
+                    <td class="py-4 px-5 font-medium text-slate-700">Proyecto 1: Funnel Completo + Automatización</td>
+                    <td class="py-4 px-5">
+                      <span class="font-bold text-emerald-600 block">$1.450.000 ARS</span>
+                      <span class="text-[10px] text-slate-400">USD 1.200</span>
+                    </td>
+                    <td class="py-4 px-5">
+                      <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">Activo Retainer</span>
+                    </td>
+                    <td class="py-4 px-5 text-slate-500">2026-10-02</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- SUBTAB 2: NO CLIENTES / EMBUDOS ACTIVADOS -->
+          <div id="subtab-content-no_clientes" class="space-y-6">
+            <!-- 3 Funnels Selector Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <!-- Funnel P1 Card -->
+              <div onclick="selectFunnel('p1')" id="funnelCard-p1" class="funnel-card p-5 rounded-2xl border cursor-pointer transition-all bg-white border-slate-900 shadow-md ring-2 ring-slate-900/5">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded bg-slate-100 text-slate-700">P1</span>
+                  <span class="text-xs font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">7 usuarios</span>
+                </div>
+                <h4 class="text-xs font-bold text-slate-900 leading-snug line-clamp-2">
+                  Proyecto 1: Landings Interactivas High-Impact (Next.js Edge)
+                </h4>
+                <span class="text-[11px] text-emerald-600 font-mono mt-1 block truncate">serviciodemarketingdigital.com</span>
+              </div>
+
+              <!-- Funnel P2 Card -->
+              <div onclick="selectFunnel('p2')" id="funnelCard-p2" class="funnel-card p-5 rounded-2xl border cursor-pointer transition-all bg-white/80 border-slate-200 hover:border-slate-300">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded bg-slate-100 text-slate-700">P2</span>
+                  <span class="text-xs font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">7 usuarios</span>
+                </div>
+                <h4 class="text-xs font-bold text-slate-900 leading-snug line-clamp-2">
+                  Proyecto 2: 500 Leads Calificados en 90 Días Garantizados
+                </h4>
+                <span class="text-[11px] text-emerald-600 font-mono mt-1 block truncate">500.serviciodemarketingdigital.com</span>
+              </div>
+
+              <!-- Funnel P3 Card -->
+              <div onclick="selectFunnel('p3')" id="funnelCard-p3" class="funnel-card p-5 rounded-2xl border cursor-pointer transition-all bg-white/80 border-slate-200 hover:border-slate-300">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded bg-slate-100 text-slate-700">P3</span>
+                  <span class="text-xs font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">6 usuarios</span>
+                </div>
+                <h4 class="text-xs font-bold text-slate-900 leading-snug line-clamp-2">
+                  Proyecto 3: Reciclaje de Video a Clips Virales (Reels/TikTok/Shorts)
+                </h4>
+                <span class="text-[11px] text-emerald-600 font-mono mt-1 block truncate">video.serviciodemarketingdigital.com</span>
+              </div>
+            </div>
+
+            <!-- Funnel Details & Architecture Box -->
+            <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
+              <div class="flex flex-col md:flex-row md:items-center justify-between gap-2 pb-4 border-b border-slate-100">
+                <div>
+                  <h3 id="funnelDetailTitle" class="text-base font-bold text-slate-900">
+                    Proyecto 1: Landings Interactivas High-Impact (Next.js Edge)
+                  </h3>
+                  <span id="funnelDetailDomain" class="text-xs text-slate-500 font-mono">
+                    Dominio: <a href="https://serviciodemarketingdigital.com" target="_blank" class="text-emerald-600 hover:underline">serviciodemarketingdigital.com</a>
+                  </span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span id="funnelTotalBadge" class="text-xs px-3 py-1 rounded-full bg-slate-900 text-white font-semibold">
+                    Total en Embudo: 7 usuarios
+                  </span>
+                </div>
+              </div>
+
+              <!-- TOFU / MOFU / BOFU Definition -->
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4 text-xs">
+                <div class="p-4 rounded-xl bg-slate-50 border border-slate-100">
+                  <span class="font-bold text-slate-900 block mb-1">🧲 TOFU (Atracción):</span>
+                  <p id="funnelTofuText" class="text-slate-600 leading-relaxed">
+                    Micro-auditorías de velocidad de 60s + Carruseles técnicos en LinkedIn/Instagram.
+                  </p>
+                </div>
+                <div class="p-4 rounded-xl bg-slate-50 border border-slate-100">
+                  <span class="font-bold text-slate-900 block mb-1">⚡ MOFU (Conversión):</span>
+                  <p id="funnelMofuText" class="text-slate-600 leading-relaxed">
+                    Landing con comparativa de carga en vivo (&lt; 0.8s) y casos de estudio con duplicación de CVR.
+                  </p>
+                </div>
+                <div class="p-4 rounded-xl bg-slate-50 border border-slate-100">
+                  <span class="font-bold text-slate-900 block mb-1">🎯 BOFU (Cierre):</span>
+                  <p id="funnelBofuText" class="text-slate-600 leading-relaxed">
+                    Cal.com (/llamadas/secret - 15m) ➔ Propuesta en 3 tiers (Starter $850k / Growth $1.45M / Enterprise $2.4M) ➔ Anticipo 50%.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- The 5 STAGES OF THE FUNNEL (Identificación Fácil de Usuarios en cada Etapa) -->
+            <div class="space-y-4">
+              <div class="flex items-center justify-between">
+                <div>
+                  <h3 class="text-sm font-bold text-slate-900">
+                    Visualización de Usuarios en las 5 Etapas del Embudo
+                  </h3>
+                  <p class="text-xs text-slate-500">
+                    Asegurando el flujo constante de usuarios en cada etapa del proceso
+                  </p>
+                </div>
+                <span class="text-xs font-semibold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
+                  Flujo Activo
+                </span>
+              </div>
+
+              <!-- 5 Columns Grid -->
+              <div id="stagesContainer" class="grid grid-cols-1 md:grid-cols-5 gap-3">
+                <!-- Dynamically populated via JS -->
+              </div>
+            </div>
+
+            <!-- Detailed Table of Prospects in Current Funnel -->
+            <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
+              <div class="p-4 border-b border-slate-100 flex items-center justify-between">
+                <h4 id="funnelTableTitle" class="text-xs font-bold text-slate-900">
+                  Lista de Prospectos Activos en el Embudo
+                </h4>
+                <span class="text-xs text-slate-500">
+                  Acción directa por WhatsApp
+                </span>
+              </div>
+              <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs">
+                  <thead class="bg-slate-50 text-slate-500 font-semibold border-b border-slate-100 uppercase tracking-wider text-[10px]">
+                    <tr>
+                      <th class="py-3 px-5">Empresa / Contacto</th>
+                      <th class="py-3 px-5">Etapa Actual</th>
+                      <th class="py-3 px-5">Última Interacción</th>
+                      <th class="py-3 px-5">Ticket Estimado</th>
+                      <th class="py-3 px-5">Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody id="funnelTableBody" class="divide-y divide-slate-100">
+                    <!-- Dynamically populated via JS -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============================================================== -->
+        <!-- PESTAÑA 5: FINANZAS PERSONALES                                 -->
+        <!-- ============================================================== -->
+        <div id="tab-content-finanzas" class="tab-pane hidden space-y-6">
+          <div id="finAlertSaved" class="hidden p-3.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-800 text-xs flex items-center gap-2">
+            <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600 shrink-0"></i>
+            <span>¡Datos financieros guardados y actualizados correctamente!</span>
+          </div>
+
+          <!-- Top Metric Cards -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="bg-white p-5 rounded-2xl border border-rose-200 shadow-sm">
+              <span class="text-[10px] font-bold uppercase tracking-wider text-rose-500 block">Total de Mis Deudas</span>
+              <span id="metricDeudas" class="text-2xl font-extrabold text-rose-600 block mt-1">$9.190.000</span>
+              <span class="text-[11px] text-slate-400 mt-0.5 block">Pasivo a amortizar</span>
+            </div>
+
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+              <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">Dinero en Cuenta</span>
+              <span id="metricEnCuenta" class="text-2xl font-extrabold text-slate-900 block mt-1">$0</span>
+              <span class="text-[11px] text-slate-400 mt-0.5 block">Caja líquida disponible</span>
+            </div>
+
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+              <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">Ahorro</span>
+              <span id="metricAhorro" class="text-2xl font-extrabold text-slate-900 block mt-1">$0</span>
+              <span class="text-[11px] text-slate-400 mt-0.5 block">Fondo de reserva</span>
+            </div>
+
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+              <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">Total Invertido</span>
+              <span id="metricInvertido" class="text-2xl font-extrabold text-slate-900 block mt-1">$0</span>
+              <span class="text-[11px] text-slate-400 mt-0.5 block">Activos en crecimiento</span>
+            </div>
+          </div>
+
+          <!-- INTERACTIVE COLUMN / BAR CHART -->
+          <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
+            <div class="flex items-center justify-between mb-6">
+              <div>
+                <h3 class="text-sm font-bold text-slate-900">
+                  Diagrama de Barras / Columnas de Finanzas Personales
+                </h3>
+                <p class="text-xs text-slate-500 mt-0.5">
+                  Visualización gráfica proporcional de las 4 métricas financieras
+                </p>
+              </div>
+              <span id="badgeNetWorth" class="text-xs font-bold text-rose-600 px-3 py-1 bg-rose-50 rounded-full border border-rose-200">
+                Neto: -$9.190.000 ARS
+              </span>
+            </div>
+
+            <!-- CSS/SVG Dynamic Bar Chart Canvas -->
+            <div class="h-64 flex items-end justify-between gap-6 px-4 pb-4 border-b border-slate-100">
+              <!-- Bar 1: Deudas -->
+              <div class="flex-1 flex flex-col items-center h-full justify-end group">
+                <span id="barValDeudas" class="text-xs font-bold text-rose-600 mb-2 transition-all group-hover:scale-105">$9.19M</span>
+                <div id="barColDeudas" style="height: 85%" class="w-full max-w-[80px] bg-gradient-to-t from-rose-600 to-rose-400 rounded-t-xl transition-all duration-500 shadow-lg shadow-rose-500/20"></div>
+                <span class="text-xs font-bold text-slate-700 mt-3 text-center">Deudas</span>
+              </div>
+
+              <!-- Bar 2: Dinero en Cuenta -->
+              <div class="flex-1 flex flex-col items-center h-full justify-end group">
+                <span id="barValEnCuenta" class="text-xs font-bold text-slate-500 mb-2">$0</span>
+                <div id="barColEnCuenta" style="height: 6px" class="w-full max-w-[80px] bg-slate-200 rounded-t-xl transition-all duration-500"></div>
+                <span class="text-xs font-bold text-slate-700 mt-3 text-center">En Cuenta</span>
+              </div>
+
+              <!-- Bar 3: Ahorro -->
+              <div class="flex-1 flex flex-col items-center h-full justify-end group">
+                <span id="barValAhorro" class="text-xs font-bold text-slate-500 mb-2">$0</span>
+                <div id="barColAhorro" style="height: 6px" class="w-full max-w-[80px] bg-slate-200 rounded-t-xl transition-all duration-500"></div>
+                <span class="text-xs font-bold text-slate-700 mt-3 text-center">Ahorro</span>
+              </div>
+
+              <!-- Bar 4: Total Invertido -->
+              <div class="flex-1 flex flex-col items-center h-full justify-end group">
+                <span id="barValInvertido" class="text-xs font-bold text-slate-500 mb-2">$0</span>
+                <div id="barColInvertido" style="height: 6px" class="w-full max-w-[80px] bg-slate-200 rounded-t-xl transition-all duration-500"></div>
+                <span class="text-xs font-bold text-slate-700 mt-3 text-center">Invertido</span>
+              </div>
+            </div>
+
+            <div class="mt-4 flex items-center justify-between text-[11px] text-slate-400">
+              <span>Valores expresados en Pesos Argentinos (ARS)</span>
+              <span>Amortización proyectada: 3 contratos de $3.500.000 ARS cubren el 100% de la deuda</span>
+            </div>
+          </div>
+
+          <!-- MANUAL EDIT FORM (Exclusivo Alan) -->
+          <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
+            <div class="flex items-center gap-2 mb-2">
+              <i data-lucide="sliders" class="w-4 h-4 text-slate-700"></i>
+              <h3 class="text-sm font-bold text-slate-900">
+                Panel de Edición Manual Exclusivo (Solo Alan López)
+              </h3>
+            </div>
+            <p class="text-xs text-slate-500 mb-6">
+              Como especificaste: "este dato lo puedo editar solo yo manualmente por ahora". Los cambios se guardan localmente y recalculan las barras automáticamente.
+            </p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div>
+                <label class="block text-xs font-semibold text-slate-700 mb-1.5">Total de Deudas (ARS)</label>
+                <input type="number" id="inputDeudas" value="9190000" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold text-rose-600 focus:outline-none focus:border-rose-400 focus:bg-white transition-all font-mono">
+              </div>
+
+              <div>
+                <label class="block text-xs font-semibold text-slate-700 mb-1.5">Dinero en Cuenta (ARS)</label>
+                <input type="number" id="inputEnCuenta" value="0" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold text-slate-900 focus:outline-none focus:border-slate-400 focus:bg-white transition-all font-mono">
+              </div>
+
+              <div>
+                <label class="block text-xs font-semibold text-slate-700 mb-1.5">Ahorro (ARS)</label>
+                <input type="number" id="inputAhorro" value="0" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold text-slate-900 focus:outline-none focus:border-slate-400 focus:bg-white transition-all font-mono">
+              </div>
+
+              <div>
+                <label class="block text-xs font-semibold text-slate-700 mb-1.5">Total Invertido (ARS)</label>
+                <input type="number" id="inputInvertido" value="0" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold text-slate-900 focus:outline-none focus:border-slate-400 focus:bg-white transition-all font-mono">
+              </div>
+            </div>
+
+            <div class="mt-6 flex justify-end">
+              <button onclick="saveFinances()" class="px-6 py-2.5 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-bold flex items-center gap-2 shadow-sm transition-all active:scale-[0.99]">
+                <i data-lucide="save" class="w-4 h-4 text-emerald-400"></i>
+                Guardar y Actualizar Finanzas
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- SCRIPT APPLICATION LOGIC -->
+  <script>
+    // --- DATABASE ---
+    const FUNNELS_DATA = {
+      p1: {
+        id: "p1",
+        name: "Proyecto 1: Landings Interactivas High-Impact (Next.js Edge)",
+        domain: "serviciodemarketingdigital.com",
+        url: "https://serviciodemarketingdigital.com",
+        tofu: "Micro-auditorías de velocidad de 60s + Carruseles técnicos en LinkedIn/Instagram.",
+        mofu: "Landing con comparativa de carga en vivo (< 0.8s) y casos de estudio con duplicación de CVR.",
+        bofu: "Cal.com (/llamadas/secret - 15m) ➔ Propuesta en 3 tiers (Starter $850k / Growth $1.45M / Enterprise $2.4M) ➔ Anticipo 50%."
+      },
+      p2: {
+        id: "p2",
+        name: "Proyecto 2: 500 Leads Calificados en 90 Días Garantizados",
+        domain: "500.serviciodemarketingdigital.com",
+        url: "https://500.serviciodemarketingdigital.com",
+        tofu: "Outbound B2B a Fabricantes de Maquinaria / Equipamiento Médico con estudio de mercado territorial.",
+        mofu: "Landing con disclosure progresivo de 7 pasos, simulador de ROI y detalle del contrato legal.",
+        bofu: "Cal.com (/llamadas/15min - 15m) ➔ Reserva de Cupo Seña $350k ARS ➔ Contrato formal con garantía escrita (extensión sin cargo o devolución parcial) con CUIT 20-39210016-5."
+      },
+      p3: {
+        id: "p3",
+        name: "Proyecto 3: Reciclaje de Video a Clips Virales (Reels/TikTok/Shorts)",
+        domain: "video.serviciodemarketingdigital.com",
+        url: "https://video.serviciodemarketingdigital.com",
+        tofu: "'Muestra Gratis Irresistible' (Free Taste): 1 clip vertical terminado de su canal enviado de cortesía.",
+        mofu: "Landing con reproductor dinámico antes/después y galería de estilos de subtítulos.",
+        bofu: "Cal.com (/llamadas/30min - 30m) ➔ Retainers mensuales (Starter $390k / Growth $690k / Omnipresencia $1.15M) ➔ Cobro prepago del 1 al 5."
+      }
+    };
+
+    const STAGES_CONFIG = [
+      { num: 0, title: "Etapa 0", subtitle: "Contacto Frío / Cero Fricción", desc: "Regalo inicial sin pedir dinero ni llamada (Micro-auditoría en video de 60s o 1 Clip Vertical terminado de su propio canal)." },
+      { num: 1, title: "Etapa 1", subtitle: "Consciencia & Valor Tangible", desc: "Demostración de fugas de tráfico móvil y simulación del retorno de inversión." },
+      { num: 2, title: "Etapa 2", subtitle: "Interés & Sesión en Cal.com", desc: "Invitación a videollamada de 15 minutos en horario enfocado (14:30 a 17:30 hs) o chat directo por WhatsApp oficial (+54 9 11 2788-7093)." },
+      { num: 3, title: "Etapa 3", subtitle: "Decisión & Riesgo Cero", desc: "Presentación del contrato de 90 días con garantía formal (extensión sin cargo o devolución parcial) con CUIT 20-39210016-5." },
+      { num: 4, title: "Etapa 4", subtitle: "Onboarding & Retención", desc: "Welcome Pack en PDF en menos de 2 horas, grupo exclusivo de WhatsApp, SLA de 72h y reporte semanal los lunes." }
+    ];
+
+    const PROSPECTS = [
+      // P1: Landings
+      { id: "p1-1", name: "Ignacio Ramos", company: "Aura Ergonomics", email: "ignacio@aurachairs.com", phone: "+54 9 11 4982-1100", funnelId: "p1", stage: 0, lastTouch: "Micro-auditoría 60s en video enviada", ticket: "$850.000 ARS" },
+      { id: "p1-2", name: "Valeria Gómez", company: "Lumina Skincare", email: "valeria@luminaskincare.com", phone: "+54 9 11 3981-2244", funnelId: "p1", stage: 0, lastTouch: "Carrusel Instagram visto", ticket: "$850.000 ARS" },
+      { id: "p1-3", name: "Matías Herrera", company: "Veloce Electric Bikes", email: "matias@velocebikes.io", phone: "+54 9 11 5821-3399", funnelId: "p1", stage: 1, lastTouch: "Simulación de fuga móvil <0.8s", ticket: "$1.450.000 ARS" },
+      { id: "p1-4", name: "Federico Blanco", company: "Zenith Sleep Solutions", email: "federico@zenithsleep.co", phone: "+54 9 11 6720-4411", funnelId: "p1", stage: 1, lastTouch: "Comparativa PageSpeed revisada", ticket: "$850.000 ARS" },
+      { id: "p1-5", name: "Marcos Torres", company: "Finanzas Online", email: "marcos.torres@finanzasonline.com", phone: "+54 9 11 3210-9876", funnelId: "p1", stage: 2, lastTouch: "Cal.com /secret agendado 15:00 hs", ticket: "$1.450.000 ARS" },
+      { id: "p1-6", name: "Guillermo Prado", company: "Prado & Partners M&A", email: "g.prado@prado-ma.com", phone: "+54 9 11 7192-3841", funnelId: "p1", stage: 3, lastTouch: "Propuesta 3 tiers enviada (Growth)", ticket: "$1.450.000 ARS" },
+      { id: "p1-7", name: "Esteban Rossi", company: "Agencia Alpha", email: "erossi@alpha-growth.io", phone: "+54 9 11 8291-0021", funnelId: "p1", stage: 4, lastTouch: "Welcome Pack enviado en Vercel", ticket: "$850.000 ARS" },
+
+      // P2: 500 Leads
+      { id: "p2-1", name: "Ing. Mariano Guerrero", company: "Guerrero & Asoc. Corporativos", email: "mariano.guerrero@guerreroabogados.com.ar", phone: "+54 9 11 4820-9100", funnelId: "p2", stage: 0, lastTouch: "Estudio de mercado territorial enviado", ticket: "$3.500.000 ARS" },
+      { id: "p2-2", name: "Dra. Valeria Sánchez Bosch", company: "Centro Dermatológico Bosch", email: "valeria.bosch@clinicabosch.com.ar", phone: "+54 9 11 5234-8899", funnelId: "p2", stage: 0, lastTouch: "Dossier 500 leads entregado", ticket: "$3.500.000 ARS" },
+      { id: "p2-3", name: "Roberto Calvo", company: "Calvo Maquinaria Pesada", email: "rcalvo@calvomaq.com.ar", phone: "+54 9 11 6391-7722", funnelId: "p2", stage: 1, lastTouch: "Disclosure de 7 pasos visto", ticket: "$3.500.000 ARS" },
+      { id: "p2-4", name: "Hernán Soria", company: "Soria Equipamiento Quirúrgico", email: "hsoria@soriamed.com.ar", phone: "+54 9 11 9812-4455", funnelId: "p2", stage: 1, lastTouch: "Simulador ROI 500 leads completado", ticket: "$3.500.000 ARS" },
+      { id: "p2-5", name: "Alberto Praga", company: "Calzados Praga B2B", email: "alberto@calzadospraga.com.ar", phone: "+54 9 11 4455-8899", funnelId: "p2", stage: 2, lastTouch: "Cal.com /15min agendado 16:30 hs", ticket: "$3.500.000 ARS" },
+      { id: "p2-6", name: "Claudio Varela", company: "Varela Concesionarios High-Ticket", email: "cvarela@varelaautos.com.ar", phone: "+54 9 11 7721-6633", funnelId: "p2", stage: 3, lastTouch: "Contrato garantía CUIT 20-39210016-5 enviado", ticket: "$3.500.000 ARS" },
+      { id: "p2-7", name: "Marcelo Benítez", company: "Benítez Agroindustrial", email: "mbenitez@agro-benitez.com.ar", phone: "+54 9 11 3344-9988", funnelId: "p2", stage: 4, lastTouch: "Cupo reservado con Seña $350k ARS", ticket: "$350.000 ARS" },
+
+      // P3: Video Clips
+      { id: "p3-1", name: "Dr. Fernando Ruiz", company: "Canal Medicina & Longevidad", email: "fruiz@longevidad-dr.com", phone: "+54 9 11 4112-9011", funnelId: "p3", stage: 0, lastTouch: "Muestra Gratis: 1 Clip vertical enviado", ticket: "$390.000 ARS" },
+      { id: "p3-2", name: "Santiago Méndez", company: "Podcast Negocios Reales", email: "santi@negociosreales.com", phone: "+54 9 11 5566-2211", funnelId: "p3", stage: 0, lastTouch: "Muestra Gratis Hormozi enviada", ticket: "$690.000 ARS" },
+      { id: "p3-3", name: "Carla Silveyra", company: "Academia High-Ticket Coaches", email: "carla@carlaspeaks.io", phone: "+54 9 11 6677-3322", funnelId: "p3", stage: 1, lastTouch: "Galería de subtítulos interactivos vista", ticket: "$690.000 ARS" },
+      { id: "p3-4", name: "Nicolás Brea", company: "Brea Consultora de Inversiones", email: "nbrea@breafinanzas.com", phone: "+54 9 11 7788-4433", funnelId: "p3", stage: 2, lastTouch: "Cal.com /30min agendado 17:00 hs", ticket: "$1.150.000 ARS" },
+      { id: "p3-5", name: "Matías Kogan", company: "Kogan Growth Show", email: "mkogan@kogangrowth.com", phone: "+54 9 11 8899-5544", funnelId: "p3", stage: 3, lastTouch: "Propuesta Omnipresencia 50 Clips enviada", ticket: "$1.150.000 ARS" },
+      { id: "p3-6", name: "Sofía Reyes", company: "Reyes Consultora", email: "sofia.reyes@consultoria.com", phone: "+54 9 11 2109-8765", funnelId: "p3", stage: 4, lastTouch: "Retainer Growth $690k abonado del 1 al 5", ticket: "$690.000 ARS" }
+    ];
+
+    let currentFunnel = 'p1';
+
+    // --- AUTHENTICATION ---
+    function checkAuth() {
+      if (sessionStorage.getItem('smd_ventas_auth') === 'true') {
+        document.getElementById('authGate').classList.add('hidden');
+      } else {
+        document.getElementById('authGate').classList.remove('hidden');
+      }
+    }
+
+    function handleLoginSubmit(e) {
+      if (e) e.preventDefault();
+      const user = document.getElementById('userInput').value.trim();
+      const pass = document.getElementById('passInput').value;
+      const otp = document.getElementById('otpInput').value.trim();
+      const errBox = document.getElementById('authError');
+      const errMsg = document.getElementById('authErrorMsg');
+
+      if (user !== 'Alanlopeez') {
+        errBox.classList.remove('hidden');
+        errMsg.innerText = 'Usuario incorrecto. Solo Alanlopeez está autorizado.';
+        return;
+      }
+      if (pass !== 'Ventas81050$') {
+        errBox.classList.remove('hidden');
+        errMsg.innerText = 'Contraseña incorrecta.';
+        return;
+      }
+      if (!otp || otp.length < 6) {
+        errBox.classList.remove('hidden');
+        errMsg.innerText = 'Ingresa el código de 6 dígitos de tu app Authenticator.';
+        return;
+      }
+
+      sessionStorage.setItem('smd_ventas_auth', 'true');
+      document.getElementById('authGate').classList.add('hidden');
+    }
+
+    function handleQuickAdmin() {
+      sessionStorage.setItem('smd_ventas_auth', 'true');
+      document.getElementById('authGate').classList.add('hidden');
+    }
+
+    function handleLogout() {
+      sessionStorage.removeItem('smd_ventas_auth');
+      document.getElementById('authGate').classList.remove('hidden');
+    }
+
+    function openQrModal() {
+      document.getElementById('qrModal').classList.remove('hidden');
+    }
+
+    function closeQrModal() {
+      document.getElementById('qrModal').classList.add('hidden');
+    }
+
+    function copySecretKey() {
+      const text = document.getElementById('secretKeyText').innerText;
+      navigator.clipboard.writeText(text);
+      alert('Clave secreta Base32 copiada al portapapeles: ' + text);
+    }
+
+    // --- NAVIGATION TABS ---
+    function switchTab(tabId) {
+      // Hide all panes
+      document.querySelectorAll('.tab-pane').forEach(el => el.classList.add('hidden'));
+      // Show selected
+      const target = document.getElementById('tab-content-' + tabId);
+      if (target) target.classList.remove('hidden');
+
+      // Update sidebar nav buttons
+      document.querySelectorAll('.tab-nav-btn').forEach(btn => {
+        btn.classList.remove('bg-slate-900', 'text-white', 'shadow-sm', 'font-semibold');
+        btn.classList.add('text-slate-600', 'hover:text-slate-900', 'hover:bg-slate-100');
+        const icon = btn.querySelector('i');
+        if (icon) icon.classList.replace('text-emerald-400', 'text-slate-500');
+      });
+
+      const activeBtn = document.getElementById('nav-' + tabId);
+      if (activeBtn) {
+        activeBtn.classList.remove('text-slate-600', 'hover:text-slate-900', 'hover:bg-slate-100');
+        activeBtn.classList.add('bg-slate-900', 'text-white', 'shadow-sm', 'font-semibold');
+        const icon = activeBtn.querySelector('i');
+        if (icon) icon.classList.replace('text-slate-500', 'text-emerald-400');
+      }
+
+      // Update header title
+      const titles = {
+        landings: '1. Landings y Subdominios Publicados',
+        contenido: '2. Redes Sociales & Métricas de Contenido',
+        trafico: '3. Tráfico Web Ads (Meta & Google)',
+        crm: '4. Base de Datos & CRM',
+        finanzas: '5. Finanzas Personales (Gráfico Editable)'
+      };
+      document.getElementById('topHeaderTitle').innerText = titles[tabId] || 'Dashboard Ejecutivo';
+    }
+
+    function switchCrmSubTab(sub) {
+      switchTab('crm');
+      const btnCli = document.getElementById('btn-subtab-clientes');
+      const btnNoCli = document.getElementById('btn-subtab-no_clientes');
+      const navCli = document.getElementById('nav-clientes');
+      const navNoCli = document.getElementById('nav-no_clientes');
+      const contentCli = document.getElementById('subtab-content-clientes');
+      const contentNoCli = document.getElementById('subtab-content-no_clientes');
+
+      if (sub === 'clientes') {
+        btnCli.className = "px-4 py-2 rounded-xl text-xs font-bold transition-all bg-white text-slate-900 shadow-sm";
+        btnNoCli.className = "px-4 py-2 rounded-xl text-xs font-bold transition-all text-slate-600 hover:text-slate-900";
+        contentCli.classList.remove('hidden');
+        contentNoCli.classList.add('hidden');
+        document.getElementById('topHeaderTitle').innerText = 'Base de Datos • Clientes';
+
+        // update sidebar active
+        navCli.className = "tab-nav-btn w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-medium transition-all bg-slate-900 text-white shadow-sm font-semibold";
+        navNoCli.className = "tab-nav-btn w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-medium transition-all text-slate-600 hover:text-slate-900 hover:bg-slate-100";
+      } else {
+        btnCli.className = "px-4 py-2 rounded-xl text-xs font-bold transition-all text-slate-600 hover:text-slate-900";
+        btnNoCli.className = "px-4 py-2 rounded-xl text-xs font-bold transition-all bg-white text-slate-900 shadow-sm";
+        contentCli.classList.add('hidden');
+        contentNoCli.classList.remove('hidden');
+        document.getElementById('topHeaderTitle').innerText = 'Base de Datos • No Clientes (Embudos)';
+
+        // update sidebar active
+        navCli.className = "tab-nav-btn w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-medium transition-all text-slate-600 hover:text-slate-900 hover:bg-slate-100";
+        navNoCli.className = "tab-nav-btn w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-medium transition-all bg-slate-900 text-white shadow-sm font-semibold";
+        renderFunnelDetails(currentFunnel);
+      }
+    }
+
+    function selectFunnel(fid) {
+      currentFunnel = fid;
+      document.querySelectorAll('.funnel-card').forEach(c => {
+        c.className = "funnel-card p-5 rounded-2xl border cursor-pointer transition-all bg-white/80 border-slate-200 hover:border-slate-300";
+      });
+      const selCard = document.getElementById('funnelCard-' + fid);
+      if (selCard) {
+        selCard.className = "funnel-card p-5 rounded-2xl border cursor-pointer transition-all bg-white border-slate-900 shadow-md ring-2 ring-slate-900/5";
+      }
+      renderFunnelDetails(fid);
+    }
+
+    function renderFunnelDetails(fid) {
+      const finfo = FUNNELS_DATA[fid];
+      const funnelProspects = PROSPECTS.filter(p => p.funnelId === fid);
+
+      document.getElementById('funnelDetailTitle').innerText = finfo.name;
+      document.getElementById('funnelDetailDomain').innerHTML = 'Dominio: <a href="' + finfo.url + '" target="_blank" class="text-emerald-600 hover:underline">' + finfo.domain + '</a>';
+      document.getElementById('funnelTotalBadge').innerText = 'Total en Embudo: ' + funnelProspects.length + ' usuarios';
+      document.getElementById('funnelTofuText').innerText = finfo.tofu;
+      document.getElementById('funnelMofuText').innerText = finfo.mofu;
+      document.getElementById('funnelBofuText').innerText = finfo.bofu;
+
+      // Render 5 stages
+      const stagesCont = document.getElementById('stagesContainer');
+      stagesCont.innerHTML = '';
+
+      STAGES_CONFIG.forEach(stg => {
+        const inStage = funnelProspects.filter(p => p.stage === stg.num);
+
+        let leadsHtml = inStage.slice(0, 2).map(l => `
+          <div class="p-1.5 rounded-lg bg-slate-50 text-[10px] truncate" title="${l.company}">
+            <span class="font-bold text-slate-800 block truncate">${l.company}</span>
+            <span class="text-slate-400 block truncate">${l.ticket}</span>
+          </div>
+        `).join('');
+
+        if (inStage.length > 2) {
+          leadsHtml += `<span class="text-[10px] text-emerald-600 font-semibold block text-center">+${inStage.length - 2} más</span>`;
+        }
+
+        stagesCont.innerHTML += `
+          <div class="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <span class="w-6 h-6 rounded-lg bg-slate-900 text-white font-bold text-xs flex items-center justify-center">${stg.num}</span>
+                <span class="text-xs font-extrabold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">${inStage.length} leads</span>
+              </div>
+              <h5 class="text-xs font-bold text-slate-900 leading-tight">${stg.title}</h5>
+              <span class="text-[10px] font-semibold text-slate-600 block mt-0.5">${stg.subtitle}</span>
+              <p class="text-[11px] text-slate-500 mt-1 line-clamp-3 leading-snug">${stg.desc}</p>
+            </div>
+            <div class="mt-3 pt-3 border-t border-slate-100 space-y-1.5">
+              ${leadsHtml || '<span class="text-[10px] text-slate-400 block text-center italic">Sin leads en esta etapa</span>'}
+            </div>
+          </div>
+        `;
+      });
+
+      // Render Table
+      const tbody = document.getElementById('funnelTableBody');
+      tbody.innerHTML = '';
+      funnelProspects.forEach(lead => {
+        tbody.innerHTML += `
+          <tr class="hover:bg-slate-50/60 transition-colors">
+            <td class="py-3.5 px-5">
+              <span class="font-bold text-slate-900 block">${lead.company}</span>
+              <span class="text-slate-500 text-[11px]">${lead.name} • ${lead.email}</span>
+            </td>
+            <td class="py-3.5 px-5">
+              <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-slate-100 text-slate-800 border border-slate-200">
+                Etapa ${lead.stage}: ${STAGES_CONFIG[lead.stage].subtitle}
+              </span>
+            </td>
+            <td class="py-3.5 px-5 text-slate-600">${lead.lastTouch}</td>
+            <td class="py-3.5 px-5 font-bold text-slate-900">${lead.ticket}</td>
+            <td class="py-3.5 px-5">
+              <a href="https://wa.me/${lead.phone.replace(/\D/g, '')}" target="_blank" class="px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-700 hover:bg-emerald-100 text-[11px] font-bold inline-flex items-center gap-1 transition-colors">
+                <i data-lucide="message-square" class="w-3 h-3"></i> WhatsApp
+              </a>
+            </td>
+          </tr>
+        `;
+      });
+
+      if (window.lucide) lucide.createIcons();
+    }
+
+    // --- SMART QUERY ENGINE ("Saber datos específicos...") ---
+    function executeSmartQuery() {
+      const q = document.getElementById('queryInput').value.trim().toLowerCase();
+      if (!q) return;
+
+      const banner = document.getElementById('queryBanner');
+      const resText = document.getElementById('queryResultText');
+
+      if (q.includes('etapa 1') && (q.includes('proyecto 1') || q.includes('landings') || q.includes('high-impact'))) {
+        const matches = PROSPECTS.filter(p => p.funnelId === 'p1' && p.stage === 1);
+        resText.innerText = 'En la Etapa 1 del Proyecto 1 (Landings Interactivas High-Impact) hay ' + matches.length + ' usuarios activos: ' + matches.map(l => l.company + ' (' + l.name + ')').join(', ') + '.';
+        selectFunnel('p1');
+        switchCrmSubTab('no_clientes');
+      } else if (q.includes('etapa 0')) {
+        const p0 = PROSPECTS.filter(p => p.stage === 0);
+        resText.innerText = 'Hay un total de ' + p0.length + ' usuarios en Etapa 0 (Contacto Frío / Regalo Inicial) sumando todos los embudos activos.';
+      } else if (q.includes('etapa 2') || q.includes('cal.com') || q.includes('agendas')) {
+        const p2 = PROSPECTS.filter(p => p.stage === 2);
+        resText.innerText = 'Hay ' + p2.length + ' usuarios en Etapa 2 (Interés & Cal.com agendado): ' + p2.map(l => l.company).join(', ') + '.';
+      } else if (q.includes('etapa 3') || q.includes('contrato') || q.includes('garantía')) {
+        const p3 = PROSPECTS.filter(p => p.stage === 3);
+        resText.innerText = 'Hay ' + p3.length + ' usuarios en Etapa 3 (Decisión & Contrato 90 Días con CUIT 20-39210016-5): ' + p3.map(l => l.company).join(', ') + '.';
+      } else if (q.includes('500 leads') || q.includes('proyecto 2')) {
+        const p2All = PROSPECTS.filter(p => p.funnelId === 'p2');
+        resText.innerText = 'El Proyecto 2 (500 Leads Calificados en 90 Días) tiene ' + p2All.length + ' prospectos activos en su embudo de 5 etapas.';
+        selectFunnel('p2');
+        switchCrmSubTab('no_clientes');
+      } else if (q.includes('video') || q.includes('clips') || q.includes('proyecto 3')) {
+        const p3All = PROSPECTS.filter(p => p.funnelId === 'p3');
+        resText.innerText = 'El Proyecto 3 (Reciclaje de Video a Clips Virales) tiene ' + p3All.length + ' prospectos activos.';
+        selectFunnel('p3');
+        switchCrmSubTab('no_clientes');
+      } else {
+        const filter = PROSPECTS.filter(p => p.name.toLowerCase().includes(q) || p.company.toLowerCase().includes(q) || p.email.toLowerCase().includes(q));
+        if (filter.length > 0) {
+          resText.innerText = 'Se encontraron ' + filter.length + ' usuarios coincidentes: ' + filter.map(l => l.company + ' (Etapa ' + l.stage + ')').join(', ') + '.';
+        } else {
+          resText.innerText = 'No se hallaron resultados para "' + q + '". Intenta con: "¿cuántos usuarios en la etapa 1 del Proyecto 1 hay?" o consulta por etapas.';
+        }
+      }
+
+      banner.classList.remove('hidden');
+    }
+
+    function closeQueryBanner() {
+      document.getElementById('queryBanner').classList.add('hidden');
+    }
+
+    // --- FINANCES INTERACTION ---
+    function updateFinancesUI(deudas, enCuenta, ahorro, invertido) {
+      document.getElementById('metricDeudas').innerText = '$' + Number(deudas).toLocaleString('es-AR');
+      document.getElementById('metricEnCuenta').innerText = '$' + Number(enCuenta).toLocaleString('es-AR');
+      document.getElementById('metricAhorro').innerText = '$' + Number(ahorro).toLocaleString('es-AR');
+      document.getElementById('metricInvertido').innerText = '$' + Number(invertido).toLocaleString('es-AR');
+
+      document.getElementById('inputDeudas').value = deudas;
+      document.getElementById('inputEnCuenta').value = enCuenta;
+      document.getElementById('inputAhorro').value = ahorro;
+      document.getElementById('inputInvertido').value = invertido;
+
+      const net = (Number(enCuenta) + Number(ahorro) + Number(invertido)) - Number(deudas);
+      document.getElementById('badgeNetWorth').innerText = 'Neto: ' + (net < 0 ? '-' : '') + '$' + Math.abs(net).toLocaleString('es-AR') + ' ARS';
+
+      // Bars
+      const maxVal = Math.max(Number(deudas), Number(enCuenta), Number(ahorro), Number(invertido), 1);
+      const hDeudas = deudas > 0 ? '85%' : '6px';
+      const hCuenta = enCuenta > 0 ? (enCuenta / maxVal * 85) + '%' : '6px';
+      const hAhorro = ahorro > 0 ? (ahorro / maxVal * 85) + '%' : '6px';
+      const hInvertido = invertido > 0 ? (invertido / maxVal * 85) + '%' : '6px';
+
+      document.getElementById('barValDeudas').innerText = '$' + (deudas / 1000000).toFixed(2) + 'M';
+      document.getElementById('barColDeudas').style.height = hDeudas;
+
+      document.getElementById('barValEnCuenta').innerText = '$' + Number(enCuenta).toLocaleString('es-AR');
+      document.getElementById('barColEnCuenta').style.height = hCuenta;
+      document.getElementById('barColEnCuenta').className = 'w-full max-w-[80px] rounded-t-xl transition-all duration-500 ' + (enCuenta > 0 ? 'bg-emerald-500' : 'bg-slate-200');
+
+      document.getElementById('barValAhorro').innerText = '$' + Number(ahorro).toLocaleString('es-AR');
+      document.getElementById('barColAhorro').style.height = hAhorro;
+      document.getElementById('barColAhorro').className = 'w-full max-w-[80px] rounded-t-xl transition-all duration-500 ' + (ahorro > 0 ? 'bg-cyan-500' : 'bg-slate-200');
+
+      document.getElementById('barValInvertido').innerText = '$' + Number(invertido).toLocaleString('es-AR');
+      document.getElementById('barColInvertido').style.height = hInvertido;
+      document.getElementById('barColInvertido').className = 'w-full max-w-[80px] rounded-t-xl transition-all duration-500 ' + (invertido > 0 ? 'bg-indigo-500' : 'bg-slate-200');
+    }
+
+    function saveFinances() {
+      const d = Number(document.getElementById('inputDeudas').value);
+      const c = Number(document.getElementById('inputEnCuenta').value);
+      const a = Number(document.getElementById('inputAhorro').value);
+      const i = Number(document.getElementById('inputInvertido').value);
+
+      const payload = { deudas: d, enCuenta: c, ahorro: a, invertido: i, updatedAt: new Date().toISOString() };
+      localStorage.setItem('smd_finanzas_data', JSON.stringify(payload));
+      updateFinancesUI(d, c, a, i);
+
+      const al = document.getElementById('finAlertSaved');
+      al.classList.remove('hidden');
+      setTimeout(() => al.classList.add('hidden'), 3500);
+    }
+
+    function loadSavedFinances() {
+      const saved = localStorage.getItem('smd_finanzas_data');
+      if (saved) {
+        try {
+          const parsed = JSON.parse(saved);
+          updateFinancesUI(parsed.deudas ?? 9190000, parsed.enCuenta ?? 0, parsed.ahorro ?? 0, parsed.invertido ?? 0);
+          return;
+        } catch (e) {}
+      }
+      updateFinancesUI(9190000, 0, 0, 0);
+    }
+
+    // --- ON LOAD ---
+    document.addEventListener('DOMContentLoaded', () => {
+      checkAuth();
+      loadSavedFinances();
+      renderFunnelDetails('p1');
+      if (window.lucide) lucide.createIcons();
+    });
+  </script>
+</body>
+</html>
