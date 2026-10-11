@@ -6,8 +6,7 @@ export function middleware(request: NextRequest) {
   const host = request.headers.get('host') || '';
 
   if (url.pathname === '/ventas' || url.pathname === '/ventas/') {
-    url.pathname = '/ventas.html';
-    return NextResponse.rewrite(url);
+    return NextResponse.redirect(new URL('/ventas.html', request.url));
   }
 
   if (host.startsWith('500.') || host.startsWith('www.500.')) {
