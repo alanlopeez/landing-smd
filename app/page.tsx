@@ -6,6 +6,8 @@ import HowItWorksSection from "../components/HowItWorksSection";
 import PortfolioSection from "../components/PortfolioSection";
 import AboutMeSection from "../components/AboutMeSection";
 import FooterLegal from "../components/FooterLegal";
+import RecurringCarePlansSection from "../components/RecurringCarePlansSection";
+import MarketingStackIntegrationSection from "../components/MarketingStackIntegrationSection";
 import RedesignLeadModal from "../components/RedesignLeadModal";
 
 export default function HomePage() {
@@ -25,6 +27,12 @@ export default function HomePage() {
 
       {/* 3. Sección: Portfolio Oficial (Webs y proyectos producidos) */}
       <PortfolioSection onOpenLeadModal={handleOpenLeadModal} />
+
+            {/* Nuevo Módulo de Stack e Integraciones Nativas (CRMs, Analítica y Webhooks) */}
+      <MarketingStackIntegrationSection />
+
+      {/* Nuevo Módulo de Planes Mensuales de Mantenimiento Continuo, CRO y Growth */}
+      <RecurringCarePlansSection onOpenLeadModal={handleOpenLeadModal} />
 
       {/* 4. Sección: Sobre mí (Alan López, Productor Digital) */}
       <AboutMeSection onOpenLeadModal={handleOpenLeadModal} />
