@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const ContentSecurityPolicy = `
   default-src 'self';
-  script-src 'self' https://unpkg.com 'unsafe-inline' 'unsafe-eval' https://vercel.live https://www.googletagmanager.com https://*.googletagmanager.com https://*.google-analytics.com https://googleads.g.doubleclick.net https://*.google.com https://crm.serviciodemarketingdigital.com https://connect.facebook.net http://localhost:3000 http://127.0.0.1:3000;
+  script-src 'self' https://unpkg.com https://cdn.tailwindcss.com 'unsafe-inline' 'unsafe-eval' https://vercel.live https://www.googletagmanager.com https://*.googletagmanager.com https://*.google-analytics.com https://googleads.g.doubleclick.net https://*.google.com https://crm.serviciodemarketingdigital.com https://connect.facebook.net http://localhost:3000 http://127.0.0.1:3000;
   style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
   font-src 'self' https://fonts.gstatic.com data:;
   img-src 'self' https://api.qrserver.com data: https: blob: https://www.google.com https://www.google.com.ar https://googleads.g.doubleclick.net https://*.google-analytics.com https://*.googletagmanager.com https://*.ytimg.com https://i.ytimg.com https://www.facebook.com https://*.facebook.com;
