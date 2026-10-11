@@ -1147,7 +1147,7 @@
 
         navCli.className = "tab-nav-btn w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-medium transition-all text-slate-600 hover:text-slate-900 hover:bg-slate-100";
         navNoCli.className = "tab-nav-btn w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-medium transition-all bg-slate-900 text-white shadow-sm font-semibold";
-        renderFunnelDetails(currentFunnel);
+        renderFunnelDetails(currentFunnel); loadLiveLeadsFromApi(); setInterval(loadLiveLeadsFromApi, 8000);
       }
     }
 
@@ -1231,7 +1231,11 @@
         tbody.innerHTML += `
           <tr class="hover:bg-slate-50/60 transition-colors">
             <td class="py-3.5 px-4">
-              <span class="font-bold text-slate-900 block">${lead.company}</span>
+              <div class="flex items-center gap-2 mb-0.5">
+                <span class="font-bold text-slate-900">${lead.company}</span>
+                ${lead.channels && lead.channels.includes('whatsapp') ? '<span title="Canal WhatsApp activo" class="px-1.5 py-0.2 rounded bg-emerald-100 text-emerald-800 text-[9px] font-bold border border-emerald-200">WPP</span>' : ''}
+                ${lead.channels && lead.channels.includes('email') ? '<span title="Canal Email activo" class="px-1.5 py-0.2 rounded bg-cyan-100 text-cyan-800 text-[9px] font-bold border border-cyan-200">MAIL</span>' : ''}
+              </div>
               <span class="text-slate-500 text-[11px]">${lead.name} • ${lead.email}</span>
             </td>
             <td class="py-3.5 px-4">
@@ -1266,140 +1270,95 @@
       if (window.lucide) lucide.createIcons();
     }
 
-    function changeLeadStage(leadId, newStage) {
+    async function loadLiveLeadsFromApi() {
+      try {
+        const res = await fetch('/api/leads');
+        if (res.ok) {
+          const data = await res.json();
+          if (data.leads && data.leads.length > 0) {
+            PROSPECTS = data.leads.map(l => ({
+              id: l.id,
+              name: l.name,
+              company: l.company,
+              email: l.email || "Sin email",
+              phone: l.phone || "Sin teléfono",
+              channels: l.channels || ["whatsapp"],
+              funnelId: l.funnelId || "p2",
+              stage: l.stage !== undefined ? l.stage : 0,
+              lastTouch: l.lastTouch || "Interacción registrada",
+              ticket: l.ticketEstimated || "$3.500.000 ARS",
+              history: l.history || []
+            }));
+            renderFunnelDetails(currentFunnel);
+          }
+        }
+      } catch (err) {
+        console.warn("API de leads en espera:", err);
+      }
+    }
+
+    async function changeLeadStage(leadId, newStage) {
       const idx = PROSPECTS.findIndex(p => p.id === leadId);
+      const stg = Number(newStage);
       if (idx !== -1) {
-        PROSPECTS[idx].stage = Number(newStage);
-        if (Number(newStage) === 1) {
+        PROSPECTS[idx].stage = stg;
+        if (stg === 1) {
           PROSPECTS[idx].lastTouch = "⚡ MOFU: Contacto escribió por WhatsApp para sacarse una duda. Conversación activa.";
         }
         renderFunnelDetails(currentFunnel);
       }
+      try {
+        await fetch('/api/leads', {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id: leadId, stage: stg })
+        });
+      } catch (e) {
+        console.error("Error guardando etapa en servidor:", e);
+      }
     }
 
-    function executeSmartQuery() {
-      const q = document.getElementById('queryInput').value.trim().toLowerCase();
-      if (!q) return;
+    function openLeadHistory(leadId) {
+      const lead = PROSPECTS.find(x => x.id === leadId);
+      if (!lead) return;
+      document.getElementById('historyModalName').innerText = lead.name + ' • ' + lead.company;
+      document.getElementById('historyModalContact').innerText = (lead.email || '') + ' | ' + (lead.phone ? '+' + lead.phone : '');
+      const histContainer = document.getElementById('historyModalTimeline');
+      histContainer.innerHTML = '';
 
-      const banner = document.getElementById('queryBanner');
-      const resText = document.getElementById('queryResultText');
-
-      if (q.includes('etapa 0') || q.includes('frio') || q.includes('lancha')) {
-        const matches = PROSPECTS.filter(p => p.stage === 0);
-        resText.innerText = 'Hay ' + matches.length + ' usuario en Etapa 0 (Contacto Frío / Regalo Inicial): ' + matches.map(l => l.company + ' (' + l.name + ')').join(', ') + '.';
-        selectFunnel('p2');
-        filterByStage(0);
-        switchCrmSubTab('no_clientes');
-      } else if (q.includes('etapa 1') || q.includes('mofu')) {
-        const matches = PROSPECTS.filter(p => p.stage === 1);
-        resText.innerText = 'Hay ' + matches.length + ' usuarios en Etapa 1 (Consciencia / MOFU).';
+      if (!lead.history || lead.history.length === 0) {
+        histContainer.innerHTML = '<p class="text-xs text-slate-400 py-4 text-center">No hay interacciones adicionales registradas.</p>';
       } else {
-        const filter = PROSPECTS.filter(p => p.name.toLowerCase().includes(q) || p.company.toLowerCase().includes(q));
-        if (filter.length > 0) {
-          resText.innerText = 'Se encontraron ' + filter.length + ' usuarios: ' + filter.map(l => l.company + ' (' + l.email + ')').join(', ') + '.';
-        } else {
-          resText.innerText = 'No se hallaron resultados para "' + q + '". Actualmente solo está registrado el Lead #1 de Alan (Venta de lanchas).';
-        }
+        lead.history.forEach(item => {
+          const isWpp = item.channel === 'whatsapp';
+          const isOut = item.direction === 'outbound';
+          const badgeClass = isWpp ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' : 'bg-cyan-500/10 text-cyan-400 border-cyan-500/20';
+          const dirText = isOut ? 'Respuesta Bot / Enviado' : 'Mensaje Lead / Entrante';
+          const dateStr = new Date(item.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+          histContainer.innerHTML += `
+            <div class="relative pl-6 pb-4 border-l-2 border-slate-700/60 last:border-l-0">
+              <div class="absolute -left-1.5 top-0 w-3 h-3 rounded-full ${isOut ? 'bg-emerald-500' : 'bg-cyan-500'}"></div>
+              <div class="flex items-center gap-2 mb-1">
+                <span class="px-2 py-0.5 rounded text-[10px] font-bold border ${badgeClass}">
+                  ${item.channel.toUpperCase()}
+                </span>
+                <span class="text-[11px] font-semibold text-slate-300">${dirText}</span>
+                <span class="text-[10px] text-slate-500 ml-auto">${dateStr}</span>
+              </div>
+              <div class="bg-slate-800/60 p-2.5 rounded-xl text-xs text-slate-200 border border-slate-700/50 whitespace-pre-wrap">
+                ${item.message}
+              </div>
+            </div>
+          `;
+        });
       }
-      banner.classList.remove('hidden');
-    }
-
-    function closeQueryBanner() {
-      document.getElementById('queryBanner').classList.add('hidden');
-    }
-
-    // Finances UI
-    function updateFinancesUI(deudas, enCuenta, ahorro, invertido) {
-      document.getElementById('metricDeudas').innerText = '$' + Number(deudas).toLocaleString('es-AR');
-      document.getElementById('metricEnCuenta').innerText = '$' + Number(enCuenta).toLocaleString('es-AR');
-      document.getElementById('metricAhorro').innerText = '$' + Number(ahorro).toLocaleString('es-AR');
-      document.getElementById('metricInvertido').innerText = '$' + Number(invertido).toLocaleString('es-AR');
-
-      document.getElementById('inputDeudas').value = deudas;
-      document.getElementById('inputEnCuenta').value = enCuenta;
-      document.getElementById('inputAhorro').value = ahorro;
-      document.getElementById('inputInvertido').value = invertido;
-
-      const net = (Number(enCuenta) + Number(ahorro) + Number(invertido)) - Number(deudas);
-      document.getElementById('badgeNetWorth').innerText = 'Neto: ' + (net < 0 ? '-' : '') + '$' + Math.abs(net).toLocaleString('es-AR') + ' ARS';
-
-      const maxVal = Math.max(Number(deudas), Number(enCuenta), Number(ahorro), Number(invertido), 1);
-      const hDeudas = deudas > 0 ? '85%' : '6px';
-      const hCuenta = enCuenta > 0 ? (enCuenta / maxVal * 85) + '%' : '6px';
-      const hAhorro = ahorro > 0 ? (ahorro / maxVal * 85) + '%' : '6px';
-      const hInvertido = invertido > 0 ? (invertido / maxVal * 85) + '%' : '6px';
-
-      document.getElementById('barValDeudas').innerText = '$' + (deudas / 1000000).toFixed(2) + 'M';
-      document.getElementById('barColDeudas').style.height = hDeudas;
-
-      document.getElementById('barValEnCuenta').innerText = '$' + Number(enCuenta).toLocaleString('es-AR');
-      document.getElementById('barColEnCuenta').style.height = hCuenta;
-      document.getElementById('barColEnCuenta').className = 'w-full max-w-[80px] rounded-t-xl transition-all duration-500 ' + (enCuenta > 0 ? 'bg-emerald-500' : 'bg-slate-200');
-
-      document.getElementById('barValAhorro').innerText = '$' + Number(ahorro).toLocaleString('es-AR');
-      document.getElementById('barColAhorro').style.height = hAhorro;
-      document.getElementById('barColAhorro').className = 'w-full max-w-[80px] rounded-t-xl transition-all duration-500 ' + (ahorro > 0 ? 'bg-cyan-500' : 'bg-slate-200');
-
-      document.getElementById('barValInvertido').innerText = '$' + Number(invertido).toLocaleString('es-AR');
-      document.getElementById('barColInvertido').style.height = hInvertido;
-      document.getElementById('barColInvertido').className = 'w-full max-w-[80px] rounded-t-xl transition-all duration-500 ' + (invertido > 0 ? 'bg-indigo-500' : 'bg-slate-200');
-    }
-
-    function saveFinances() {
-      const d = Number(document.getElementById('inputDeudas').value);
-      const c = Number(document.getElementById('inputEnCuenta').value);
-      const a = Number(document.getElementById('inputAhorro').value);
-      const i = Number(document.getElementById('inputInvertido').value);
-
-      const payload = { deudas: d, enCuenta: c, ahorro: a, invertido: i, updatedAt: new Date().toISOString() };
-      localStorage.setItem('smd_finanzas_data', JSON.stringify(payload));
-      updateFinancesUI(d, c, a, i);
-
-      const al = document.getElementById('finAlertSaved');
-      al.classList.remove('hidden');
-      setTimeout(() => al.classList.add('hidden'), 3500);
-    }
-
-    function loadSavedFinances() {
-      const saved = localStorage.getItem('smd_finanzas_data');
-      if (saved) {
-        try {
-          const parsed = JSON.parse(saved);
-          updateFinancesUI(parsed.deudas ?? 9190000, parsed.enCuenta ?? 0, parsed.ahorro ?? 0, parsed.invertido ?? 0);
-          return;
-        } catch (e) {}
-      }
-      updateFinancesUI(9190000, 0, 0, 0);
-    }
-
-    function openNewLeadModal() {
-      const comp = prompt("Nombre de la Empresa / Negocio:");
-      if (!comp) return;
-      const contact = prompt("Nombre del Contacto:") || "Contacto";
-      const email = prompt("Email del Lead:") || "lead@ejemplo.com";
-      const phone = prompt("WhatsApp / Teléfono:") || "+54911...";
-
-      PROSPECTS.push({
-        id: "lead-" + Date.now(),
-        name: contact,
-        company: comp,
-        email: email,
-        phone: phone,
-        funnelId: currentFunnel,
-        stage: 0,
-        lastTouch: "Registrado manualmente / Consulta recibida",
-        ticket: currentFunnel === 'p2' ? '$3.500.000 ARS' : currentFunnel === 'p1' ? '$1.450.000 ARS' : '$690.000 ARS'
-      });
-
-      renderFunnelDetails(currentFunnel);
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      checkAuth();
-      loadSavedFinances();
-      selectFunnel('p2'); // Start directly on P2 500 Leads
       if (window.lucide) lucide.createIcons();
-    });
-  </script>
-</body>
-</html>
+      document.getElementById('historyModal').classList.remove('hidden');
+    }
+
+    function closeLeadHistory() {
+      document.getElementById('historyModal').classList.add('hidden');
+    }
+
+    
