@@ -10,8 +10,7 @@ export function middleware(request: NextRequest) {
   }
 
   if (url.pathname === '/500' || url.pathname === '/500/') {
-    url.pathname = '/500/index.html';
-    return NextResponse.rewrite(url);
+    return NextResponse.redirect(new URL('/500/index.html', request.url));
   }
 
   if (host.startsWith('500.') || host.startsWith('www.500.')) {
