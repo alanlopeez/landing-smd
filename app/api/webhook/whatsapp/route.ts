@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import { stitchOrCreateLead, UNIFIED_LEADS } from "@/lib/leadsStore";
-import { findBestResponse, ConversationResponse } from "@/lib/conversationRepository";
 import { syncLeadWithChatwoot } from "@/lib/chatwootClient";
 
 export const dynamic = "force-dynamic";
@@ -20,86 +19,121 @@ interface BurstItem {
 }
 const burstBuffer = new Map<string, BurstItem>();
 
-// Prompt del Asesor Comercial Consultivo Humano con Repositorio de Respuestas
-const SYSTEM_PROMPT = `Sos el asesor comercial consultivo de Alan López en Servicio de Marketing Digital (Buenos Aires, Argentina).
-Estás chateando por WhatsApp con un dueño de negocio o prospecto real.
+// SYSTEM PROMPT OFICIAL: ASISTENTE DE VENTAS Y CALIFICACIÓN (WHATSAPP)
+const SYSTEM_PROMPT = `# SYSTEM PROMPT: ASISTENTE DE VENTAS Y CALIFICACIÓN (WHATSAPP)
 
-REGLAS DE ORO OBLIGATORIAS:
-1. RESPUESTAS ULTRACORTAS: Máximo 2 a 3 oraciones cortas (35 a 45 palabras en total). En WhatsApp los mensajes largos parecen spam y nadie los lee.
-2. TONO 100% HUMANO Y NATURAL: Cercano, empático, profesional argentino ("Hola Alan, ¿cómo estás?", "Totalmente", "De una", "Te entiendo"). Cero lenguaje corporativo rígido.
-3. DIVULGACIÓN PROGRESIVA Y BASADA EN EL REPOSITORIO:
-   - Apoyate siempre en la "Respuesta Canónica Aprobada" del repositorio que se te proporciona para cada intención.
-   - NUNCA pegues links de pago de entrada, a menos que el usuario pregunte explícitamente precios o cómo reservar.
-   - Si pregunta por la garantía: explicá la extensión gratis sin costo o devolución proporcional, firmado por contrato (CUIT 20-39210016-5).
-   - Si pregunta por ad spend: explicá que la pauta publicitaria corre por cuenta del cliente directo en sus cuentas de Meta/Google para deducir impuestos.
-   - Si pide llamada o coordinar: pasale el link oficial de Cal.com: https://cal.com/alan-lopez/15min
-4. CIERRE CONVERSACIONAL: Cada respuesta tuya DEBE terminar siempre con UNA sola pregunta corta para mantener la conversación viva y fácil de contestar.`;
+## 1. ROL E IDENTIDAD
+Eres el asistente de admisiones y ventas de Alan López en **Servicio de Marketing Digital (SMD)**.
+Tu función es atender a los contactos que llegan por WhatsApp, diagnosticar rápidamente su necesidad comercial, recomendar el servicio adecuado entre los 3 disponibles, guiarlos por las etapas del embudo de calificación y derivar oportunamente con Alan para el cierre.
 
-/**
- * Función para inferir etiquetas (labels) a partir del texto y la categoría detectada
- */
-function inferLabels(text: string, category: string, stage: number): string[] {
-  const lower = text.toLowerCase();
-  const labels: Set<string> = new Set();
+### Tono y estilo de comunicación:
+- **Profesional, ágil y conversacional:** Escribes como un asesor humano en WhatsApp.
+- **Conciso:** No envíes bloques largos de texto. Máximo 2 a 4 párrafos cortos por mensaje.
+- **Una pregunta por turno:** Cada interacción debe terminar con una única pregunta clara para mantener el control de la conversación.
+- **Formato WhatsApp:** Usa negritas con *texto* para resaltar palabras clave. No utilices tablas, títulos con almohadillas (#) ni listas interminables.
 
-  // Etiqueta de Etapa Comercial
-  labels.add(`etapa-${stage}`);
+---
 
-  // Etiquetas por Categoría e Intención
-  if (category === "saludo") labels.add("contacto-inicial");
-  if (category === "calificacion") labels.add("en-calificacion");
-  if (category === "oferta_500leads" || lower.includes("500") || lower.includes("leads")) {
-    labels.add("interes-500leads");
-  }
-  if (category === "oferta_landing" || lower.includes("landing") || lower.includes("web") || lower.includes("sitio")) {
-    labels.add("interes-landing-web");
-  }
-  if (category === "oferta_video" || lower.includes("video") || lower.includes("reels") || lower.includes("tiktok")) {
-    labels.add("interes-video-social");
-  }
-  if (category === "objecion_garantia" || lower.includes("garantia") || lower.includes("garantía")) {
-    labels.add("objecion-garantia");
-  }
-  if (category === "objecion_adspend" || lower.includes("publicidad") || lower.includes("pauta") || lower.includes("anuncio")) {
-    labels.add("consulta-adspend");
-  }
-  if (category === "objecion_precio" || lower.includes("precio") || lower.includes("cuanto sale") || lower.includes("costo") || lower.includes("cuánto")) {
-    labels.add("consulta-precio");
-  }
-  if (category === "cierre_reserva" || lower.includes("seña") || lower.includes("pagar") || lower.includes("transferencia") || lower.includes("tarjeta")) {
-    labels.add("intencion-pago-seña");
-  }
-  if (category === "cierre_llamada" || lower.includes("llamada") || lower.includes("reunion") || lower.includes("reunión") || lower.includes("zoom")) {
-    labels.add("solicita-llamada");
-  }
+## 2. CATÁLOGO DE SERVICIOS
 
-  // Criterios de Calificación ICP
-  if (
-    lower.includes("empresa") ||
-    lower.includes("fabrica") ||
-    lower.includes("fábrica") ||
-    lower.includes("distribuidora") ||
-    lower.includes("lanchas") ||
-    lower.includes("inmobiliaria") ||
-    lower.includes("constructora")
-  ) {
-    labels.add("lead-calificado-icp");
-  }
+### Servicio 1: Rediseño / Landing Page Interactiva
+- **Para quién es:** Negocios, profesionales o startups que no tienen página web o cuya web actual no genera conversiones, o que preparan un lanzamiento.
+- **Oferta:** Diseño interactivo de alta conversión con prototipo navegable entregado en 48 horas y versión final lista en 3 a 5 días hábiles.
+- **Precio:** USD $490 (pago único).
+- **Garantía:** Fidelidad total de diseño y optimización de velocidad.
 
-  return Array.from(labels);
-}
+### Servicio 2: Máquina de Ventas Digital (500 Leads en 90 Días)
+- **Para quién es:** Empresas B2B, marcas consolidadas o servicios de ticket medio/alto que ya cuentan con equipo comercial activo para atender llamadas y WhatsApp.
+- **Oferta:** Sistema llave en mano instalado en 72 horas (embudo Next.js en Vercel Edge + Chatbot WhatsApp con IA + campañas en Meta/Google).
+- **Precio:** Inversión total de $3.500.000 ARS (o equivalente en USD). Opciones: Seña de reserva de $350.000 ARS (10%) para exclusividad de nicho, o 2 cuotas de $1.750.000 ARS.
+- **Garantía contractual:** 500 prospectos calificados en 90 días o se reembolsa el 100% del dinero por contrato legal, o se trabaja gratis hasta cumplirlos.
 
-// Función para llamar a Gemini Flash con inyección del Repositorio de Respuestas y contexto histórico
+### Servicio 3: Video Repurposing DFY (Clips Cortos Virales)
+- **Para quién es:** Creadores, podcasters, YouTubers, coaches y marcas con videos largos existentes (webinars, podcast, entrevistas) que no tienen tiempo de editar.
+- **Oferta:** Transformación de video largo a clips verticales (9:16) con ganchos virales, subtítulos dinámicos y diseño de sonido. Entregas en 48-72h.
+- **Gancho de entrada:** 1 clip demo 100% gratuito y sin compromiso a partir de un video del cliente.
+- **Precio:** Cotización según volumen de clips mensuales, sin contratos de permanencia.
+
+---
+
+## 3. ETAPAS DEL EMBUDO Y REGLAS DE CALIFICACIÓN
+
+Debes evaluar el avance de cada conversación y asignarle estrictamente una de las siguientes etapas:
+
+1. `nuevo contacto`
+   - El usuario inicia la conversación o saluda.
+   - **Acción:** Dar la bienvenida amablemente y hacer una pregunta abierta para identificar su modelo de negocio y necesidad principal.
+
+2. `solicito una demo`
+   - El usuario muestra interés en ver cómo funciona un servicio (pide ver prototipos de landing, solicita el video explicativo de la máquina de 500 leads o pide el clip de prueba de video).
+   - **Acción:** Si es video, pedir el enlace de su video largo para la demo gratuita. Si es landing o leads, compartir el enlace al proyecto/video demostrativo correspondiente.
+
+3. `demo enviada`
+   - Ya se le proporcionó el enlace de prueba, el video demostrativo de 3 minutos de la máquina de leads o el cliente envió el material para procesar su clip gratuito.
+   - **Acción:** Preguntar qué le pareció el material y validar si se adapta a lo que busca implementar.
+
+4. `solicito un presupuesto`
+   - El usuario pregunta explícitamente por precios, modalidades de pago, planes mensuales o condiciones de contratación.
+   - **Acción:** Presentar los valores oficiales con total transparencia y explicar qué incluye la inversión.
+
+5. `presupuesto enviado`
+   - Se le detallaron los importes (ej. USD $490 para Landing, los planes del servicio 500 leads o los paquetes de video).
+   - **Acción:** Resolver dudas puntuales y consultar la fecha estimada en la que desean poner en marcha el proyecto.
+
+6. `cliente cerrado`
+   - El cliente confirma que desea contratar, pide datos bancarios, enlace de pago (Mercado Pago / Stripe) o solicita el contrato legal.
+   - **Acción:** Facilitar los datos de pago/reserva o coordinar el traspaso con Alan para la firma del acuerdo.
+
+7. `cliente mensual`
+   - El cliente contrató un plan recurrente (mantenimiento de funnels, pauta publicitaria continua o paquete mensual de clips de video).
+   - **Acción:** Brindar soporte de seguimiento y canalizar solicitudes operativas.
+
+---
+
+## 4. PROTOCOLO DE INTERACCIÓN PASO A PASO
+
+1. **Fase de Diagnóstico Inicial:**
+   - Averigua a qué se dedica su negocio y cuál es su cuello de botella actual:
+     * ¿Falta de visitas/conversión en su web? -> Rediseño Landing ($490 USD).
+     * ¿Tienen equipo comercial pero faltan prospectos B2B calificados? -> Máquina 500 Leads.
+     * ¿Generan contenido largo pero no tienen presencia en Reels/TikTok/Shorts? -> Video Repurposing (Demo Gratis).
+
+2. **Manejo de Dudas Frecuentes:**
+   - **Sobre la garantía de 500 leads:** Explicar que está respaldada por contrato legal. Si no se alcanza la cifra en 90 días, se devuelve el 100% de los fondos o se continúa trabajando sin coste.
+   - **Sobre los plazos de la landing:** El prototipo navegable se entrega en 48 horas para revisión y la web se despliega en 3 a 5 días hábiles.
+   - **Sobre el clip de video:** Reiterar que el primer clip es sin coste ni tarjeta de crédito, simplemente enviando un enlace de Drive o YouTube.
+
+3. **Derivación Humana:**
+   - Si el cliente solicita una llamada personalizada previa al contrato, plantea requisitos atípicos o desea abonar mediante transferencia corporativa específica, indícale que Alan tomará el chat directamente para coordinar los detalles.
+
+---
+
+## 5. FORMATO OBLIGATORIO DE RESPUESTA
+
+En **cada mensaje que generes**, debes incluir un encabezado técnico en la primera línea para que el CRM procese el estado del lead, seguido del mensaje destinado al usuario.
+
+Usa exactamente esta estructura:
+
+[TAGS_CRM: {"etapa": "<nombre_de_la_etapa>", "servicio_sugerido": "<Landing | 500 Leads | Video Repurposing | Indeciso>", "accion_requerida": "<esperar_respuesta | enviar_link_pago | notificar_a_alan>"}]
+(dos saltos de línea y el mensaje para el usuario)`;
+
+// Mapa de etapas a índices numéricos
+const STAGE_NAME_MAP: Record<string, number> = {
+  "nuevo contacto": 0,
+  "solicito una demo": 1,
+  "demo enviada": 2,
+  "solicito un presupuesto": 3,
+  "presupuesto enviado": 4,
+  "cliente cerrado": 5,
+  "cliente mensual": 6,
+};
+
+// Función para llamar a Gemini Flash con inyección del nuevo system prompt
 async function callGeminiFlash(
   lead: any,
   contactName: string,
-  burstText: string,
-  repositoryMatch: {
-    matchedResponse: ConversationResponse;
-    recommendedText: string;
-    suggestedStage: number;
-  }
-): Promise<string> {
+  burstText: string
+): Promise<{ cleanReply: string; tagsCrm: { etapa: string; servicio_sugerido: string; accion_requerida: string } }> {
   const historySnippet = (lead?.history || [])
     .slice(-8)
     .map((h: any) => `${h.direction === "inbound" ? "Usuario" : "Asesor"}: ${h.message}`)
@@ -107,24 +141,23 @@ async function callGeminiFlash(
 
   const promptText = `${SYSTEM_PROMPT}
 
-DATOS DEL CONTACTO:
+---
+CONTEXTO DEL PROSPECTO:
 Nombre: ${lead?.name || contactName}
-Rubro/Empresa: ${lead?.company || "Negocio"}
-Etapa Actual del Lead: Etapa ${lead?.stage ?? 0} (0: Saludo -> 1: Calificado -> 2: Oferta -> 3: Objeción -> 4: Cierre)
+Rubro/Empresa actual: ${lead?.company || "Por calificar"}
+Etapa previa en CRM: ${lead?.stageName || "nuevo contacto"}
+Etiquetas previas: ${(lead?.tags || []).join(", ") || "Ninguna"}
 
-REPOSITORIO DE RESPUESTAS APROBADAS (GUÍA EXACTA PARA ESTA INTENCIÓN):
-- Título: ${repositoryMatch.matchedResponse.title}
-- Categoría: ${repositoryMatch.matchedResponse.category}
-- Respuesta Canónica Aprobada: "${repositoryMatch.recommendedText}"
-- Datos Clave Inmutables: ${repositoryMatch.matchedResponse.keyFacts.join(", ")}
+HISTORIAL RECIENTE DE LA CONVERSACIÓN:
+${historySnippet || "Sin historial previo (primer contacto)."}
 
-HISTORIAL RECIENTE:
-${historySnippet || "Sin historial previo."}
-
-MENSAJES RECIÉN ENVIADOS POR EL USUARIO:
+MENSAJE(S) ENVIADO(S) AHORA POR EL USUARIO:
 ${burstText}
 
-INSTRUCCIÓN: Respondé al usuario utilizando la guía de la Respuesta Canónica Aprobada. Máximo 2 a 3 oraciones cortas en tono argentino natural, terminando con 1 sola pregunta:`;
+INSTRUCCIÓN:
+Genera tu respuesta en el formato obligatorio:
+Línea 1: [TAGS_CRM: {"etapa": "...", "servicio_sugerido": "...", "accion_requerida": "..."}]
+Líneas siguientes: Tu respuesta concisa en tono humano conversacional de WhatsApp (2 a 4 párrafos cortos, usando *negritas*, terminando con UNA sola pregunta clara):`;
 
   const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=${GEMINI_API_KEY}`;
   const payload = {
@@ -135,8 +168,8 @@ INSTRUCCIÓN: Respondé al usuario utilizando la guía de la Respuesta Canónica
       },
     ],
     generationConfig: {
-      maxOutputTokens: 120,
-      temperature: 0.65,
+      maxOutputTokens: 250,
+      temperature: 0.6,
     },
   };
 
@@ -147,17 +180,46 @@ INSTRUCCIÓN: Respondé al usuario utilizando la guía de la Respuesta Canónica
       body: JSON.stringify(payload),
     });
     const data: any = await res.json();
-    let text = data?.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || "";
+    let rawText = data?.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || "";
 
-    // Fallback defensivo: si Gemini falla o devuelve vacío, usamos directamente la respuesta aprobada del repositorio
-    if (!text) {
-      text = repositoryMatch.recommendedText;
+    // Parsear encabezado [TAGS_CRM: {...}]
+    let tagsCrm = {
+      etapa: "nuevo contacto",
+      servicio_sugerido: "Indeciso",
+      accion_requerida: "esperar_respuesta",
+    };
+
+    const tagMatch = rawText.match(/\[TAGS_CRM:\s*(\{.*?\})\s*\]/i);
+    if (tagMatch) {
+      try {
+        const parsed = JSON.parse(tagMatch[1]);
+        tagsCrm = {
+          etapa: parsed.etapa || "nuevo contacto",
+          servicio_sugerido: parsed.servicio_sugerido || "Indeciso",
+          accion_requerida: parsed.accion_requerida || "esperar_respuesta",
+        };
+      } catch (err) {}
     }
 
-    return text;
-  } catch (err) {
-    console.error("Error llamando a Gemini Flash:", err);
-    return repositoryMatch.recommendedText;
+    // Limpiar mensaje para enviar al usuario de WhatsApp sin el header técnico
+    let cleanReply = rawText.replace(/\[TAGS_CRM:\s*\{.*?\}\s*\]\s*/gi, "").trim();
+
+    // Fallback si vino vacío
+    if (!cleanReply) {
+      cleanReply = "¡Hola! Un gusto saludarte. 👋 Soy el asesor del equipo de Alan López en *Servicio de Marketing Digital*.\n\nPara orientarte de la forma más precisa, ¿a qué rubro se dedica tu negocio y qué objetivo te gustaría acelerar este mes?";
+    }
+
+    return { cleanReply, tagsCrm };
+  } catch (err: any) {
+    console.error("Error llamando a Gemini Flash:", err.message);
+    return {
+      cleanReply: "¡Hola! Un gusto saludarte. 👋 Soy el asesor del equipo de Alan López en *Servicio de Marketing Digital*.\n\nPara orientarte de la forma más precisa, ¿a qué rubro se dedica tu negocio y qué objetivo te gustaría acelerar este mes?",
+      tagsCrm: {
+        etapa: "nuevo contacto",
+        servicio_sugerido: "Indeciso",
+        accion_requerida: "esperar_respuesta",
+      },
+    };
   }
 }
 
@@ -176,7 +238,7 @@ export async function GET(req: NextRequest) {
   return new Response("Forbidden", { status: 403 });
 }
 
-// POST para recepción de mensajes con Debounce Buffer, Repositorio de Respuestas y Sincronización Chatwoot
+// POST para recepción de mensajes con Debounce Buffer y Sistema de Calificación
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
@@ -212,7 +274,7 @@ export async function POST(req: NextRequest) {
               }),
             }).catch((e) => console.warn("Error marcando leído:", e));
 
-            // 2. Acumular en el Debounce Buffer por teléfono
+            // 2. Acumular en el Debounce Buffer por teléfono (4 segundos)
             let item = burstBuffer.get(cleanTo);
             const now = Date.now();
             if (!item) {
@@ -227,7 +289,7 @@ export async function POST(req: NextRequest) {
               item.lastArrival = now;
             }
 
-            // 3. Ventana de espera inteligente (4 segundos para captar mensajes múltiples en ráfaga)
+            // 3. Ventana de espera inteligente
             await new Promise((r) => setTimeout(r, 4000));
 
             // Si llegó un mensaje más nuevo durante los 4 segundos, este hilo cede el turno
@@ -257,28 +319,24 @@ export async function POST(req: NextRequest) {
               message: consolidatedBurst,
             });
 
-            // 5. Consultar el Repositorio de Respuestas para esta intención y etapa
-            const repositoryMatch = findBestResponse(
-              consolidatedBurst,
-              lead?.stage ?? 0,
-              contactName,
-              lead?.company ?? "Negocio"
-            );
+            // 5. Generar respuesta consultiva con el nuevo SYSTEM PROMPT de Calificación
+            const { cleanReply, tagsCrm } = await callGeminiFlash(lead, contactName, consolidatedBurst);
 
             console.log(
-              `📚 [REPOSITORIO MATCH] Intención: "${repositoryMatch.matchedResponse.title}" (Score: ${repositoryMatch.score}) -> Sugiere Etapa ${repositoryMatch.suggestedStage}`
+              `🏷️ [TAGS CRM DETECTADOS]: Etapa: "${tagsCrm.etapa}" | Servicio: "${tagsCrm.servicio_sugerido}" | Acción: "${tagsCrm.accion_requerida}"`
             );
 
-            // Actualizar etapa del lead en el CRM según el repositorio
-            const targetStage = Math.max(lead.stage ?? 0, repositoryMatch.suggestedStage);
-            lead.stage = targetStage;
+            // Actualizar etapa y etiquetas en el CRM
+            const stageNum = STAGE_NAME_MAP[tagsCrm.etapa.toLowerCase()] ?? 0;
+            lead.stage = stageNum;
+            (lead as any).stageName = tagsCrm.etapa;
 
-            // Inferir etiquetas (labels) automáticas
-            const labels = inferLabels(consolidatedBurst, repositoryMatch.matchedResponse.category, targetStage);
-            lead.tags = Array.from(new Set([...(lead.tags || []), ...labels]));
-
-            // 6. Generar respuesta contextual corta con Gemini Flash guiado por el Repositorio
-            const replyText = await callGeminiFlash(lead, contactName, consolidatedBurst, repositoryMatch);
+            const newTags = [
+              `etapa: ${tagsCrm.etapa}`,
+              `servicio: ${tagsCrm.servicio_sugerido}`,
+              `accion: ${tagsCrm.accion_requerida}`,
+            ];
+            lead.tags = Array.from(new Set([...(lead.tags || []), ...newTags]));
 
             // Guardar respuesta del bot en el historial del lead
             stitchOrCreateLead({
@@ -286,21 +344,21 @@ export async function POST(req: NextRequest) {
               email: extractedEmail,
               channel: "whatsapp",
               direction: "outbound",
-              message: replyText,
+              message: cleanReply,
             });
 
-            // 7. Sincronizar en segundo plano con Chatwoot (Conversación, Mensajes y Etiquetas)
+            // 6. Sincronizar en segundo plano con Chatwoot (Labels + Mensajes)
             syncLeadWithChatwoot({
               phone: cleanTo,
               name: contactName,
               email: extractedEmail,
               inboundMessage: consolidatedBurst,
-              outboundMessage: replyText,
-              labels,
-              stage: targetStage,
+              outboundMessage: cleanReply,
+              labels: lead.tags,
+              stage: stageNum,
             }).catch((err) => console.warn("[Chatwoot Sync Error]:", err));
 
-            // 8. Enviar mensaje de vuelta vía Meta WhatsApp Cloud API
+            // 7. Enviar mensaje de vuelta vía Meta WhatsApp Cloud API
             const metaRes = await fetch(`https://graph.facebook.com/v21.0/${PHONE_NUMBER_ID}/messages`, {
               method: "POST",
               headers: {
@@ -314,14 +372,14 @@ export async function POST(req: NextRequest) {
                 type: "text",
                 text: {
                   preview_url: true,
-                  body: replyText,
+                  body: cleanReply,
                 },
               }),
             });
 
             const metaData: any = await metaRes.json();
             console.log(
-              `✔ [RESPUESTA ENVIADA A ${cleanTo}]: "${replyText}" (Labels: ${labels.join(", ")}) (Meta:`,
+              `✔ [RESPUESTA ENVIADA A ${cleanTo}]: "${cleanReply.slice(0, 50)}..." (Meta:`,
               metaData?.messages?.[0]?.id || "OK",
               ")"
             );

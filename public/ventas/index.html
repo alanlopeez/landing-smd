@@ -1287,10 +1287,12 @@
       const input = document.getElementById('chatInputMessage');
       if (!input) return;
       const responses = {
-        garantia: "¡Hola! Si en los 90 días no alcanzamos los 500 leads calificados, seguimos trabajando gratis sin costo hasta cumplirlos o te devolvemos la diferencia proporcional por contrato firmado (CUIT 20-39210016-5). ¿Cómo comercializan actualmente?",
-        adspend: "¡Hola! La inversión publicitaria de Meta/Google corre directo por tu cuenta para que puedas deducir impuestos con tu tarjeta corporativa. Nosotros gestionamos y optimizamos toda la pauta. ¿Qué presupuesto mensual suelen destinar?",
-        precio: "El sistema llave en mano de 500 leads es de $3.500.000 ARS por el trimestre completo, o se reserva con $350.000 ARS de seña inicial para congelar plaza. ¿Prefieren coordinar una llamada o avanzar directo con la reserva?",
-        calcom: "¡Hola! Para ver en detalle los embudos y proyectar los números de tu rubro, podés elegir el día y hora que te quede más cómodo acá: https://cal.com/alan-lopez/15min ¿Te queda mejor por la mañana o por la tarde?"
+        landing: "Diseñamos tu *Landing Page interactiva de alta conversión*: prototipo navegable entregado en *48 horas* y versión final lista en 3 a 5 días hábiles.\n\nLa inversión es de *USD $490* (pago único) con optimización de velocidad y fidelidad total. ¿Tienes una web actual para auditar o arrancamos desde cero?",
+        "500leads": "El sistema llave en mano comienza a instalarse en *72 horas hábiles* (embudo Next.js en Vercel Edge + Chatbot WhatsApp IA + pauta Meta/Google).\n\nInversión integral: *$3.500.000 ARS* (o seña del 10% de *$350.000 ARS* para bloquear exclusividad de nicho, o 2 cuotas de *$1.750.000 ARS*).\n\nGarantía legal: 500 prospectos en 90 días o *reembolso del 100%* por contrato escrito. ¿Cuentan con equipo comercial activo para contactar los leads?",
+        video_demo: "Transformamos tus videos largos (podcast, entrevistas o webinars) en clips verticales (9:16) con ganchos virales, subtítulos animados y diseño de sonido en 48-72h.\n\nPara que pruebes la calidad con tu propio material, *te editamos 1 clip de prueba 100% gratis y sin compromiso*. ¿Tienes a mano un enlace de YouTube o Drive de algún video?",
+        garantia: "Nuestra garantía está respaldada por *contrato legal escrito*: si en 90 días no alcanzamos los 500 prospectos calificados en tu CRM, *se te devuelve el 100% de los fondos* o seguimos trabajando sin costo adicional hasta cumplirlos.\n\n¿Deseas que te enviemos el modelo del acuerdo para revisarlo?",
+        adspend: "La pauta de Meta o Google corre directo por tu cuenta abonando con tu tarjeta corporativa para que puedas deducir impuestos. Nosotros nos encargamos del diseño, segmentación y optimización diaria sin coste extra.\n\n¿Qué presupuesto mensual estiman destinar a campañas?",
+        calcom: "¡Excelente! Para coordinar los detalles de implementación directamente con Alan López, puedes elegir el día y hora que mejor te quede en su agenda oficial:\n\n👉 https://cal.com/alan-lopez/15min\n\n¿Pudiste agendar o prefieres que Alan te escriba por acá?"
       };
       input.value = responses[key] || "";
       input.focus();
@@ -1413,76 +1415,67 @@
     
 const OFFICIAL_RESPONSES = [
   {
-    id: "saludo_general",
-    title: "Saludo Inicial & Descubrimiento",
-    category: "saludo",
-    stage: 0,
-    keywords: ["hola", "buen dia", "buenas", "que tal", "como va"],
-    text: "¡Hola {nombre}! Qué bueno que escribas. ¿De qué rubro es tu empresa y en qué zona están operando actualmente?",
-    keyFacts: ["Nunca enviar precios ni links de pago de entrada", "Tono cercano argentino"]
+    id: "diag_nuevo_contacto",
+    title: "1. Diagnóstico Inicial (Nuevo Contacto)",
+    category: "nuevo contacto",
+    stage: "nuevo contacto",
+    keywords: ["hola", "buen dia", "buenas", "que tal", "info", "informacion", "anuncio"],
+    text: "¡Hola! Un gusto saludarte. 👋 Soy el asesor del equipo de Alan López en *Servicio de Marketing Digital*.\n\nPara orientarte de la forma más precisa, ¿a qué rubro se dedica tu negocio y qué objetivo principal te gustaría acelerar este mes?",
+    keyFacts: ["Apertura amigable", "Pregunta abierta de modelo de negocio"]
   },
   {
-    id: "saludo_lanchas",
-    title: "Apertura para Rubro Náutico / Lanchas / Maquinaria",
-    category: "saludo",
-    stage: 0,
-    keywords: ["lancha", "embarcacion", "nautica", "maquinaria", "tractor"],
-    text: "¡Hola {nombre}! Espectacular. En ese rubro el problema número uno son los curiosos sin presupuesto real. ¿Cómo vienen captando prospectos hoy?",
-    keyFacts: ["Validar dolor de los curiosos sin presupuesto", "Foco en decisores"]
+    id: "oferta_servicio_1_landing",
+    title: "2. Servicio 1: Rediseño / Landing Page Interactiva (USD $490)",
+    category: "Landing Page",
+    stage: "solicito un presupuesto",
+    keywords: ["landing", "web", "pagina", "sitio", "rediseño", "tienda"],
+    text: "Diseñamos tu *Landing Page interactiva de alta conversión*: prototipo navegable entregado en *48 horas* y versión final lista en 3 a 5 días hábiles.\n\nLa inversión es de *USD $490* (pago único) con optimización de velocidad y fidelidad total. ¿Tienes una web actual para auditar o arrancamos desde cero?",
+    keyFacts: ["USD $490 pago único", "Prototipo en 48h, lista en 3-5 días"]
   },
   {
-    id: "calificacion_ticket",
-    title: "Calificación de Ticket y Equipo Comercial",
-    category: "calificacion",
-    stage: 1,
-    keywords: ["vendo", "ofrezco", "productos", "servicios", "equipo", "vendedores"],
-    text: "Excelente {nombre}. Para saber si nuestro sistema te encaja perfecto: ¿cuál es el ticket promedio de lo que comercializan y si cuentan con asesores para atender los contactos en el día?",
-    keyFacts: ["Detectar si el ticket soporta la inversión", "Validar capacidad de cierre"]
+    id: "oferta_servicio_2_500leads",
+    title: "3. Servicio 2: Máquina de Ventas (500 Leads en 90 Días)",
+    category: "500 Leads",
+    stage: "solicito un presupuesto",
+    keywords: ["500", "leads", "maquina", "ventas", "prospectos", "b2b", "contrato"],
+    text: "El sistema llave en mano comienza a instalarse en *72 horas hábiles* (embudo Next.js en Vercel Edge + Chatbot WhatsApp IA + pauta Meta/Google).\n\nInversión integral: *$3.500.000 ARS* (o seña del 10% de *$350.000 ARS* para bloquear exclusividad de nicho, o 2 cuotas de *$1.750.000 ARS*).\n\nGarantía legal: 500 prospectos en 90 días o *reembolso del 100%* por contrato escrito. ¿Cuentan con equipo comercial activo para contactar los leads?",
+    keyFacts: ["$3.500.000 ARS o seña $350k", "Garantía contractual 100% reembolso"]
   },
   {
-    id: "oferta_500leads",
-    title: "Propuesta de 500 Leads Garantizados",
-    category: "oferta_500leads",
-    stage: 2,
-    keywords: ["500", "leads", "garantia", "garantizado", "servicio", "como funciona"],
-    text: "Implementamos un sistema llave en mano que te entrega 500 prospectos calificados en 90 días con garantía contractual por escrito. ¿Te gustaría ver un desglose de cómo filtramos a los curiosos?",
-    keyFacts: ["Garantía contractual CUIT 20-39210016-5", "500 leads en 90 días"]
+    id: "oferta_servicio_3_video_demo",
+    title: "4. Servicio 3: Video Repurposing DFY (Demo Clip Gratis)",
+    category: "Video Repurposing",
+    stage: "solicito una demo",
+    keywords: ["video", "reels", "tiktok", "podcast", "shorts", "edicion", "clip"],
+    text: "Transformamos tus videos largos (podcast, entrevistas o webinars) en clips verticales (9:16) con ganchos virales, subtítulos animados y diseño de sonido en 48-72h.\n\nPara que pruebes la calidad con tu propio material, *te editamos 1 clip de prueba 100% gratis y sin compromiso*. ¿Tienes a mano un enlace de YouTube o Drive de algún video?",
+    keyFacts: ["1 clip demo gratis sin compromiso", "Entrega en 48-72h"]
   },
   {
-    id: "objecion_garantia",
-    title: "Manejo de Objeción: ¿Qué pasa si no llegan a 500?",
-    category: "objecion_garantia",
-    stage: 3,
-    keywords: ["no llegan", "garantia", "si fallan", "devolucion", "plata"],
-    text: "Si no alcanzamos los 500 contactos calificados en los 90 días, seguimos trabajando gratis sin costo hasta completarlos o te devolvemos la diferencia proporcional por contrato firmado (CUIT 20-39210016-5). ¿Cómo comercializan actualmente?",
-    keyFacts: ["Extensión sin costo o devolución proporcional", "Firmado por contrato"]
+    id: "objecion_garantia_500leads",
+    title: "5. Manejo de Objeción: Garantía de Reembolso Legal",
+    category: "Garantía",
+    stage: "solicito un presupuesto",
+    keywords: ["garantia", "reembolso", "no llegan", "si fallan", "devolucion", "plata"],
+    text: "Nuestra garantía está respaldada por *contrato legal escrito*: si en 90 días no alcanzamos los 500 prospectos calificados en tu CRM, *se te devuelve el 100% de los fondos* o seguimos trabajando sin costo adicional hasta cumplirlos.\n\n¿Deseas que te enviemos el modelo del acuerdo para revisarlo?",
+    keyFacts: ["Devolución del 100% de fondos por contrato", "Opción de extensión gratuita"]
   },
   {
-    id: "objecion_adspend",
-    title: "Manejo de Objeción: ¿Incluye pauta publicitaria (Ad Spend)?",
-    category: "objecion_adspend",
-    stage: 3,
-    keywords: ["pauta", "publicidad", "ads", "gasto", "ad spend", "meta ads", "google ads"],
-    text: "La pauta de Meta/Google la abonas directo con tu tarjeta corporativa para deducir impuestos. Nosotros creamos, configuramos y optimizamos las campañas sin costo extra. ¿Qué inversión mensual suelen destinar?",
-    keyFacts: ["Ad spend a cargo del cliente para deducir impuestos", "Nosotros optimizamos"]
+    id: "objecion_adspend_meta_google",
+    title: "6. Manejo de Objeción: Pauta Publicitaria (Ad Spend)",
+    category: "Pauta Publicitaria",
+    stage: "solicito un presupuesto",
+    keywords: ["pauta", "publicidad", "ads", "gasto", "ad spend", "presupuesto extra"],
+    text: "La pauta de Meta o Google corre directo por tu cuenta abonando con tu tarjeta corporativa para que puedas deducir impuestos. Nosotros nos encargamos del diseño, segmentación y optimización diaria sin coste extra.\n\n¿Qué presupuesto mensual estiman destinar a campañas?",
+    keyFacts: ["Ad spend directo a cuentas de Meta/Google", "Deducción impositiva directa"]
   },
   {
-    id: "objecion_precio",
-    title: "Precio Total del Servicio ($3.500.000 ARS)",
-    category: "objecion_precio",
-    stage: 3,
-    keywords: ["precio", "cuanto sale", "costo", "valor", "cuanto cuesta"],
-    text: "El sistema integral de 500 leads garantizados es de $3.500.000 ARS por el trimestre completo, o se reserva con $350.000 ARS de seña inicial para congelar plaza. ¿Prefieren coordinar una llamada o avanzar directo con la reserva?",
-    keyFacts: ["Total $3.5M ARS o seña $350k ARS", "Trimestre completo llave en mano"]
-  },
-  {
-    id: "cierre_llamada",
-    title: "Cierre a Videollamada por Cal.com",
-    category: "cierre_llamada",
-    stage: 4,
-    keywords: ["llamada", "reunion", "zoom", "hablar", "meet", "agenda"],
-    text: "¡De una {nombre}! Para ver en detalle los embudos y proyectar los números de tu rubro, podés elegir el día y hora que te quede más cómodo acá: https://cal.com/alan-lopez/15min ¿Te queda mejor por la mañana o por la tarde?",
-    keyFacts: ["Link oficial Cal.com de Alan López", "Mantener pregunta de cierre"]
+    id: "cierre_agenda_alan",
+    title: "7. Derivación Humana / Llamada de Cierre con Alan",
+    category: "Derivación Alan",
+    stage: "cliente cerrado",
+    keywords: ["llamada", "reunion", "zoom", "hablar", "alan", "agendar", "meet"],
+    text: "¡Excelente! Para coordinar los detalles de implementación directamente con Alan López, puedes elegir el día y hora que mejor te quede en su agenda oficial:\n\n👉 https://cal.com/alan-lopez/15min\n\n¿Pudiste agendar o prefieres que Alan te escriba por acá?",
+    keyFacts: ["Agenda oficial Cal.com 15 min", "Derivación a Alan"]
   }
 ];
 
