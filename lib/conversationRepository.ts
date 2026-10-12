@@ -10,7 +10,10 @@ export type ResponseCategory =
   | 'objecion_criterios'
   | 'objecion_ia_video'
   | 'cierre_reserva'
-  | 'cierre_llamada';
+  | 'cierre_llamada'
+  | 'pago_transferencia'
+  | 'pago_tarjeta'
+  | 'pago_usd';
 
 export interface ConversationResponse {
   id: string;
@@ -184,6 +187,65 @@ export const CONVERSATION_RESPONSES: ConversationResponse[] = [
   // ==========================================
   // ETAPA 4: CIERRE & ACCIÓN DIRECTA
   // ==========================================
+  // ==========================================
+  // ETAPA 4: MEDIOS DE PAGO & TRANSFERENCIA (10% OFF)
+  // ==========================================
+  {
+    id: 'pago_transferencia_bonificado',
+    title: 'Pago por Transferencia Bancaria Directa (10% OFF Bonificado)',
+    category: 'pago_transferencia',
+    targetStage: 4,
+    keywords: [
+      'transferencia', 'transferir', 'bancaria', 'cbu', 'cvu', 'alias',
+      'banco', 'descuento', 'bonificacion', 'datos de cuenta', 'cuenta', 'deposito'
+    ],
+    approvedResponse:
+      '¡Excelente {nombre}! Si abonás por Transferencia Bancaria Directa tenés un **10% de DESCUENTO DIRECTO BONIFICADO** (o 1 mes de mantenimiento extra sin cargo).\n\nLos datos oficiales son:\n• **Titular:** Alan López\n• **CUIT:** 20-39210016-5\n• **Banco:** Mercado Pago / Banco Santander\n• **Alias:** `alanlopez.smd`\n• **CVU:** `0000003100085023148162`\n\nApenas realices la transferencia, enviame el comprobante por acá o al WhatsApp +54 9 11 2788-7093 para emitirte la Factura y dar inicio inmediato.',
+    keyFacts: [
+      'Incentivo: 10% OFF directo sobre el valor',
+      'Alias: alanlopez.smd',
+      'CVU: 0000003100085023148162',
+      'CUIT: 20-39210016-5 (Alan López)',
+      'Facturación oficial y activación en 24h'
+    ],
+    nextStage: 4,
+  },
+  {
+    id: 'pago_tarjeta_checkout',
+    title: 'Pago con Tarjeta de Crédito / Débito (Mercado Pago)',
+    category: 'pago_tarjeta',
+    targetStage: 4,
+    keywords: [
+      'tarjeta', 'credito', 'debito', 'cuotas', 'mercadopago', 'mp',
+      'link de pago', 'link', 'checkout', 'visa', 'mastercard'
+    ],
+    approvedResponse:
+      'Podés pagar con tarjeta de crédito o débito en cuotas a través de nuestro link protegido de Mercado Pago: https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=3724152558-04c4dcd1-4592-4c02-8ac1-504c13b09ead. Recordá que si preferís abonar por Transferencia Bancaria directa, tenés un **10% de descuento bonificado** en el Alias `alanlopez.smd`. ¿Avisame cómo preferís avanzar!',
+    keyFacts: [
+      'Acepta todas las tarjetas y dinero en cuenta',
+      'Enlace oficial de seña: pref_id 3724152558-04c4dcd1-4592-4c02-8ac1-504c13b09ead',
+      'Recordar incentivo del 10% por transferencia'
+    ],
+    nextStage: 4,
+  },
+  {
+    id: 'pago_usd_internacional',
+    title: 'Pago en Dólares (USD / Latam / Internacional)',
+    category: 'pago_usd',
+    targetStage: 4,
+    keywords: [
+      'dolar', 'dolares', 'usd', 'paypal', 'exterior', 'internacional',
+      'usdt', 'crypto', 'cripto', 'swift', 'wire', 'afuera', 'uruguay', 'chile', 'mexico', 'espana'
+    ],
+    approvedResponse:
+      'Para pagos internacionales en Dólares (USD), aceptamos:\n1. **Transferencia / Dólar Cripto USDT (Red TRC20/BEP20)** con **10% de descuento directo**.\n2. **Tarjeta de crédito internacional vía PayPal**.\n3. **Transferencia bancaria internacional** con Factura E oficial de exportación de servicios deducible.\n\n¿Desde qué país estarías realizando el pago para facilitarte la opción exacta?',
+    keyFacts: [
+      'Factura E oficial deducible',
+      '10% OFF en transferencias / USDT',
+      'PayPal disponible para tarjeta de crédito extranjera'
+    ],
+    nextStage: 4,
+  },
   {
     id: 'cierre_reserva_mercadopago',
     title: 'Enlace de Seña / Bloqueo de Exclusividad',

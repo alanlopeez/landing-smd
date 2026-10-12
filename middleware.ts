@@ -13,6 +13,11 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL('/500/index.html', request.url));
   }
 
+  if (url.pathname.startsWith('/checkout') || url.pathname.startsWith('/pagar')) {
+    url.pathname = '/pagar';
+    return NextResponse.rewrite(url);
+  }
+
   if (host.startsWith('500.') || host.startsWith('www.500.')) {
     if (url.pathname === '/' || url.pathname === '') {
       url.pathname = '/trato_garantizado.html';

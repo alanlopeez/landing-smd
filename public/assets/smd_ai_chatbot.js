@@ -496,6 +496,32 @@
   function getBotResponse(userQuery) {
     const q = userQuery.toLowerCase().trim();
 
+    if (
+      q.includes("pagar") ||
+      q.includes("pago") ||
+      q.includes("transfer") ||
+      q.includes("tarjeta") ||
+      q.includes("alias") ||
+      q.includes("cbu") ||
+      q.includes("cvu") ||
+      q.includes("link") ||
+      q.includes("mercadopago") ||
+      q.includes("paypal") ||
+      q.includes("dolar") ||
+      q.includes("dólar") ||
+      q.includes("peso") ||
+      q.includes("forma de pago") ||
+      q.includes("como pago") ||
+      q.includes("cómo pago")
+    ) {
+      return {
+        text: `Aceptamos pagos en **Pesos (ARS)** y **Dólares (USD)** con todas las modalidades:\n\n🔥 **1. Transferencia Bancaria Directa (10% DE DESCUENTO BONIFICADO):**\n• **Beneficio:** 10% OFF inmediato sobre la seña o pago total.\n• **Titular:** Alan López | **CUIT:** 20-39210016-5\n• **Banco:** Mercado Pago / Banco Santander\n• **Alias:** \`alanlopez.smd\`\n• **CVU:** \`0000003100085023148162\`\n\n💳 **2. Tarjetas de Crédito / Débito (Mercado Pago en Cuotas):**\n• Podes abonar con cualquier tarjeta mediante nuestros checkouts protegidos.\n\n🌎 **3. Pagos Internacionales en Dólares (USD):**\n• Transferencia bancaria internacional, PayPal o USDT con Factura E oficial de exportación.\n\n¿Deseas transferir con el 10% OFF o que te pase el link de tarjeta?`,
+        actionUrl: `https://wa.me/${config.whatsappPhone}?text=${encodeURIComponent("Hola Alan, quiero abonar por Transferencia Bancaria con el 10% de descuento bonificado. Mis datos:")}`,
+        actionLabel: `💬 Abonar con 10% OFF (${config.formattedPhone})`,
+        chips: ["🔥 Pagar por Transferencia (10% OFF)", "💳 Pagar con Tarjeta (Mercado Pago)", "🌎 Pagar en USD", "💬 Hablar por WhatsApp"]
+      };
+    }
+
     if (q.includes("precio") || q.includes("cuanto") || q.includes("cuánto") || q.includes("costo") || q.includes("tarifa") || q.includes("plan") || q.includes("350") || q.includes("260")) {
       if (config.context === "500_leads") {
         return {

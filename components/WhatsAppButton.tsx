@@ -35,6 +35,7 @@ const FORMATTED_WHATSAPP = "+54 9 11 2788-7093";
 
 const INITIAL_QUICK_REPLIES = [
   "⚡ Rediseño Web ($490 USD)",
+  "💳 Medios de Pago (10% OFF)",
   "🛡️ Plan 500 Leads Garantizados",
   "📅 Agendar Llamada (15 min)",
   "🎥 Ver Demo en YouTube",
@@ -97,6 +98,33 @@ export default function WhatsAppButton() {
 
   const generateBotReply = (userQuery: string): { text: string; actionUrl?: string; actionLabel?: string; quickReplies?: string[] } => {
     const q = userQuery.toLowerCase().trim();
+
+    // 0. Medios de Pago / Transferencia / Tarjetas / Checkout / Monedas (ARS y USD)
+    if (
+      q.includes("pagar") ||
+      q.includes("pago") ||
+      q.includes("transfer") ||
+      q.includes("tarjeta") ||
+      q.includes("alias") ||
+      q.includes("cbu") ||
+      q.includes("cvu") ||
+      q.includes("link") ||
+      q.includes("mercadopago") ||
+      q.includes("paypal") ||
+      q.includes("dolar") ||
+      q.includes("dólar") ||
+      q.includes("peso") ||
+      q.includes("forma de pago") ||
+      q.includes("como pago") ||
+      q.includes("cómo pago")
+    ) {
+      return {
+        text: `Aceptamos pagos en **Pesos (ARS)** y **Dólares (USD)** con todos los medios disponibles:\n\n🔥 **1. Transferencia Bancaria Directa (10% DE DESCUENTO DIRECTO BONIFICADO):**\n• **Beneficio:** 10% OFF inmediato sobre el valor total o seña.\n• **Titular:** Alan López | **CUIT:** 20-39210016-5\n• **Banco:** Mercado Pago / Banco Santander\n• **Alias:** \`alanlopez.smd\`\n• **CVU:** \`0000003100085023148162\`\n\n💳 **2. Tarjetas de Crédito / Débito (Mercado Pago en Cuotas):**\n• Podés abonar con cualquier tarjeta mediante nuestros checkouts protegidos:\n  - **Seña 500 Leads ($350.000 ARS):** [Pagar Seña MP](https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=3724152558-04c4dcd1-4592-4c02-8ac1-504c13b09ead)\n  - **Seña Rediseño Web ($260.000 ARS):** [Pagar Seña Web](https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=3724152558-3b7ae0a0-6750-4fee-a7af-f53837841ee8)\n\n🌎 **3. Pagos Internacionales en Dólares (USD):**\n• Aceptamos transferencia internacional, PayPal y USDT con **Factura E oficial deducible de impuestos**.\n\n¿Querés transferir con el 10% OFF o preferís el link de tarjeta?`,
+        actionUrl: `https://wa.me/${OFFICIAL_WHATSAPP}?text=${encodeURIComponent("Hola Alan, quiero abonar por Transferencia Bancaria con el 10% de descuento bonificado. Te paso los datos de mi negocio:")}`,
+        actionLabel: `💬 Abonar con 10% OFF (${FORMATTED_WHATSAPP})`,
+        quickReplies: ["🔥 Abonar por Transferencia (10% OFF)", "💳 Pagar con Tarjeta (Mercado Pago)", "🌎 Pagar en Dólares (USD)", "💬 Hablar por WhatsApp Directo"],
+      };
+    }
 
     // 1. Precios / Tarifas / Planes
     if (q.includes("precio") || q.includes("cuanto") || q.includes("cuánto") || q.includes("costo") || q.includes("tarifa") || q.includes("plan") || q.includes("490")) {
