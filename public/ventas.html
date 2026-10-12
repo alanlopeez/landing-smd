@@ -1474,11 +1474,12 @@
       const input = document.getElementById('chatInputMessage');
       if (!input) return;
       const responses = {
+        landing_demo: "¡Totalmente! En este breve video puedes ver en detalle el estándar de diseño e interactividad de alta conversión que desarrollamos:\n\n👉 https://youtu.be/M5_QicGRh-s?si=vOCtc6L-uMgpsb0G\n\nEntregamos el prototipo navegable en *48 horas* y la web final en 3 a 5 días hábiles por *USD $490* (pago único).\n\n¿Qué tipo de diseño o funcionalidad tienes en mente para tu proyecto?",
         landing: "Diseñamos tu *Landing Page interactiva de alta conversión*: prototipo navegable entregado en *48 horas* y versión final lista en 3 a 5 días hábiles.\n\nLa inversión es de *USD $490* (pago único) con optimización de velocidad y fidelidad total. ¿Tienes una web actual para auditar o arrancamos desde cero?",
+        "500leads_demo": "La *Máquina de 500 Leads* no cuenta con una demo estática, ya que todo el sistema (embudo de alta velocidad en Next.js, chatbot de WhatsApp con IA y pauta activa) se diseña 100% a medida de tu empresa y equipo comercial.\n\nPara evaluar tu nicho y mostrarte cómo funcionaría en tu caso, lo ideal es una breve llamada de 15 minutos con Alan López.\n\nPuedes agendar directamente en su calendario oficial:\n👉 https://cal.com/alan-lopez/15min\n\n¿Pudiste abrir el enlace o prefieres que coordinemos un horario por acá?",
         "500leads": "El sistema llave en mano comienza a instalarse en *72 horas hábiles* (embudo Next.js en Vercel Edge + Chatbot WhatsApp IA + pauta Meta/Google).\n\nInversión integral: *$3.500.000 ARS* (o seña del 10% de *$350.000 ARS* para bloquear exclusividad de nicho, o 2 cuotas de *$1.750.000 ARS*).\n\nGarantía legal: 500 prospectos en 90 días o *reembolso del 100%* por contrato escrito. ¿Cuentan con equipo comercial activo para contactar los leads?",
-        video_demo: "Transformamos tus videos largos (podcast, entrevistas o webinars) en clips verticales (9:16) con ganchos virales, subtítulos animados y diseño de sonido en 48-72h.\n\nPara que pruebes la calidad con tu propio material, *te editamos 1 clip de prueba 100% gratis y sin compromiso*. ¿Tienes a mano un enlace de YouTube o Drive de algún video?",
+        video_demo: "¡Excelente! Para que compruebes el nivel de edición y ritmo con tu propio contenido, *te generamos 1 video short de muestra 100% gratis y listo para publicar*.\n\nNos encargamos de detectar el mejor gancho, editar en 9:16, animar subtítulos y optimizar el sonido en 48-72h.\n\n¿Tienes a mano el enlace de tu *canal de YouTube* o el link de algún video largo que quieras transformar?",
         garantia: "Nuestra garantía está respaldada por *contrato legal escrito*: si en 90 días no alcanzamos los 500 prospectos calificados en tu CRM, *se te devuelve el 100% de los fondos* o seguimos trabajando sin costo adicional hasta cumplirlos.\n\n¿Deseas que te enviemos el modelo del acuerdo para revisarlo?",
-        adspend: "La pauta de Meta o Google corre directo por tu cuenta abonando con tu tarjeta corporativa para que puedas deducir impuestos. Nosotros nos encargamos del diseño, segmentación y optimización diaria sin coste extra.\n\n¿Qué presupuesto mensual estiman destinar a campañas?",
         calcom: "¡Excelente! Para coordinar los detalles de implementación directamente con Alan López, puedes elegir el día y hora que mejor te quede en su agenda oficial:\n\n👉 https://cal.com/alan-lopez/15min\n\n¿Pudiste agendar o prefieres que Alan te escriba por acá?"
       };
       input.value = responses[key] || "";
@@ -1611,49 +1612,49 @@ const OFFICIAL_RESPONSES = [
     keyFacts: ["Apertura amigable", "Pregunta abierta de modelo de negocio"]
   },
   {
-    id: "oferta_servicio_1_landing",
-    title: "2. Servicio 1: Rediseño / Landing Page Interactiva (USD $490)",
+    id: "demo_landing_youtube",
+    title: "2. DEMO: Landing Page Interactiva (Video YouTube)",
     category: "Landing Page",
-    stage: "solicito un presupuesto",
-    keywords: ["landing", "web", "pagina", "sitio", "rediseño", "tienda"],
-    text: "Diseñamos tu *Landing Page interactiva de alta conversión*: prototipo navegable entregado en *48 horas* y versión final lista en 3 a 5 días hábiles.\n\nLa inversión es de *USD $490* (pago único) con optimización de velocidad y fidelidad total. ¿Tienes una web actual para auditar o arrancamos desde cero?",
-    keyFacts: ["USD $490 pago único", "Prototipo en 48h, lista en 3-5 días"]
+    stage: "solicito una demo",
+    keywords: ["demo landing", "ejemplo web", "ver pagina", "muestra web", "video landing"],
+    text: "¡Totalmente! En este breve video puedes ver en detalle el estándar de diseño e interactividad de alta conversión que desarrollamos:\n\n👉 https://youtu.be/M5_QicGRh-s?si=vOCtc6L-uMgpsb0G\n\nEntregamos el prototipo navegable en *48 horas* y la web final en 3 a 5 días hábiles por *USD $490* (pago único).\n\n¿Qué tipo de diseño o funcionalidad tienes en mente para tu proyecto?",
+    keyFacts: ["Link directo YouTube", "USD $490 pago único", "Prototipo 48h"]
+  },
+  {
+    id: "demo_500leads_llamada",
+    title: "3. DEMO: Máquina 500 Leads (Sin demo estática -> Agendar Llamada)",
+    category: "500 Leads",
+    stage: "solicito una demo",
+    keywords: ["demo leads", "demo maquina", "ejemplo embudo", "como funciona 500", "ver maquina"],
+    text: "La *Máquina de 500 Leads* no cuenta con una demo estática, ya que todo el sistema (embudo de alta velocidad en Next.js, chatbot de WhatsApp con IA y pauta activa) se diseña 100% a medida de tu empresa y equipo comercial.\n\nPara evaluar tu nicho y mostrarte cómo funcionaría en tu caso, lo ideal es una breve llamada de 15 minutos con Alan López.\n\nPuedes agendar directamente en su calendario oficial:\n👉 https://cal.com/alan-lopez/15min\n\n¿Pudiste abrir el enlace o prefieres que coordinemos un horario por acá?",
+    keyFacts: ["Sin demo estática", "Llamada 15 min en Cal.com", "Garantía contractual escrita"]
+  },
+  {
+    id: "demo_video_reciclado_shorts",
+    title: "4. DEMO: Reciclado de Videos a Shorts (1 Short Gratis de Muestra)",
+    category: "Video Repurposing",
+    stage: "solicito una demo",
+    keywords: ["demo video", "prueba reels", "muestra tiktok", "ejemplo clips", "demo shorts"],
+    text: "¡Excelente! Para que compruebes el nivel de edición y ritmo con tu propio contenido, *te generamos 1 video short de muestra 100% gratis y listo para publicar*.\n\nNos encargamos de detectar el mejor gancho, editar en 9:16, animar subtítulos y optimizar el sonido en 48-72h.\n\n¿Tienes a mano el enlace de tu *canal de YouTube* o el link de algún video largo que quieras transformar?",
+    keyFacts: ["1 short gratis listo para publicar", "Pide canal o video largo", "Entrega en 48-72h"]
   },
   {
     id: "oferta_servicio_2_500leads",
-    title: "3. Servicio 2: Máquina de Ventas (500 Leads en 90 Días)",
+    title: "5. Presupuesto: Máquina de Ventas (500 Leads en 90 Días)",
     category: "500 Leads",
     stage: "solicito un presupuesto",
-    keywords: ["500", "leads", "maquina", "ventas", "prospectos", "b2b", "contrato"],
+    keywords: ["precio leads", "cuanto sale", "costo 500", "inversion", "cuotas", "seña"],
     text: "El sistema llave en mano comienza a instalarse en *72 horas hábiles* (embudo Next.js en Vercel Edge + Chatbot WhatsApp IA + pauta Meta/Google).\n\nInversión integral: *$3.500.000 ARS* (o seña del 10% de *$350.000 ARS* para bloquear exclusividad de nicho, o 2 cuotas de *$1.750.000 ARS*).\n\nGarantía legal: 500 prospectos en 90 días o *reembolso del 100%* por contrato escrito. ¿Cuentan con equipo comercial activo para contactar los leads?",
     keyFacts: ["$3.500.000 ARS o seña $350k", "Garantía contractual 100% reembolso"]
   },
   {
-    id: "oferta_servicio_3_video_demo",
-    title: "4. Servicio 3: Video Repurposing DFY (Demo Clip Gratis)",
-    category: "Video Repurposing",
-    stage: "solicito una demo",
-    keywords: ["video", "reels", "tiktok", "podcast", "shorts", "edicion", "clip"],
-    text: "Transformamos tus videos largos (podcast, entrevistas o webinars) en clips verticales (9:16) con ganchos virales, subtítulos animados y diseño de sonido en 48-72h.\n\nPara que pruebes la calidad con tu propio material, *te editamos 1 clip de prueba 100% gratis y sin compromiso*. ¿Tienes a mano un enlace de YouTube o Drive de algún video?",
-    keyFacts: ["1 clip demo gratis sin compromiso", "Entrega en 48-72h"]
-  },
-  {
     id: "objecion_garantia_500leads",
-    title: "5. Manejo de Objeción: Garantía de Reembolso Legal",
+    title: "6. Manejo de Objeción: Garantía Legal de Reembolso",
     category: "Garantía",
     stage: "solicito un presupuesto",
     keywords: ["garantia", "reembolso", "no llegan", "si fallan", "devolucion", "plata"],
     text: "Nuestra garantía está respaldada por *contrato legal escrito*: si en 90 días no alcanzamos los 500 prospectos calificados en tu CRM, *se te devuelve el 100% de los fondos* o seguimos trabajando sin costo adicional hasta cumplirlos.\n\n¿Deseas que te enviemos el modelo del acuerdo para revisarlo?",
     keyFacts: ["Devolución del 100% de fondos por contrato", "Opción de extensión gratuita"]
-  },
-  {
-    id: "objecion_adspend_meta_google",
-    title: "6. Manejo de Objeción: Pauta Publicitaria (Ad Spend)",
-    category: "Pauta Publicitaria",
-    stage: "solicito un presupuesto",
-    keywords: ["pauta", "publicidad", "ads", "gasto", "ad spend", "presupuesto extra"],
-    text: "La pauta de Meta o Google corre directo por tu cuenta abonando con tu tarjeta corporativa para que puedas deducir impuestos. Nosotros nos encargamos del diseño, segmentación y optimización diaria sin coste extra.\n\n¿Qué presupuesto mensual estiman destinar a campañas?",
-    keyFacts: ["Ad spend directo a cuentas de Meta/Google", "Deducción impositiva directa"]
   },
   {
     id: "cierre_agenda_alan",
