@@ -83,6 +83,14 @@ const nextConfig = {
         destination: '/trato_garantizado.html',
       },
       {
+        source: '/500',
+        destination: '/500/index.html',
+      },
+      {
+        source: '/500/',
+        destination: '/500/index.html',
+      },
+      {
         source: '/trato_garantizado',
         destination: '/trato_garantizado.html',
       },
