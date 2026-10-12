@@ -4,20 +4,22 @@ import React, { useState } from "react";
 import Image from "next/image";
 import {
   ShieldCheck,
-  CreditCard,
   Building2,
   Copy,
   Check,
   MessageCircle,
   Sparkles,
   ArrowRight,
-  ExternalLink,
   Lock,
-  Globe
+  Globe,
+  AlertTriangle,
+  Receipt,
+  CheckCircle2,
+  CreditCard
 } from "lucide-react";
 
 export default function PagarCheckoutPage() {
-  const [activeTab, setActiveTab] = useState<"transferencia" | "tarjeta" | "usd">("transferencia");
+  const [activeTab, setActiveTab] = useState<"ars" | "usd">("ars");
   const [copiedField, setCopiedField] = useState<string | null>(null);
 
   const copyToClipboard = (text: string, fieldName: string) => {
@@ -27,7 +29,7 @@ export default function PagarCheckoutPage() {
   };
 
   return (
-    <main className="min-h-screen bg-[#070b14] text-[#f8fafc] font-matter selection:bg-[#25D366] selection:text-[#070b14] pb-24">
+    <main className="min-h-screen bg-[#070b14] text-[#f8fafc] font-sans selection:bg-[#25D366] selection:text-[#070b14] pb-24">
       {/* Top Security & Navigation Bar */}
       <header className="w-full border-b border-white/10 bg-[#0a101f]/90 backdrop-blur-xl sticky top-0 z-40">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
@@ -36,18 +38,18 @@ export default function PagarCheckoutPage() {
               <Image src="/logo.png" alt="Logo" width={28} height={28} className="object-contain" />
             </div>
             <div>
-              <span className="text-sm font-bold tracking-tight text-white block">ALAN LÓPEZ</span>
-              <span className="text-[10px] uppercase text-[#94a3b8] tracking-wider">Checkout Seguro • SMD</span>
+              <span className="text-sm font-bold tracking-tight text-white block">ALAN EZEQUIEL LOPEZ</span>
+              <span className="text-[10px] uppercase text-[#94a3b8] tracking-wider">Centro Oficial de Cobros • SMD</span>
             </div>
           </a>
 
           <div className="flex items-center gap-3">
             <div className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-mono">
               <Lock className="w-3.5 h-3.5" />
-              <span>SSL 256-Bit Encriptado</span>
+              <span>Conexión 256-Bit SSL</span>
             </div>
             <a
-              href="https://wa.me/5491127887093?text=Hola%20Alan%2C%20estoy%20en%20el%20checkout%20y%20tengo%20una%20consulta"
+              href="https://wa.me/5491127887093?text=Hola%20Alan%2C%20estoy%20en%20el%20checkout%20y%20quiero%20confirmar%20mi%20transferencia"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#25D366]/20 border border-[#25D366]/50 text-[#25D366] hover:text-white text-xs font-semibold transition-all"
@@ -60,310 +62,326 @@ export default function PagarCheckoutPage() {
       </header>
 
       {/* Main Container */}
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 pt-10 sm:pt-14 space-y-10">
-        
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 pt-10 pb-16">
         {/* Title & Trust Header */}
-        <div className="text-center space-y-3 max-w-2xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/40 text-emerald-400 text-xs font-mono uppercase tracking-wider">
+        <div className="text-center max-w-2xl mx-auto mb-10">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold mb-4">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>Medios de Pago Oficiales • Factura E o C Únicamente</span>
+            <span>Medio Exclusivo Habilitado: Transferencia Bancaria Inmediata</span>
           </div>
-          <h1 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
-            Confirmá tu Pago y Activá tu Proyecto
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-white mb-4">
+            Abona tu Seña o Servicio con <span className="text-emerald-400">10% OFF Bonificado</span>
           </h1>
-          <p className="text-xs sm:text-sm text-[#94a3b8] leading-relaxed">
-            Elegí la modalidad que prefieras. Podés abonar en pesos (ARS) o en dólares (USD).
+          <p className="text-sm sm:text-base text-[#94a3b8] leading-relaxed">
+            Para garantizar la máxima transparencia, facturación fiscal inmediata y trasladarte el 100% del ahorro en comisiones de pasarelas, operamos <strong className="text-white">únicamente mediante transferencia bancaria directa</strong>.
           </p>
         </div>
 
-        {/* Incentive Highlight Callout */}
-        <div className="p-5 sm:p-6 rounded-3xl bg-gradient-to-r from-emerald-950/80 via-[#0d1f1e] to-emerald-950/80 border-2 border-emerald-500/70 shadow-2xl flex flex-col md:flex-row items-center justify-between gap-5 text-left">
-          <div className="flex items-start gap-4">
-            <div className="w-12 h-12 rounded-2xl bg-emerald-500 text-slate-950 flex items-center justify-center font-black text-xl shrink-0 shadow-lg shadow-emerald-500/40">
-              10%
-            </div>
-            <div className="space-y-1">
-              <div className="flex items-center gap-2">
-                <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-mono text-[10px] font-bold uppercase tracking-wider border border-emerald-500/40">Incentivo Exclusivo</span>
-                <strong className="text-white text-base sm:text-lg">10% OFF Bonificado por Transferencia Bancaria</strong>
-              </div>
-              <p className="text-xs text-slate-300 leading-relaxed max-w-xl">
-                Aboná mediante transferencia directa y accedé a un <strong>10% de descuento directo</strong> sobre el valor total o seña, más inicio acelerado en 24 horas sin intermediaciones.
-              </p>
-            </div>
+        {/* Notice: No Credit Card Accepted */}
+        <div className="mb-8 p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-start sm:items-center gap-3">
+          <div className="p-2 rounded-xl bg-amber-500/20 text-amber-400 shrink-0">
+            <AlertTriangle className="w-5 h-5" />
           </div>
-          <button
-            type="button"
-            onClick={() => setActiveTab("transferencia")}
-            className="w-full md:w-auto px-5 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-xs uppercase tracking-wider shadow-lg transition-all cursor-pointer whitespace-nowrap"
-          >
-            Ver Datos de Transferencia →
-          </button>
+          <div className="text-xs sm:text-sm text-amber-200/90 leading-relaxed">
+            <strong className="text-white font-semibold">Política de Cobro:</strong> Solo aceptamos <strong>Transferencia Bancaria Directa (CVU / CBU / Alias)</strong>. No aceptamos tarjetas de crédito ni pagos diferidos con recargo financiero.
+          </div>
         </div>
 
-        {/* Tab Selector Buttons */}
-        <div className="grid grid-cols-3 gap-2 p-1.5 rounded-2xl bg-white/5 border border-white/10 max-w-xl mx-auto">
-          <button
-            type="button"
-            onClick={() => setActiveTab("transferencia")}
-            className={`py-3 px-3 rounded-xl font-bold text-xs sm:text-sm transition-all flex items-center justify-center gap-2 cursor-pointer ${
-              activeTab === "transferencia"
-                ? "bg-emerald-500 text-slate-950 shadow-lg"
-                : "text-slate-400 hover:text-white"
-            }`}
-          >
-            <Building2 className="w-4 h-4 shrink-0" />
-            <span>Transferencia (10% OFF)</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => setActiveTab("tarjeta")}
-            className={`py-3 px-3 rounded-xl font-bold text-xs sm:text-sm transition-all flex items-center justify-center gap-2 cursor-pointer ${
-              activeTab === "tarjeta"
-                ? "bg-emerald-500 text-slate-950 shadow-lg"
-                : "text-slate-400 hover:text-white"
-            }`}
-          >
-            <CreditCard className="w-4 h-4 shrink-0" />
-            <span>Tarjeta / Mercado Pago</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => setActiveTab("usd")}
-            className={`py-3 px-3 rounded-xl font-bold text-xs sm:text-sm transition-all flex items-center justify-center gap-2 cursor-pointer ${
-              activeTab === "usd"
-                ? "bg-emerald-500 text-slate-950 shadow-lg"
-                : "text-slate-400 hover:text-white"
-            }`}
-          >
-            <Globe className="w-4 h-4 shrink-0" />
-            <span>Dólares (USD / Exterior)</span>
-          </button>
+        {/* Currency Switcher Tabs */}
+        <div className="flex justify-center mb-8">
+          <div className="p-1 rounded-2xl bg-[#0f172a] border border-white/10 flex items-center gap-1">
+            <button
+              onClick={() => setActiveTab("ars")}
+              className={`px-6 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all flex items-center gap-2 ${
+                activeTab === "ars"
+                  ? "bg-emerald-500 text-black shadow-lg shadow-emerald-500/20"
+                  : "text-[#94a3b8] hover:text-white"
+              }`}
+            >
+              <Building2 className="w-4 h-4" />
+              <span>Pesos Argentinos (ARS)</span>
+              <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-black/30 text-white font-mono font-bold">10% OFF</span>
+            </button>
+            <button
+              onClick={() => setActiveTab("usd")}
+              className={`px-6 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all flex items-center gap-2 ${
+                activeTab === "usd"
+                  ? "bg-emerald-500 text-black shadow-lg shadow-emerald-500/20"
+                  : "text-[#94a3b8] hover:text-white"
+              }`}
+            >
+              <Globe className="w-4 h-4" />
+              <span>Exterior / USD</span>
+            </button>
+          </div>
         </div>
 
-        {/* TAB 1: TRANSFERENCIA BANCARIA */}
-        {activeTab === "transferencia" && (
-          <div className="p-6 sm:p-8 rounded-3xl bg-[#0e172a]/90 border border-emerald-500/40 shadow-2xl space-y-6">
-            <div className="flex items-center justify-between border-b border-white/10 pb-4">
-              <div>
-                <span className="text-xs font-mono uppercase text-emerald-400 font-bold tracking-wider">Opción Preferida con 10% OFF</span>
-                <h2 className="text-xl sm:text-2xl font-bold text-white mt-0.5">Datos Oficiales de Cuenta</h2>
-              </div>
-              <span className="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 font-mono text-xs font-bold border border-emerald-500/40">
-                10% OFF Aplicado
-              </span>
-            </div>
+        {activeTab === "ars" ? (
+          <div className="space-y-8">
+            {/* Bank Transfer Official Card */}
+            <div className="rounded-3xl border border-emerald-500/30 bg-gradient-to-b from-[#0e1a2f] to-[#0a101f] p-6 sm:p-8 relative overflow-hidden shadow-2xl">
+              <div className="absolute top-0 right-0 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {/* Alias */}
-              <div className="p-4 rounded-2xl bg-black/40 border border-white/10 flex items-center justify-between gap-3">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-white/10">
                 <div>
-                  <span className="text-[11px] text-slate-400 block font-mono">ALIAS BANCARIO (Recomendado)</span>
-                  <span className="text-base sm:text-lg font-mono font-bold text-emerald-400">alanlopez.smd</span>
+                  <span className="text-xs uppercase tracking-widest text-emerald-400 font-mono font-semibold block mb-1">
+                    Cuenta Oficial de Acreditación Inmediata
+                  </span>
+                  <h2 className="text-2xl font-bold text-white flex items-center gap-2">
+                    <span>Mercado Pago Argentina</span>
+                    <span className="text-xs font-mono font-normal px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                      CVU Certificado
+                    </span>
+                  </h2>
                 </div>
-                <button
-                  type="button"
-                  onClick={() => copyToClipboard("alanlopez.smd", "alias")}
-                  className="px-3 py-2 rounded-xl bg-white/10 hover:bg-emerald-500 hover:text-slate-950 text-white text-xs font-mono transition-all flex items-center gap-1.5 cursor-pointer shrink-0"
-                >
-                  {copiedField === "alias" ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
-                  <span>{copiedField === "alias" ? "Copiado!" : "Copiar"}</span>
-                </button>
-              </div>
-
-              {/* CVU */}
-              <div className="p-4 rounded-2xl bg-black/40 border border-white/10 flex items-center justify-between gap-3">
-                <div className="min-w-0">
-                  <span className="text-[11px] text-slate-400 block font-mono">CVU OFICIAL</span>
-                  <span className="text-xs sm:text-sm font-mono font-bold text-slate-200 truncate block">0000003100085023148162</span>
+                <div className="text-left sm:text-right">
+                  <span className="text-xs text-[#94a3b8] block">Bonificación Directa</span>
+                  <span className="text-lg font-black text-emerald-400 font-mono">-10% DESCUENTO</span>
                 </div>
-                <button
-                  type="button"
-                  onClick={() => copyToClipboard("0000003100085023148162", "cvu")}
-                  className="px-3 py-2 rounded-xl bg-white/10 hover:bg-emerald-500 hover:text-slate-950 text-white text-xs font-mono transition-all flex items-center gap-1.5 cursor-pointer shrink-0"
-                >
-                  {copiedField === "cvu" ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
-                  <span>{copiedField === "cvu" ? "Copiado!" : "Copiar"}</span>
-                </button>
               </div>
 
-              {/* Titular */}
-              <div className="p-4 rounded-2xl bg-black/40 border border-white/10">
-                <span className="text-[11px] text-slate-400 block font-mono">TITULAR DE CUENTA</span>
-                <span className="text-sm font-bold text-white">Alan López</span>
-              </div>
-
-              {/* CUIT */}
-              <div className="p-4 rounded-2xl bg-black/40 border border-white/10">
-                <span className="text-[11px] text-slate-400 block font-mono">CUIT FISCAL (Factura C / E)</span>
-                <span className="text-sm font-bold font-mono text-white">20-39210016-5</span>
-              </div>
-            </div>
-
-            {/* Step to confirm via WhatsApp */}
-            <div className="p-5 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex flex-col sm:flex-row items-center justify-between gap-4">
-              <div className="space-y-0.5 text-xs text-slate-300">
-                <strong className="text-white text-sm block">¿Hiciste la transferencia?</strong>
-                <span>Envianos el comprobante por WhatsApp para emitirte la factura oficial y activar el cronómetro de entrega.</span>
-              </div>
-              <a
-                href="https://wa.me/5491127887093?text=Hola%20Alan%2C%20ya%20realic%C3%A9%20la%20transferencia%20bancaria%20con%20el%2010%25%20de%20descuento.%20Adjunto%20comprobante%3A"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-[#25D366] hover:bg-[#20ba59] text-slate-950 font-bold text-xs uppercase tracking-wider shadow-lg transition-all whitespace-nowrap cursor-pointer"
-              >
-                <MessageCircle className="w-4 h-4 fill-current" />
-                <span>Enviar Comprobante (+54 9 11 2788-7093)</span>
-              </a>
-            </div>
-          </div>
-        )}
-
-        {/* TAB 2: TARJETAS & MERCADO PAGO */}
-        {activeTab === "tarjeta" && (
-          <div className="p-6 sm:p-8 rounded-3xl bg-[#0e172a]/90 border border-white/10 shadow-2xl space-y-6">
-            <div className="flex items-center justify-between border-b border-white/10 pb-4">
-              <div>
-                <span className="text-xs font-mono uppercase text-sky-400 font-bold tracking-wider">Pasarela Mercado Pago</span>
-                <h2 className="text-xl sm:text-2xl font-bold text-white mt-0.5">Elegí el Servicio a Abonar</h2>
-              </div>
-              <span className="text-xs text-slate-400">Hasta 6 y 12 cuotas</span>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {/* 500 Leads Seña */}
-              <div className="p-5 rounded-2xl bg-black/40 border border-white/10 flex flex-col justify-between space-y-4">
-                <div>
-                  <span className="text-[10px] font-mono uppercase text-emerald-400 font-bold">Máquina de Ventas</span>
-                  <h3 className="text-base font-bold text-white mt-0.5">500 Leads en 90 Días (Seña Reserva)</h3>
-                  <div className="text-2xl font-black text-white font-mono mt-2">$350.000 <span className="text-xs font-sans text-slate-400">ARS</span></div>
-                  <p className="text-xs text-slate-400 mt-1">Bloqueo de exclusividad de zona y contrato de garantía escrita.</p>
-                </div>
-                <a
-                  href="https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=3724152558-04c4dcd1-4592-4c02-8ac1-504c13b09ead"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full py-3 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold text-xs uppercase tracking-wider text-center block transition-all"
-                >
-                  Pagar Seña ($350.000) →
-                </a>
-              </div>
-
-              {/* Rediseño Web Seña */}
-              <div className="p-5 rounded-2xl bg-black/40 border border-white/10 flex flex-col justify-between space-y-4">
-                <div>
-                  <span className="text-[10px] font-mono uppercase text-sky-400 font-bold">Desarrollo Web Next.js</span>
-                  <h3 className="text-base font-bold text-white mt-0.5">Rediseño Web Interactivo (Seña 50%)</h3>
-                  <div className="text-2xl font-black text-white font-mono mt-2">$260.000 <span className="text-xs font-sans text-slate-400">ARS</span></div>
-                  <p className="text-xs text-slate-400 mt-1">Primera demo navegable en 48 hs. Saldo contra aprobación final.</p>
-                </div>
-                <a
-                  href="https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=3724152558-3b7ae0a0-6750-4fee-a7af-f53837841ee8"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full py-3 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold text-xs uppercase tracking-wider text-center block transition-all"
-                >
-                  Pagar Seña Web ($260.000) →
-                </a>
-              </div>
-
-              {/* Rediseño Web Contado Bonificado */}
-              <div className="p-5 rounded-2xl bg-black/40 border border-white/10 flex flex-col justify-between space-y-4">
-                <div>
-                  <span className="text-[10px] font-mono uppercase text-indigo-400 font-bold">Ahorro Directo</span>
-                  <h3 className="text-base font-bold text-white mt-0.5">Rediseño Web (Contado Bonificado)</h3>
-                  <div className="text-2xl font-black text-white font-mono mt-2">$420.000 <span className="text-xs font-sans text-slate-400">ARS</span></div>
-                  <p className="text-xs text-slate-400 mt-1">Pago único con ahorro directo de $100.000 ARS y entrega en 72 hs.</p>
-                </div>
-                <a
-                  href="https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=3724152558-a6cfaea7-3aa0-48e9-9be2-5a35c4fed120"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs uppercase tracking-wider text-center block border border-white/10 transition-all"
-                >
-                  Pagar Contado ($420.000) →
-                </a>
-              </div>
-
-              {/* 500 Leads Contado Total */}
-              <div className="p-5 rounded-2xl bg-black/40 border border-white/10 flex flex-col justify-between space-y-4">
-                <div>
-                  <span className="text-[10px] font-mono uppercase text-emerald-400 font-bold">Plan Integral</span>
-                  <h3 className="text-base font-bold text-white mt-0.5">500 Leads en 90 Días (Total Contado)</h3>
-                  <div className="text-2xl font-black text-white font-mono mt-2">$3.500.000 <span className="text-xs font-sans text-slate-400">ARS</span></div>
-                  <p className="text-xs text-slate-400 mt-1">Inversión completa llave en mano con soporte prioritario del CEO.</p>
-                </div>
-                <a
-                  href="https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=3724152558-ace51496-f51a-41da-9b9b-2d6158225ca2"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs uppercase tracking-wider text-center block border border-white/10 transition-all"
-                >
-                  Pagar Total ($3.500.000) →
-                </a>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* TAB 3: DÓLARES / USD */}
-        {activeTab === "usd" && (
-          <div className="p-6 sm:p-8 rounded-3xl bg-[#0e172a]/90 border border-white/10 shadow-2xl space-y-6">
-            <div className="flex items-center justify-between border-b border-white/10 pb-4">
-              <div>
-                <span className="text-xs font-mono uppercase text-emerald-400 font-bold tracking-wider">Factura E de Exportación</span>
-                <h2 className="text-xl sm:text-2xl font-bold text-white mt-0.5">Pagos Internacionales en Dólares</h2>
-              </div>
-              <span className="text-xs text-slate-400">Clientes de Latam, EE.UU. y Europa</span>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {/* USDT Cripto */}
-              <div className="p-5 rounded-2xl bg-black/40 border border-white/10 space-y-3">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-emerald-400 font-mono">DÓLAR CRIPTO (USDT)</span>
-                  <span className="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 text-[10px] font-mono">10% OFF Bonificado</span>
-                </div>
-                <p className="text-xs text-slate-400">Billetera de depósito directo en Red TRC-20 (Tron) sin intermediarios bancarios:</p>
-                <div className="p-3 rounded-xl bg-white/5 border border-white/10 flex items-center justify-between gap-2">
-                  <span className="text-xs font-mono text-slate-200 truncate">TFx8P3kL7yQwZ9mBnCv4Rt5Ew2XjK6H1mN</span>
+              {/* Data Fields with Copy */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+                {/* Alias */}
+                <div className="p-4 rounded-2xl bg-black/40 border border-white/10 flex items-center justify-between">
+                  <div>
+                    <span className="text-[11px] uppercase tracking-wider text-[#94a3b8] font-mono block">Alias Oficial</span>
+                    <span className="text-base sm:text-lg font-mono font-bold text-white select-all">marketingdigital.arg</span>
+                  </div>
                   <button
-                    type="button"
-                    onClick={() => copyToClipboard("TFx8P3kL7yQwZ9mBnCv4Rt5Ew2XjK6H1mN", "usdt")}
-                    className="p-1.5 rounded-lg bg-white/10 hover:bg-emerald-500 hover:text-slate-950 transition-colors cursor-pointer shrink-0"
-                    title="Copiar billetera"
+                    onClick={() => copyToClipboard("marketingdigital.arg", "alias")}
+                    className="p-2.5 rounded-xl bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-500/40 text-emerald-300 text-xs font-semibold transition-all flex items-center gap-1.5"
                   >
-                    {copiedField === "usdt" ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
+                    {copiedField === "alias" ? (
+                      <>
+                        <Check className="w-4 h-4 text-emerald-400" />
+                        <span className="text-emerald-400">¡Copiado!</span>
+                      </>
+                    ) : (
+                      <>
+                        <Copy className="w-4 h-4" />
+                        <span>Copiar</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+
+                {/* CVU */}
+                <div className="p-4 rounded-2xl bg-black/40 border border-white/10 flex items-center justify-between">
+                  <div>
+                    <span className="text-[11px] uppercase tracking-wider text-[#94a3b8] font-mono block">CVU (22 dígitos)</span>
+                    <span className="text-sm sm:text-base font-mono font-bold text-white select-all">0000003100054772699472</span>
+                  </div>
+                  <button
+                    onClick={() => copyToClipboard("0000003100054772699472", "cvu")}
+                    className="p-2.5 rounded-xl bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-500/40 text-emerald-300 text-xs font-semibold transition-all flex items-center gap-1.5"
+                  >
+                    {copiedField === "cvu" ? (
+                      <>
+                        <Check className="w-4 h-4 text-emerald-400" />
+                        <span className="text-emerald-400">¡Copiado!</span>
+                      </>
+                    ) : (
+                      <>
+                        <Copy className="w-4 h-4" />
+                        <span>Copiar</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+
+                {/* Titular */}
+                <div className="p-4 rounded-2xl bg-black/40 border border-white/10 flex items-center justify-between">
+                  <div>
+                    <span className="text-[11px] uppercase tracking-wider text-[#94a3b8] font-mono block">Titular de la Cuenta</span>
+                    <span className="text-sm sm:text-base font-bold text-white">Alan Ezequiel Lopez</span>
+                  </div>
+                  <button
+                    onClick={() => copyToClipboard("Alan Ezequiel Lopez", "titular")}
+                    className="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-[#cbd5e1] text-xs font-semibold transition-all flex items-center gap-1.5"
+                  >
+                    {copiedField === "titular" ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
+                  </button>
+                </div>
+
+                {/* CUIT / CUIL */}
+                <div className="p-4 rounded-2xl bg-black/40 border border-white/10 flex items-center justify-between">
+                  <div>
+                    <span className="text-[11px] uppercase tracking-wider text-[#94a3b8] font-mono block">CUIT / CUIL Fiscal</span>
+                    <span className="text-sm sm:text-base font-mono font-bold text-white">20-39210016-5</span>
+                  </div>
+                  <button
+                    onClick={() => copyToClipboard("20-39210016-5", "cuit")}
+                    className="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-[#cbd5e1] text-xs font-semibold transition-all flex items-center gap-1.5"
+                  >
+                    {copiedField === "cuit" ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
                   </button>
                 </div>
               </div>
+            </div>
 
-              {/* PayPal / Tarjeta Internacional */}
-              <div className="p-5 rounded-2xl bg-black/40 border border-white/10 space-y-3 flex flex-col justify-between">
-                <div>
-                  <span className="text-xs font-bold text-sky-400 font-mono">TARJETA INTERNACIONAL / PAYPAL</span>
-                  <p className="text-xs text-slate-400 mt-1">Aceptamos pagos en USD mediante PayPal con protección al comprador para clientes del exterior.</p>
+            {/* Pricing Breakdown with 10% OFF */}
+            <div className="rounded-3xl border border-white/10 bg-[#0a101f] p-6 sm:p-8">
+              <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                <Receipt className="w-5 h-5 text-emerald-400" />
+                <span>Montos de Transferencia con 10% OFF Bonificado</span>
+              </h3>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div className="p-4 rounded-2xl bg-black/40 border border-white/10 hover:border-emerald-500/40 transition-all">
+                  <span className="text-xs uppercase font-mono text-[#94a3b8] block mb-1">Seña Máquina 500 Leads</span>
+                  <div className="flex items-baseline gap-2 mb-2">
+                    <span className="text-xl sm:text-2xl font-black font-mono text-emerald-400">$315.000 ARS</span>
+                    <span className="text-xs text-[#64748b] line-through font-mono">$350.000</span>
+                  </div>
+                  <p className="text-[11px] text-[#94a3b8] leading-tight">
+                    Reserva de cupo + Garantía de 500 leads en 90 días por contrato legal.
+                  </p>
                 </div>
-                <a
-                  href="https://wa.me/5491127887093?text=Hola%20Alan%2C%20quiero%20el%20enlace%20de%20pago%20en%20USD%20con%20PayPal"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full py-2.5 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold text-xs uppercase tracking-wider text-center block transition-all"
-                >
-                  Solicitar Link PayPal en USD →
-                </a>
+
+                <div className="p-4 rounded-2xl bg-black/40 border border-white/10 hover:border-emerald-500/40 transition-all">
+                  <span className="text-xs uppercase font-mono text-[#94a3b8] block mb-1">Seña Web Praga / Rediseño</span>
+                  <div className="flex items-baseline gap-2 mb-2">
+                    <span className="text-xl sm:text-2xl font-black font-mono text-emerald-400">$234.000 ARS</span>
+                    <span className="text-xs text-[#64748b] line-through font-mono">$260.000</span>
+                  </div>
+                  <p className="text-[11px] text-[#94a3b8] leading-tight">
+                    Reserva y comienzo de desarrollo de web interactiva ultra-rápida.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-black/40 border border-white/10 hover:border-emerald-500/40 transition-all">
+                  <span className="text-xs uppercase font-mono text-[#94a3b8] block mb-1">Plan Total Contado 500 Leads</span>
+                  <div className="flex items-baseline gap-2 mb-2">
+                    <span className="text-xl sm:text-2xl font-black font-mono text-emerald-400">$3.150.000 ARS</span>
+                    <span className="text-xs text-[#64748b] line-through font-mono">$3.500.000</span>
+                  </div>
+                  <p className="text-[11px] text-[#94a3b8] leading-tight">
+                    Cancelación de servicio completo + 1 mes extra de soporte bonificado.
+                  </p>
+                </div>
               </div>
             </div>
 
-            <div className="p-4 rounded-xl bg-white/5 border border-white/10 text-xs text-slate-400 flex items-center gap-3">
-              <ShieldCheck className="w-5 h-5 text-emerald-400 shrink-0" />
-              <span>Por cada pago internacional se emite formalmente <strong>Factura E</strong> oficial para que puedas deducir el gasto corporativo en tu país.</span>
+            {/* 3 Steps Guide & WhatsApp Confirmation */}
+            <div className="rounded-3xl border border-white/10 bg-[#0a101f] p-6 sm:p-8">
+              <h3 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
+                <CheckCircle2 className="w-5 h-5 text-emerald-400" />
+                <span>¿Cómo confirmar tu pago en 3 pasos?</span>
+              </h3>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
+                <div className="flex gap-4">
+                  <div className="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 flex items-center justify-center font-bold text-sm shrink-0">
+                    1
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-bold text-white mb-1">Copiá el Alias o CVU</h4>
+                    <p className="text-xs text-[#94a3b8] leading-relaxed">
+                      Abrí tu app de banco o Mercado Pago y pegá el alias <code className="text-emerald-400 font-mono">marketingdigital.arg</code>.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex gap-4">
+                  <div className="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 flex items-center justify-center font-bold text-sm shrink-0">
+                    2
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-bold text-white mb-1">Transferí el monto</h4>
+                    <p className="text-xs text-[#94a3b8] leading-relaxed">
+                      Efectuá la transferencia por el valor de tu seña o plan con la bonificación aplicada.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex gap-4">
+                  <div className="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 flex items-center justify-center font-bold text-sm shrink-0">
+                    3
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-bold text-white mb-1">Enviá el comprobante</h4>
+                    <p className="text-xs text-[#94a3b8] leading-relaxed">
+                      Envianos la captura o PDF por WhatsApp para confeccionar tu Factura y dar inicio formal.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Direct WhatsApp Receipt Button */}
+              <a
+                href="https://wa.me/5491127887093?text=Hola%20Alan%2C%20adjunto%20el%20comprobante%20de%20mi%20transferencia%20bancaria%20al%20alias%20marketingdigital.arg"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full py-4 px-6 rounded-2xl bg-[#25D366] hover:bg-[#20ba59] text-black font-black text-center flex items-center justify-center gap-3 shadow-lg shadow-[#25D366]/20 transition-all text-base"
+              >
+                <MessageCircle className="w-5 h-5 fill-current" />
+                <span>Enviar Comprobante por WhatsApp (+54 9 11 2788-7093)</span>
+                <ArrowRight className="w-5 h-5" />
+              </a>
+            </div>
+          </div>
+        ) : (
+          <div className="space-y-8">
+            {/* USD International Transfer Card */}
+            <div className="rounded-3xl border border-white/10 bg-[#0a101f] p-6 sm:p-8">
+              <span className="text-xs uppercase tracking-widest text-emerald-400 font-mono font-semibold block mb-2">
+                Clientes Internacionales • Factura E Oficial
+              </span>
+              <h2 className="text-2xl font-bold text-white mb-4">Transferencia Directa en Dólares (USD)</h2>
+              <p className="text-sm text-[#94a3b8] mb-6 leading-relaxed">
+                Para contrataciones desde el exterior (Estados Unidos, España, México, Chile, Colombia, Uruguay), emitimos Factura Electrónica de Exportación (Factura E deducible en tu país). <strong>No operamos con tarjeta de crédito</strong>; los cobros se reciben vía transferencia bancaria directa o criptoactivos estables (USDT).
+              </p>
+
+              <div className="space-y-4">
+                {/* USDT TRC-20 */}
+                <div className="p-4 rounded-2xl bg-black/40 border border-white/10 flex items-center justify-between">
+                  <div>
+                    <span className="text-[11px] uppercase tracking-wider text-[#94a3b8] font-mono block">Crypto USDT (Red TRC-20 / Binance / Ledger)</span>
+                    <span className="text-xs sm:text-sm font-mono font-bold text-white select-all">TFx8P3kL7yQwZ9mBnCv4Rt5Ew2XjK6H1mN</span>
+                  </div>
+                  <button
+                    onClick={() => copyToClipboard("TFx8P3kL7yQwZ9mBnCv4Rt5Ew2XjK6H1mN", "usdt")}
+                    className="p-2.5 rounded-xl bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-500/40 text-emerald-300 text-xs font-semibold transition-all flex items-center gap-1.5"
+                  >
+                    {copiedField === "usdt" ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
+                    <span>Copiar Wallet</span>
+                  </button>
+                </div>
+
+                {/* Wire Transfer Details */}
+                <div className="p-4 rounded-2xl bg-black/40 border border-white/10">
+                  <span className="text-[11px] uppercase tracking-wider text-[#94a3b8] font-mono block mb-1">Transferencia Bancaria Internacional (Wire / Swift)</span>
+                  <p className="text-xs text-[#cbd5e1] leading-relaxed">
+                    Disponible para empresas que liquiden vía cuenta corporativa bancaria en el exterior. Solicitá el formulario Swift a través de WhatsApp.
+                  </p>
+                </div>
+              </div>
+
+              <div className="mt-6 pt-6 border-t border-white/10">
+                <a
+                  href="https://wa.me/5491127887093?text=Hola%20Alan%2C%20deseo%20abonar%20desde%20el%20exterior%20en%20USD%20v%C3%ADa%20transferencia"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full py-4 px-6 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-black font-black text-center flex items-center justify-center gap-3 transition-all text-base"
+                >
+                  <MessageCircle className="w-5 h-5 fill-current" />
+                  <span>Solicitar Datos Swift / Coordinar Pago USD por WhatsApp</span>
+                </a>
+              </div>
             </div>
           </div>
         )}
 
+        {/* Legal & Security Footer */}
+        <div className="mt-12 text-center text-xs text-[#64748b] space-y-2">
+          <p>
+            Alan Ezequiel Lopez • CUIT: 20-39210016-5 • Mercado Pago Argentina (Alias: marketingdigital.arg)
+          </p>
+          <p>
+            Emisión de Factura Fiscal A / B / E según corresponda tras acreditarse la transferencia.
+          </p>
+        </div>
       </div>
     </main>
   );

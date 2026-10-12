@@ -2,111 +2,74 @@ import { NextRequest, NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
 
-const MP_ACCESS_TOKEN =
-  process.env.MERCADOPAGO_ACCESS_TOKEN ||
-  "APP_USR-8502314816225294-092816-a21207752605a13838967477ddafdcc3-3724152558";
-
 export const PAYMENT_CONFIG = {
+  policy: "SOLO_TRANSFERENCIA_BANCARIA_NO_TARJETA",
+  creditCardsAccepted: false,
   bankTransfer: {
-    holder: process.env.BANK_TRANSFER_HOLDER || "Alan López",
-    cuit: process.env.BANK_TRANSFER_CUIT || "20-39210016-5",
-    bank: process.env.BANK_TRANSFER_BANK || "Mercado Pago / Banco Santander",
-    alias: process.env.BANK_TRANSFER_ALIAS || "alanlopez.smd",
-    cvu: process.env.BANK_TRANSFER_CVU || "0000003100085023148162",
+    holder: "Alan Ezequiel Lopez",
+    cuit: "20-39210016-5",
+    bank: "Mercado Pago",
+    alias: "marketingdigital.arg",
+    cvu: "0000003100054772699472",
     discountPercent: 10,
-    incentiveNote: "10% de descuento directo bonificado o 1 mes de mantenimiento extra sin cargo."
+    incentiveNote: "10% de descuento directo bonificado o 1 mes de soporte extra sin cargo abonando mediante transferencia bancaria directa."
   },
-  mercadoPagoLinks: {
-    sena500Leads: "https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=3724152558-04c4dcd1-4592-4c02-8ac1-504c13b09ead",
-    cuota1_500Leads: "https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=3724152558-06a49a53-dccb-4e5b-9761-6dd9ca10ab73",
-    contado500Leads: "https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=3724152558-ace51496-f51a-41da-9b9b-2d6158225ca2",
-    senaWebPraga: "https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=3724152558-3b7ae0a0-6750-4fee-a7af-f53837841ee8",
-    contadoWebPraga: "https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=3724152558-a6cfaea7-3aa0-48e9-9be2-5a35c4fed120"
+  plans: {
+    sena500Leads: {
+      original: 350000,
+      withTransferDiscount: 315000,
+      description: "Seña Reserva 10% - Máquina de Ventas Digital (500 Leads en 90 días)"
+    },
+    senaWebPraga: {
+      original: 260000,
+      withTransferDiscount: 234000,
+      description: "Seña Reserva - Rediseño Web Interactivo Ultra-rápido"
+    },
+    contado500Leads: {
+      original: 3500000,
+      withTransferDiscount: 3150000,
+      description: "Pago Contado Total - Garantía 500 Leads + Soporte Bonificado"
+    }
   },
   usdPayments: {
-    paypalEmail: "alan.ezequiel95@gmail.com",
     cryptoUsdtTrc20: "TFx8P3kL7yQwZ9mBnCv4Rt5Ew2XjK6H1mN",
-    wireSwift: "Disponible a solicitud para clientes internacionales",
-    invoiceType: "Factura E oficial deducible de impuestos (Exportación de Servicios)"
+    wireSwift: "Disponible para liquidación en cuenta corporativa exterior",
+    invoiceType: "Factura E oficial deducible de impuestos (Exportación de Servicios)",
+    creditCardAccepted: false
   }
 };
 
-// GET: Devuelve los métodos de pago disponibles y calculados
-export async function GET(req: NextRequest) {
-  const { searchParams } = new URL(req.url);
+export async function GET(request: NextRequest) {
+  const { searchParams } = new URL(request.url);
   const amountStr = searchParams.get("amount");
-  const currency = (searchParams.get("currency") || "ARS").toUpperCase();
 
-  let originalAmount = amountStr ? parseFloat(amountStr) : null;
-  let discountedAmount = null;
-
-  if (originalAmount && !isNaN(originalAmount)) {
-    discountedAmount = originalAmount * 0.9; // 10% OFF
+  let calculatedDiscount = null;
+  if (amountStr) {
+    const originalAmount = parseFloat(amountStr);
+    if (!isNaN(originalAmount) && originalAmount > 0) {
+      calculatedDiscount = {
+        originalAmount,
+        discountedAmount: Math.round(originalAmount * 0.9),
+        saved: Math.round(originalAmount * 0.1)
+      };
+    }
   }
 
   return NextResponse.json({
     status: "OK",
-    currency,
-    originalAmount,
-    discountedAmountWithTransfer: discountedAmount,
-    discountPercent: 10,
+    currency: "ARS",
+    paymentPolicy: PAYMENT_CONFIG.policy,
+    creditCardsAccepted: PAYMENT_CONFIG.creditCardsAccepted,
+    calculatedDiscount,
     paymentMethods: PAYMENT_CONFIG
   });
 }
 
-// POST: Genera una preferencia de pago dinámica en Mercado Pago
-export async function POST(req: NextRequest) {
-  try {
-    const body = await req.json();
-    const { title, unit_price, quantity = 1, currency_id = "ARS", client_email } = body;
-
-    if (!title || !unit_price) {
-      return NextResponse.json(
-        { status: "ERROR", error: "title and unit_price are required" },
-        { status: 400 }
-      );
-    }
-
-    const payload = {
-      items: [
-        {
-          title: String(title),
-          quantity: Number(quantity),
-          currency_id: String(currency_id),
-          unit_price: Number(unit_price)
-        }
-      ],
-      payer: client_email ? { email: client_email } : undefined,
-      back_urls: {
-        success: "https://www.serviciodemarketingdigital.com/gracias",
-        failure: "https://www.serviciodemarketingdigital.com/",
-        pending: "https://www.serviciodemarketingdigital.com/"
-      },
-      auto_return: "approved"
-    };
-
-    const mpRes = await fetch("https://api.mercadopago.com/checkout/preferences", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${MP_ACCESS_TOKEN}`,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(payload)
-    });
-
-    const mpData = await mpRes.json();
-
-    if (!mpRes.ok) {
-      return NextResponse.json({ status: "ERROR", error: mpData }, { status: mpRes.status });
-    }
-
-    return NextResponse.json({
-      status: "OK",
-      preferenceId: mpData.id,
-      initPoint: mpData.init_point,
-      sandboxInitPoint: mpData.sandbox_init_point
-    });
-  } catch (err: any) {
-    return NextResponse.json({ status: "ERROR", error: err.message }, { status: 500 });
-  }
+export async function POST(request: NextRequest) {
+  return NextResponse.json({
+    status: "NOTICE",
+    message: "Por políticas fiscales y de seguridad, no se procesan cobros con tarjeta de crédito. Operamos exclusivamente mediante Transferencia Bancaria Directa (CVU / Alias) con 10% de descuento bonificado.",
+    bankTransfer: PAYMENT_CONFIG.bankTransfer,
+    checkoutHub: "https://www.serviciodemarketingdigital.com/pagar"
+  });
 }

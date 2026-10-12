@@ -200,19 +200,20 @@ export const CONVERSATION_RESPONSES: ConversationResponse[] = [
       'banco', 'descuento', 'bonificacion', 'datos de cuenta', 'cuenta', 'deposito'
     ],
     approvedResponse:
-      '¡Excelente {nombre}! Si abonás por Transferencia Bancaria Directa tenés un **10% de DESCUENTO DIRECTO BONIFICADO** (o 1 mes de mantenimiento extra sin cargo).\n\nLos datos oficiales son:\n• **Titular:** Alan López\n• **CUIT:** 20-39210016-5\n• **Banco:** Mercado Pago / Banco Santander\n• **Alias:** `alanlopez.smd`\n• **CVU:** `0000003100085023148162`\n\nApenas realices la transferencia, enviame el comprobante por acá o al WhatsApp +54 9 11 2788-7093 para emitirte la Factura y dar inicio inmediato.',
+      '¡Excelente {nombre}! Para tu mayor tranquilidad y facturación inmediata, operamos **exclusivamente mediante Transferencia Bancaria Directa** con un **10% de DESCUENTO BONIFICADO**:\n\n• **Entidad:** Mercado Pago\n• **Titular:** Alan Ezequiel Lopez\n• **CUIT:** 20-39210016-5\n• **Alias:** `marketingdigital.arg`\n• **CVU:** `0000003100054772699472`\n\nValores bonificados con 10% OFF:\n- Seña 500 Leads: **$315.000 ARS** (en lugar de $350.000)\n- Seña Web Praga: **$234.000 ARS** (en lugar de $260.000)\n\nApenas hagas la transferencia, pasame el comprobante por acá para confeccionar tu Factura Fiscal (A o B) y dar inicio de inmediato.',
     keyFacts: [
-      'Incentivo: 10% OFF directo sobre el valor',
-      'Alias: alanlopez.smd',
-      'CVU: 0000003100085023148162',
-      'CUIT: 20-39210016-5 (Alan López)',
-      'Facturación oficial y activación en 24h'
+      'Único medio de pago: Transferencia Bancaria Directa',
+      'No se aceptan tarjetas de crédito',
+      'Alias oficial: marketingdigital.arg',
+      'CVU oficial: 0000003100054772699472',
+      'Titular: Alan Ezequiel Lopez (CUIT 20-39210016-5)',
+      '10% OFF bonificado incluido'
     ],
     nextStage: 4,
   },
   {
     id: 'pago_tarjeta_checkout',
-    title: 'Pago con Tarjeta de Crédito / Débito (Mercado Pago)',
+    title: 'Consulta por Tarjeta de Crédito (No Aceptada - Exclusivo Transferencia)',
     category: 'pago_tarjeta',
     targetStage: 4,
     keywords: [
@@ -220,17 +221,18 @@ export const CONVERSATION_RESPONSES: ConversationResponse[] = [
       'link de pago', 'link', 'checkout', 'visa', 'mastercard'
     ],
     approvedResponse:
-      'Podés pagar con tarjeta de crédito o débito en cuotas a través de nuestro link protegido de Mercado Pago: https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=3724152558-04c4dcd1-4592-4c02-8ac1-504c13b09ead. Recordá que si preferís abonar por Transferencia Bancaria directa, tenés un **10% de descuento bonificado** en el Alias `alanlopez.smd`. ¿Avisame cómo preferís avanzar!',
+      '{nombre}, por políticas de seguridad, trazabilidad fiscal y para transferirte el 100% del ahorro en comisiones intermediarias, **no recibimos pagos con tarjeta de crédito**.\n\nOperamos **únicamente mediante Transferencia Bancaria Directa**, trasladándote un **10% de DESCUENTO DIRECTO BONIFICADO**:\n• **Alias:** `marketingdigital.arg`\n• **CVU:** `0000003100054772699472`\n• **Titular:** Alan Ezequiel Lopez (Mercado Pago)\n\n¿Te queda cómodo hacer la transferencia desde tu app de banco o billetera virtual?',
     keyFacts: [
-      'Acepta todas las tarjetas y dinero en cuenta',
-      'Enlace oficial de seña: pref_id 3724152558-04c4dcd1-4592-4c02-8ac1-504c13b09ead',
-      'Recordar incentivo del 10% por transferencia'
+      'No se acepta tarjeta de crédito',
+      'Solo transferencia bancaria directa',
+      'Alias oficial: marketingdigital.arg',
+      '10% de descuento bonificado'
     ],
     nextStage: 4,
   },
   {
     id: 'pago_usd_internacional',
-    title: 'Pago en Dólares (USD / Latam / Internacional)',
+    title: 'Pago en Dólares (USD / Latam / Internacional - Exclusivo Transferencia o Crypto)',
     category: 'pago_usd',
     targetStage: 4,
     keywords: [
@@ -238,25 +240,26 @@ export const CONVERSATION_RESPONSES: ConversationResponse[] = [
       'usdt', 'crypto', 'cripto', 'swift', 'wire', 'afuera', 'uruguay', 'chile', 'mexico', 'espana'
     ],
     approvedResponse:
-      'Para pagos internacionales en Dólares (USD), aceptamos:\n1. **Transferencia / Dólar Cripto USDT (Red TRC20/BEP20)** con **10% de descuento directo**.\n2. **Tarjeta de crédito internacional vía PayPal**.\n3. **Transferencia bancaria internacional** con Factura E oficial de exportación de servicios deducible.\n\n¿Desde qué país estarías realizando el pago para facilitarte la opción exacta?',
+      'Para contrataciones internacionales en Dólares (USD), emitimos Factura E oficial de exportación deducible. **No recibimos pagos con tarjeta de crédito**; operamos mediante:\n1. **Transferencia Crypto USDT (Red TRC-20):** `TFx8P3kL7yQwZ9mBnCv4Rt5Ew2XjK6H1mN` (con 10% bonificado)\n2. **Transferencia Bancaria Internacional (Wire / Swift)** para empresas en el exterior.\n\nTodos los datos están centralizados en: https://www.serviciodemarketingdigital.com/pagar',
     keyFacts: [
-      'Factura E oficial deducible',
-      '10% OFF en transferencias / USDT',
-      'PayPal disponible para tarjeta de crédito extranjera'
+      'Factura E oficial deducible de exportación',
+      'No se acepta tarjeta de crédito internacional',
+      'Transferencia bancaria Wire o Crypto USDT (TRC-20)'
     ],
     nextStage: 4,
   },
   {
     id: 'cierre_reserva_mercadopago',
-    title: 'Enlace de Seña / Bloqueo de Exclusividad',
+    title: 'Enlace de Seña / Bloqueo con Transferencia Bancaria',
     category: 'cierre_reserva',
     targetStage: 4,
-    keywords: ['senar', 'seña', 'reservar', 'bloquear', 'pagar', 'comenzar', 'arrancar', 'link', 'mercadopago', 'mercadopago'],
+    keywords: ['senar', 'seña', 'reservar', 'bloquear', 'pagar', 'comenzar', 'arrancar'],
     approvedResponse:
-      'Podés congelar el cupo exclusivo de tu zona con la seña inicial de $350.000 ARS mediante Mercado Pago protegido: https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=3724152558-04c4dcd1-4592-4c02-8ac1-504c13b09ead. Apenas ingresa te emito la Factura legal y armamos el grupo de trabajo. ¿Avisame cuando lo tengas!',
+      'Podés congelar el cupo exclusivo de tu zona con la seña inicial bonificada de **$315.000 ARS** (en vez de $350.000) por transferencia directa:\n• **Alias:** `marketingdigital.arg`\n• **CVU:** `0000003100054772699472`\n• **Titular:** Alan Ezequiel Lopez (Mercado Pago)\n\nApenas hagas la transferencia, pasame el comprobante por acá para confeccionar tu Factura legal y dar inicio formal hoy mismo.',
     keyFacts: [
-      'Link oficial Mercado Pago: pref_id 3724152558-04c4dcd1-4592-4c02-8ac1-504c13b09ead',
-      'Emisión de Factura C o E bajo CUIT 20-39210016-5',
+      'Seña bonificada 10% OFF: $315.000 ARS',
+      'Exclusivo transferencia bancaria directa',
+      'Alias marketingdigital.arg'
     ],
     nextStage: 4,
   },

@@ -515,19 +515,18 @@
       q.includes("cómo pago")
     ) {
       return {
-        text: `Aceptamos pagos en **Pesos (ARS)** y **Dólares (USD)** con todas las modalidades:\n\n🔥 **1. Transferencia Bancaria Directa (10% DE DESCUENTO BONIFICADO):**\n• **Beneficio:** 10% OFF inmediato sobre la seña o pago total.\n• **Titular:** Alan López | **CUIT:** 20-39210016-5\n• **Banco:** Mercado Pago / Banco Santander\n• **Alias:** \`alanlopez.smd\`\n• **CVU:** \`0000003100085023148162\`\n\n💳 **2. Tarjetas de Crédito / Débito (Mercado Pago en Cuotas):**\n• Podes abonar con cualquier tarjeta mediante nuestros checkouts protegidos.\n\n🌎 **3. Pagos Internacionales en Dólares (USD):**\n• Transferencia bancaria internacional, PayPal o USDT con Factura E oficial de exportación.\n\n¿Deseas transferir con el 10% OFF o que te pase el link de tarjeta?`,
-        actionUrl: `https://wa.me/${config.whatsappPhone}?text=${encodeURIComponent("Hola Alan, quiero abonar por Transferencia Bancaria con el 10% de descuento bonificado. Mis datos:")}`,
-        actionLabel: `💬 Abonar con 10% OFF (${config.formattedPhone})`,
-        chips: ["🔥 Pagar por Transferencia (10% OFF)", "💳 Pagar con Tarjeta (Mercado Pago)", "🌎 Pagar en USD", "💬 Hablar por WhatsApp"]
+        text: `Operamos **exclusivamente mediante Transferencia Bancaria Directa** (no aceptamos tarjeta de credito) con un **10% de DESCUENTO DIRECTO BONIFICADO**:\n\n*Datos Oficiales de Acreditacion Inmediata (Mercado Pago):*\n- **Entidad:** Mercado Pago\n- **Titular:** Alan Ezequiel Lopez\n- **CUIT / CUIL:** 20-39210016-5\n- **Alias Oficial:** \`marketingdigital.arg\`\n- **CVU:** \`0000003100054772699472\`\n\n*Valores Bonificados con 10% OFF:*\n- **Seña 500 Leads:** **$315.000 ARS** (en vez de $350.000)\n- **Seña Web Praga:** **$234.000 ARS** (en vez de $260.000)\n\n*Nota: No recibimos tarjeta de credito para evitar sobrecargos y garantizar facturacion directa.*\n\n*Exterior (USD):* Transferencia Wire o Crypto USDT con Factura E oficial.\n\nDetalles completos en: https://www.serviciodemarketingdigital.com/pagar`,
+        actionUrl: `https://wa.me/${config.whatsappPhone}?text=${encodeURIComponent("Hola Alan, quiero transferir la sena al alias marketingdigital.arg con el 10% de descuento bonificado:")}`,
+        actionLabel: `Enviar Comprobante (${config.formattedPhone})`,
+        chips: ["Transferir con 10% OFF (Alias)", "Pagar en Dolares (USD)", "Solicitar Factura A/B", "Hablar por WhatsApp"]
       };
-    }
 
     if (q.includes("precio") || q.includes("cuanto") || q.includes("cuánto") || q.includes("costo") || q.includes("tarifa") || q.includes("plan") || q.includes("350") || q.includes("260")) {
       if (config.context === "500_leads") {
         return {
           text: `El plan **500 Leads en 90 Días** incluye instalación express en 72 hs y garantía legal por contrato:\n\n• **Inversión Total:** $3.500.000 ARS (o USD equivalente).\n• **Modalidad Seña:** Reservá con $350.000 ARS y el saldo al finalizar los 90 días o entrega.\n\n¿Deseas bloquear cupo o consultar por WhatsApp?`,
-          actionUrl: "https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=3724152558-04c4dcd1-4592-4c02-8ac1-504c13b09ead",
-          actionLabel: "💳 Bloquear Cupo con Seña ($350.000 ARS)",
+          actionUrl: "https://www.serviciodemarketingdigital.com/pagar",
+          actionLabel: "Reservar con 10% OFF ($315.000 ARS)",
           chips: ["🛡️ ¿Cómo funciona la garantía?", "📅 Agendar Llamada (15 min)", "💬 Chatear por WhatsApp"]
         };
       } else if (config.context === "praga") {
