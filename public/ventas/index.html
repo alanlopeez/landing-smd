@@ -1029,6 +1029,326 @@
     let currentStageFilter = 'all'; // 'all' or 0, 1, 2, 3, 4
 
     // Check Auth
+    
+    // ==========================================
+    // LOGICA DE BANDEJA EN VIVO Y CHATS WPP
+    // ==========================================
+    let currentChatLeadId = 'lead-alan-01';
+    let currentChatTagFilter = 'all';
+
+    function switchWppView(view) {
+      const inboxCont = document.getElementById('wppViewInboxContainer');
+      const repoCont = document.getElementById('wppViewRepoContainer');
+      const btnInbox = document.getElementById('btnViewInbox');
+      const btnRepo = document.getElementById('btnViewRepo');
+      if (view === 'inbox') {
+        inboxCont.classList.remove('hidden');
+        repoCont.classList.add('hidden');
+        btnInbox.className = 'px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all bg-emerald-500 text-slate-950 shadow-sm flex items-center gap-1.5';
+        btnRepo.className = 'px-3.5 py-1.5 rounded-lg text-xs font-medium transition-all text-slate-400 hover:text-white flex items-center gap-1.5';
+      } else {
+        inboxCont.classList.add('hidden');
+        repoCont.classList.remove('hidden');
+        btnInbox.className = 'px-3.5 py-1.5 rounded-lg text-xs font-medium transition-all text-slate-400 hover:text-white flex items-center gap-1.5';
+        btnRepo.className = 'px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all bg-emerald-500 text-slate-950 shadow-sm flex items-center gap-1.5';
+      }
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function renderChatInbox() {
+      const listContainer = document.getElementById('chatConversationsList');
+      if (!listContainer) return;
+
+      const query = (document.getElementById('chatSearchInput')?.value || '').toLowerCase().trim();
+      let filtered = PROSPECTS.filter(p => {
+        const matchesQuery = !query || 
+          p.name.toLowerCase().includes(query) || 
+          p.company.toLowerCase().includes(query) || 
+          (p.phone && p.phone.includes(query));
+
+        if (!matchesQuery) return false;
+
+        if (currentChatTagFilter === 'all') return true;
+        if (currentChatTagFilter === 'etapa-1') return p.stage === 1 || (p.tags && p.tags.includes('etapa-1'));
+        if (currentChatTagFilter === 'etapa-2') return p.stage === 2 || (p.tags && p.tags.includes('etapa-2'));
+        if (currentChatTagFilter === '500leads') return (p.tags && p.tags.some(t => t.includes('500leads')));
+        if (currentChatTagFilter === 'calificado') return (p.tags && p.tags.some(t => t.includes('calificado')));
+        return true;
+      });
+
+      const countBadge = document.getElementById('chatCountBadge');
+      if (countBadge) countBadge.innerText = filtered.length;
+
+      if (filtered.length === 0) {
+        listContainer.innerHTML = '<div class="p-6 text-center text-xs text-slate-400">No se encontraron conversaciones con este filtro.</div>';
+        return;
+      }
+
+      if (!filtered.some(p => p.id === currentChatLeadId)) {
+        currentChatLeadId = filtered[0].id;
+      }
+
+      listContainer.innerHTML = '';
+      filtered.forEach(lead => {
+        const isSelected = lead.id === currentChatLeadId;
+        const lastMsg = (lead.history && lead.history.length > 0) 
+          ? lead.history[lead.history.length - 1] 
+          : { message: lead.lastTouch || "Sin mensajes", timestamp: lead.updatedAt || new Date().toISOString() };
+        
+        const timeStr = new Date(lastMsg.timestamp || Date.now()).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        const stageColors = ['bg-slate-100 text-slate-600', 'bg-blue-100 text-blue-700', 'bg-purple-100 text-purple-700', 'bg-amber-100 text-amber-700', 'bg-emerald-100 text-emerald-800'];
+        const stageBadge = '<span class="px-1.5 py-0.5 rounded text-[9px] font-bold ' + (stageColors[lead.stage] || stageColors[0]) + '">E' + (lead.stage ?? 0) + '</span>';
+
+        const tagsHtml = (lead.tags || []).slice(0, 2).map(t => 
+          '<span class="px-1.5 py-0.5 rounded text-[9px] font-medium bg-slate-100 text-slate-600 border border-slate-200/60 truncate max-w-[90px]">' + t + '</span>'
+        ).join('');
+
+        listContainer.innerHTML += `
+          <div onclick="selectChatLead('${lead.id}')" class="p-3 rounded-xl cursor-pointer transition-all flex flex-col gap-1.5 ${isSelected ? 'bg-white shadow-sm border border-emerald-500/40 ring-1 ring-emerald-500/20' : 'hover:bg-white/80 border border-transparent'}">
+            <div class="flex items-center justify-between gap-1">
+              <div class="flex items-center gap-1.5 min-w-0">
+                <span class="text-xs font-bold text-slate-900 truncate">${lead.name}</span>
+                ${stageBadge}
+              </div>
+              <span class="text-[10px] text-slate-400 shrink-0 font-mono">${timeStr}</span>
+            </div>
+            <p class="text-[11px] text-slate-500 truncate font-medium">${lead.company}</p>
+            <p class="text-[11px] text-slate-600 line-clamp-1 italic text-slate-600">
+              ${lastMsg.direction === 'outbound' ? '✓ ' : ''}${lastMsg.message}
+            </p>
+            <div class="flex items-center gap-1 pt-1 flex-wrap">
+              ${tagsHtml}
+            </div>
+          </div>
+        `;
+      });
+
+      renderActiveChatDetail();
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function selectChatLead(leadId) {
+      currentChatLeadId = leadId;
+      renderChatInbox();
+    }
+
+    function filterChatList() {
+      renderChatInbox();
+    }
+
+    function filterChatByTag(tag) {
+      currentChatTagFilter = tag;
+      document.querySelectorAll('.chat-tag-filter').forEach(btn => {
+        btn.className = 'chat-tag-filter px-2 py-0.5 rounded-lg font-medium bg-white text-slate-600 border border-slate-200 hover:bg-slate-100 shrink-0';
+      });
+      const activeBtn = document.getElementById('tagFilter-' + tag);
+      if (activeBtn) {
+        activeBtn.className = 'chat-tag-filter px-2 py-0.5 rounded-lg font-bold bg-slate-900 text-white shrink-0';
+      }
+      renderChatInbox();
+    }
+
+    function renderActiveChatDetail() {
+      const lead = PROSPECTS.find(p => p.id === currentChatLeadId);
+      const header = document.getElementById('activeChatHeader');
+      const tagsBar = document.getElementById('activeChatTagsBar');
+      const feed = document.getElementById('activeChatMessagesFeed');
+      if (!lead || !header || !tagsBar || !feed) return;
+
+      const cleanPhone = (lead.phone || '').replace(/\D/g, '');
+      const stageOptions = [0, 1, 2, 3, 4].map(stg => 
+        '<option value="' + stg + '" ' + (lead.stage === stg ? 'selected' : '') + '>Etapa ' + stg + '</option>'
+      ).join('');
+
+      header.innerHTML = `
+        <div class="flex items-center gap-3 min-w-0">
+          <div class="w-10 h-10 rounded-xl bg-slate-900 text-emerald-400 font-bold text-xs flex items-center justify-center shrink-0 border border-slate-700 shadow-sm">
+            ${lead.name.slice(0, 2).toUpperCase()}
+          </div>
+          <div class="min-w-0">
+            <div class="flex items-center gap-2">
+              <h3 class="text-xs font-bold text-slate-900 truncate">${lead.name}</h3>
+              <select onchange="changeChatLeadStage('${lead.id}', this.value)" class="text-[10px] font-bold px-2 py-0.5 rounded bg-slate-100 border border-slate-200 text-slate-700 focus:outline-none">
+                ${stageOptions}
+              </select>
+            </div>
+            <p class="text-[11px] text-slate-500 truncate">${lead.company} • +${cleanPhone}</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2 shrink-0">
+          <a href="https://wa.me/${cleanPhone}" target="_blank" class="px-2.5 py-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-700 text-xs font-semibold flex items-center gap-1 border border-emerald-200/60 transition-colors">
+            <i data-lucide="message-circle" class="w-3.5 h-3.5"></i>
+            <span>WhatsApp Web</span>
+          </a>
+          <a href="https://app.chatwoot.com/app/accounts/191100/dashboard" target="_blank" class="px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold flex items-center gap-1 transition-colors" title="Chatwoot Cloud Account 191100">
+            <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+            <span>Chatwoot</span>
+          </a>
+        </div>
+      `;
+
+      // Tags Bar
+      const tagsList = (lead.tags || []).map(t => `
+        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-bold bg-slate-200 text-slate-700 border border-slate-300/80">
+          #${t}
+          <button onclick="removeChatTag('${lead.id}', '${t}')" class="hover:text-rose-600 font-bold ml-0.5">×</button>
+        </span>
+      `).join('');
+
+      tagsBar.innerHTML = `
+        <div class="flex items-center gap-1.5 flex-wrap min-w-0">
+          <span class="text-slate-400 font-bold uppercase text-[9px] tracking-wider">Etiquetas:</span>
+          ${tagsList || '<span class="text-slate-400 italic text-[11px]">Sin etiquetas aplicadas</span>'}
+        </div>
+        <div class="flex items-center gap-1 shrink-0">
+          <input type="text" id="newTagInput" placeholder="Nueva etiqueta..." class="px-2 py-1 bg-white border border-slate-200 rounded-lg text-[11px] text-slate-800 placeholder-slate-400 w-28 focus:outline-none focus:border-emerald-500" onkeydown="if(event.key==='Enter') addChatTag('${lead.id}')">
+          <button onclick="addChatTag('${lead.id}')" class="px-2 py-1 bg-slate-900 hover:bg-slate-800 text-white rounded-lg text-[10px] font-bold transition-all">
+            + Tag
+          </button>
+        </div>
+      `;
+
+      // Messages Feed
+      feed.innerHTML = '';
+      if (!lead.history || lead.history.length === 0) {
+        feed.innerHTML = '<div class="h-full flex items-center justify-center text-xs text-slate-400">No hay mensajes previos en esta conversación. Escribe un mensaje abajo para comenzar.</div>';
+      } else {
+        lead.history.forEach(msg => {
+          const isOut = msg.direction === 'outbound';
+          const time = new Date(msg.timestamp || Date.now()).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+          feed.innerHTML += `
+            <div class="flex flex-col ${isOut ? 'items-end' : 'items-start'}">
+              <div class="max-w-[80%] rounded-2xl p-3 shadow-xs ${isOut ? 'bg-emerald-600 text-white rounded-br-xs' : 'bg-white text-slate-900 border border-slate-200 rounded-bl-xs'}">
+                <p class="text-xs whitespace-pre-wrap leading-relaxed">${msg.message}</p>
+                <div class="flex items-center justify-end gap-1 mt-1 text-[10px] ${isOut ? 'text-emerald-200' : 'text-slate-400'}">
+                  <span>${time}</span>
+                  ${isOut ? '<span>✓✓</span>' : ''}
+                </div>
+              </div>
+            </div>
+          `;
+        });
+        feed.scrollTop = feed.scrollHeight;
+      }
+      if (window.lucide) lucide.createIcons();
+    }
+
+    async function changeChatLeadStage(leadId, newStage) {
+      const idx = PROSPECTS.findIndex(p => p.id === leadId);
+      if (idx !== -1) {
+        PROSPECTS[idx].stage = Number(newStage);
+        renderChatInbox();
+      }
+      try {
+        await fetch('/api/leads', {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id: leadId, stage: Number(newStage) })
+        });
+      } catch (e) {
+        console.error("Error actualizando etapa:", e);
+      }
+    }
+
+    async function addChatTag(leadId) {
+      const input = document.getElementById('newTagInput');
+      const tag = (input?.value || '').trim().toLowerCase().replace(/\s+/g, '-');
+      if (!tag) return;
+      const lead = PROSPECTS.find(p => p.id === leadId);
+      if (lead) {
+        lead.tags = Array.from(new Set([...(lead.tags || []), tag]));
+        renderChatInbox();
+        try {
+          await fetch('/api/leads', {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id: leadId, tags: lead.tags })
+          });
+        } catch (e) {}
+      }
+    }
+
+    async function removeChatTag(leadId, tagToRemove) {
+      const lead = PROSPECTS.find(p => p.id === leadId);
+      if (lead && lead.tags) {
+        lead.tags = lead.tags.filter(t => t !== tagToRemove);
+        renderChatInbox();
+        try {
+          await fetch('/api/leads', {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id: leadId, tags: lead.tags })
+          });
+        } catch (e) {}
+      }
+    }
+
+    function insertQuickResponse(key) {
+      const input = document.getElementById('chatInputMessage');
+      if (!input) return;
+      const responses = {
+        garantia: "¡Hola! Si en los 90 días no alcanzamos los 500 leads calificados, seguimos trabajando gratis sin costo hasta cumplirlos o te devolvemos la diferencia proporcional por contrato firmado (CUIT 20-39210016-5). ¿Cómo comercializan actualmente?",
+        adspend: "¡Hola! La inversión publicitaria de Meta/Google corre directo por tu cuenta para que puedas deducir impuestos con tu tarjeta corporativa. Nosotros gestionamos y optimizamos toda la pauta. ¿Qué presupuesto mensual suelen destinar?",
+        precio: "El sistema llave en mano de 500 leads es de $3.500.000 ARS por el trimestre completo, o se reserva con $350.000 ARS de seña inicial para congelar plaza. ¿Prefieren coordinar una llamada o avanzar directo con la reserva?",
+        calcom: "¡Hola! Para ver en detalle los embudos y proyectar los números de tu rubro, podés elegir el día y hora que te quede más cómodo acá: https://cal.com/alan-lopez/15min ¿Te queda mejor por la mañana o por la tarde?"
+      };
+      input.value = responses[key] || "";
+      input.focus();
+    }
+
+    async function sendManualChatMessage() {
+      const input = document.getElementById('chatInputMessage');
+      const text = (input?.value || '').trim();
+      if (!text) return;
+
+      const lead = PROSPECTS.find(p => p.id === currentChatLeadId);
+      if (!lead) return;
+
+      const btn = document.getElementById('btnSendChatMessage');
+      if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = '<span class="animate-spin">⏳</span> Enviando...';
+      }
+
+      const now = new Date().toISOString();
+      const localMsg = {
+        id: 'msg-' + Date.now(),
+        channel: 'whatsapp',
+        direction: 'outbound',
+        message: text,
+        timestamp: now
+      };
+      if (!lead.history) lead.history = [];
+      lead.history.push(localMsg);
+      lead.lastTouch = 'WHATSAPP (outbound): ' + text;
+      input.value = '';
+      renderActiveChatDetail();
+
+      try {
+        const res = await fetch('/api/messages/send', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            leadId: lead.id,
+            phone: lead.phone,
+            message: text,
+            tags: lead.tags || [],
+            stage: lead.stage
+          })
+        });
+        const data = await res.json();
+        console.log("Mensaje enviado:", data);
+      } catch (err) {
+        console.warn("Envío procesado localmente:", err);
+      } finally {
+        if (btn) {
+          btn.disabled = false;
+          btn.innerHTML = '<i data-lucide="send" class="w-3.5 h-3.5"></i><span>Enviar</span>';
+          if (window.lucide) lucide.createIcons();
+        }
+      }
+    }
+
     function checkAuth() {
       if (sessionStorage.getItem('smd_ventas_auth') === 'true') {
         document.getElementById('authGate').classList.add('hidden');

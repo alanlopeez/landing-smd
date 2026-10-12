@@ -973,103 +973,187 @@
         <!-- ============================================================== -->
         <!-- 6. TAB REPOSITORIO DE RESPUESTAS WHATSAPP                      -->
         <!-- ============================================================== -->
+                <!-- ============================================================== -->
+        <!-- 6. TAB WHATSAPP LIVE INBOX & REPOSITORIO DE RESPUESTAS         -->
+        <!-- ============================================================== -->
         <div id="tab-content-respuestas" class="tab-pane hidden space-y-6">
           
-          <!-- Header Banner -->
-          <div class="p-6 rounded-3xl bg-slate-900 text-white shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-4 border border-slate-800">
-            <div>
-              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-mono font-semibold mb-2 border border-emerald-500/30">
-                <i data-lucide="bot" class="w-3.5 h-3.5"></i>
-                <span>WHATSAPP CLOUD BOT INTELLIGENCE</span>
-              </div>
-              <h2 class="text-xl md:text-2xl font-bold tracking-tight">Repositorio Oficial de Respuestas & Guiones</h2>
-              <p class="text-xs md:text-sm text-slate-400 mt-1 max-w-2xl">
-                Catálogo estructurado de respuestas canónicas anti-muro de texto (2-3 oraciones), ordenado por etapas (0 a 4) y objeciones frecuentes. Copiá cualquier respuesta con 1 clic para responder en WhatsApp Web.
-              </p>
-            </div>
+          <!-- Top Nav Sub-tabs: Bandeja en Vivo vs Repositorio -->
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-2xl bg-slate-900 text-white shadow-lg border border-slate-800">
             <div class="flex items-center gap-3">
-              <a href="https://wa.me/5491178122565" target="_blank" class="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold flex items-center gap-2 shadow-md transition-all active:scale-95">
-                <i data-lucide="smartphone" class="w-4 h-4"></i>
-                <span>Probar Bot Oficial (+54 9 11 7812-2565)</span>
+              <div class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center font-bold">
+                <i data-lucide="message-square-text" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <h2 class="text-base font-bold text-white flex items-center gap-2">
+                  <span>Bandeja Omnicanal WhatsApp & Repositorio</span>
+                  <span class="px-2 py-0.5 rounded-full text-[10px] font-mono bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-bold">Live Synced</span>
+                </h2>
+                <p class="text-xs text-slate-400 mt-0.5">
+                  Visualizá conversaciones en vivo, gestioná etiquetas para calificar leads y respondé manualmente vía Meta Cloud API.
+                </p>
+              </div>
+            </div>
+
+            <!-- Subview Toggle -->
+            <div class="flex items-center gap-2 bg-slate-950 p-1 rounded-xl border border-slate-800">
+              <button onclick="switchWppView('inbox')" id="btnViewInbox" class="px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all bg-emerald-500 text-slate-950 shadow-sm flex items-center gap-1.5">
+                <i data-lucide="inbox" class="w-3.5 h-3.5"></i>
+                <span>Bandeja de Chats & Etiquetas</span>
+              </button>
+              <button onclick="switchWppView('repo')" id="btnViewRepo" class="px-3.5 py-1.5 rounded-lg text-xs font-medium transition-all text-slate-400 hover:text-white flex items-center gap-1.5">
+                <i data-lucide="book-open" class="w-3.5 h-3.5"></i>
+                <span>Catálogo de Respuestas (IA)</span>
+              </button>
+              <a href="https://app.chatwoot.com/app/accounts/191100/dashboard" target="_blank" class="px-2.5 py-1.5 rounded-lg text-xs font-medium text-slate-400 hover:text-emerald-400 border border-slate-800 hover:border-emerald-500/30 flex items-center gap-1 transition-colors" title="Abrir Chatwoot Cloud Oficial (ID: 191100)">
+                <i data-lucide="external-link" class="w-3 h-3"></i>
+                <span class="hidden md:inline">Chatwoot Cloud</span>
               </a>
             </div>
           </div>
 
-          <!-- Buscador y Simulador Interactivo de Matching -->
-          <div class="p-5 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-3">
-            <div class="flex items-center justify-between">
-              <div class="flex items-center gap-2">
-                <i data-lucide="sparkles" class="w-4 h-4 text-emerald-600"></i>
-                <h3 class="text-sm font-bold text-slate-900">Simulador de Respuestas del Bot en Tiempo Real</h3>
+          <!-- ============================================================== -->
+          <!-- VISTA 1: BANDEJA EN VIVO DUPLICADA (ESTILO CHATWOOT / WPP WEB) -->
+          <!-- ============================================================== -->
+          <div id="wppViewInboxContainer" class="bg-white rounded-2xl border border-slate-200 shadow-xl overflow-hidden flex flex-col md:flex-row h-[740px]">
+            
+            <!-- COLUMNA IZQUIERDA: LISTA DE CHATS -->
+            <div class="w-full md:w-80 lg:w-[350px] border-r border-slate-200 flex flex-col bg-slate-50/60 shrink-0">
+              <!-- Barra Superior de Filtros y Búsqueda -->
+              <div class="p-3.5 border-b border-slate-200 bg-white space-y-2.5">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-2">
+                    <span class="text-xs font-bold text-slate-900">Conversaciones</span>
+                    <span id="chatCountBadge" class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-600">4</span>
+                  </div>
+                  <span class="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200/60">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                    API Activa
+                  </span>
+                </div>
+
+                <!-- Buscador de Chats -->
+                <div class="relative">
+                  <i data-lucide="search" class="w-3.5 h-3.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2"></i>
+                  <input type="text" id="chatSearchInput" oninput="filterChatList()" placeholder="Buscar por nombre, empresa o tel..." class="w-full pl-8 pr-3 py-1.5 bg-slate-100/80 border border-slate-200 rounded-xl text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-emerald-500 transition-all">
+                </div>
+
+                <!-- Filtro por Etiquetas -->
+                <div class="flex items-center gap-1 overflow-x-auto pt-1 pb-0.5 no-scrollbar text-[10px]">
+                  <button onclick="filterChatByTag('all')" id="tagFilter-all" class="chat-tag-filter px-2 py-0.5 rounded-lg font-bold bg-slate-900 text-white shrink-0">Todos</button>
+                  <button onclick="filterChatByTag('etapa-1')" id="tagFilter-etapa-1" class="chat-tag-filter px-2 py-0.5 rounded-lg font-medium bg-white text-slate-600 border border-slate-200 hover:bg-slate-100 shrink-0">Etapa 1</button>
+                  <button onclick="filterChatByTag('etapa-2')" id="tagFilter-etapa-2" class="chat-tag-filter px-2 py-0.5 rounded-lg font-medium bg-white text-slate-600 border border-slate-200 hover:bg-slate-100 shrink-0">Etapa 2</button>
+                  <button onclick="filterChatByTag('500leads')" id="tagFilter-500leads" class="chat-tag-filter px-2 py-0.5 rounded-lg font-medium bg-white text-slate-600 border border-slate-200 hover:bg-slate-100 shrink-0">500 Leads</button>
+                  <button onclick="filterChatByTag('calificado')" id="tagFilter-calificado" class="chat-tag-filter px-2 py-0.5 rounded-lg font-medium bg-white text-slate-600 border border-slate-200 hover:bg-slate-100 shrink-0">Calificados</button>
+                </div>
               </div>
-              <span class="text-[11px] font-mono text-slate-500">Matching por palabras clave & intención</span>
-            </div>
-            <div class="flex flex-col sm:flex-row gap-2">
-              <input
-                type="text"
-                id="simulatorInput"
-                placeholder="Escribí lo que te dijo un prospecto (ej: 'cuánto sale y qué garantía me dan si no llegan a los 500')"
-                class="flex-1 px-4 py-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none bg-slate-50"
-                onkeypress="if(event.key === 'Enter') runSimulatorMatch()"
-              />
-              <button
-                type="button"
-                onclick="runSimulatorMatch()"
-                class="px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold flex items-center justify-center gap-2 transition-all active:scale-95 shadow-sm"
-              >
-                <i data-lucide="search" class="w-3.5 h-3.5"></i>
-                <span>Simular Respuesta</span>
-              </button>
-            </div>
-            <!-- Simulation result card -->
-            <div id="simulatorResult" class="hidden p-4 rounded-xl bg-emerald-50 border border-emerald-200 space-y-2 animate-in fade-in">
-              <div class="flex items-center justify-between text-xs">
-                <span class="font-bold text-emerald-900 flex items-center gap-1.5" id="simResultTitle">
-                  <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600"></i>
-                  <span>Respuesta Asignada</span>
-                </span>
-                <span class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-200 text-emerald-800 font-semibold" id="simResultStage">
-                  Etapa 0 -> Etapa 1
-                </span>
+
+              <!-- Lista de Chats Scrollable -->
+              <div id="chatConversationsList" class="flex-1 overflow-y-auto divide-y divide-slate-100 p-1 space-y-1">
+                <!-- Se llena dinámicamente con JavaScript -->
               </div>
-              <p class="text-xs text-slate-800 font-medium bg-white p-3 rounded-lg border border-emerald-100" id="simResultText"></p>
-              <div class="flex items-center justify-between pt-1">
-                <span class="text-[11px] text-emerald-700 font-mono" id="simResultFacts"></span>
-                <button
-                  type="button"
-                  onclick="copyTextToClipboard(document.getElementById('simResultText').innerText, this)"
-                  class="px-3 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-[11px] font-semibold flex items-center gap-1.5 transition-all"
-                >
-                  <i data-lucide="copy" class="w-3 h-3"></i>
-                  <span>Copiar para WhatsApp</span>
+            </div>
+
+            <!-- COLUMNA DERECHA: VENTANA DE CONVERSACIÓN ACTIVA -->
+            <div class="flex-1 flex flex-col bg-slate-100/50 min-w-0">
+              
+              <!-- Cabecera del Chat Activo -->
+              <div id="activeChatHeader" class="p-3.5 border-b border-slate-200 bg-white flex items-center justify-between gap-3 shadow-xs">
+                <!-- Dinámico -->
+              </div>
+
+              <!-- Barra de Etiquetas del Contacto Activo -->
+              <div id="activeChatTagsBar" class="px-4 py-2 border-b border-slate-200/80 bg-slate-50 flex items-center justify-between gap-2 text-xs flex-wrap">
+                <!-- Dinámico: badges con botón x + input de nueva etiqueta -->
+              </div>
+
+              <!-- Feed de Mensajes (Chat Scroll) -->
+              <div id="activeChatMessagesFeed" class="flex-1 overflow-y-auto p-4 space-y-3 bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] [background-size:16px_16px]">
+                <!-- Dinámico: burbujas de chat -->
+              </div>
+
+              <!-- Barra de Respuestas Rápidas Canónicas del Repositorio -->
+              <div class="px-3.5 py-2 bg-white border-t border-slate-200 flex items-center gap-2 overflow-x-auto text-[11px] shrink-0">
+                <span class="text-slate-400 font-bold shrink-0 flex items-center gap-1">
+                  <i data-lucide="zap" class="w-3.5 h-3.5 text-amber-500"></i> Pegar Respuesta:
+                </span>
+                <button onclick="insertQuickResponse('garantia')" class="px-2 py-1 rounded-lg bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200/60 font-semibold shrink-0 transition-colors">Garantía 500 Leads</button>
+                <button onclick="insertQuickResponse('adspend')" class="px-2 py-1 rounded-lg bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200/60 font-semibold shrink-0 transition-colors">Ad Spend / Pauta</button>
+                <button onclick="insertQuickResponse('precio')" class="px-2 py-1 rounded-lg bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200/60 font-semibold shrink-0 transition-colors">Precio $3.5M / Seña</button>
+                <button onclick="insertQuickResponse('calcom')" class="px-2 py-1 rounded-lg bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200/60 font-semibold shrink-0 transition-colors">Agenda Cal.com</button>
+              </div>
+
+              <!-- Formulario de Envío Manual de Mensaje -->
+              <div class="p-3 bg-white border-t border-slate-200 flex items-end gap-2 shrink-0">
+                <div class="flex-1 relative">
+                  <textarea id="chatInputMessage" rows="2" placeholder="Escribe un mensaje para responder por WhatsApp..." class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-emerald-500 transition-all resize-none"></textarea>
+                </div>
+                <button id="btnSendChatMessage" onclick="sendManualChatMessage()" class="h-10 px-4 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition-all shadow-md active:scale-95 shrink-0">
+                  <i data-lucide="send" class="w-3.5 h-3.5"></i>
+                  <span>Enviar</span>
                 </button>
               </div>
+
             </div>
           </div>
 
-          <!-- Filtros de Etapas -->
-          <div class="flex flex-wrap items-center gap-2 border-b border-slate-200 pb-3">
-            <span class="text-xs font-semibold text-slate-500 mr-2 flex items-center gap-1">
-              <i data-lucide="filter" class="w-3.5 h-3.5"></i>
-              Filtrar por Etapa:
-            </span>
-            <button onclick="filterResponses('all')" class="resp-filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-900 text-white shadow-sm transition-all" data-filter="all">Todas (12)</button>
-            <button onclick="filterResponses(0)" class="resp-filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition-all" data-filter="0">Etapa 0: Saludo</button>
-            <button onclick="filterResponses(1)" class="resp-filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition-all" data-filter="1">Etapa 1: Calificación</button>
-            <button onclick="filterResponses(2)" class="resp-filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition-all" data-filter="2">Etapa 2: Ofertas</button>
-            <button onclick="filterResponses(3)" class="resp-filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition-all" data-filter="3">Etapa 3: Objeciones</button>
-            <button onclick="filterResponses(4)" class="resp-filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition-all" data-filter="4">Etapa 4: Cierre & Seña</button>
-          </div>
+          <!-- ============================================================== -->
+          <!-- VISTA 2: CATÁLOGO DEL REPOSITORIO DE RESPUESTAS                -->
+          <!-- ============================================================== -->
+          <div id="wppViewRepoContainer" class="hidden space-y-6">
+            <!-- Header Banner -->
+            <div class="p-6 rounded-3xl bg-slate-900 text-white shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-4 border border-slate-800">
+              <div>
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-mono font-semibold mb-2 border border-emerald-500/30">
+                  <i data-lucide="bot" class="w-3.5 h-3.5"></i>
+                  <span>WHATSAPP CLOUD BOT INTELLIGENCE</span>
+                </div>
+                <h2 class="text-xl md:text-2xl font-bold tracking-tight">Repositorio Oficial de Respuestas & Guiones</h2>
+                <p class="text-xs md:text-sm text-slate-400 mt-1 max-w-2xl">
+                  Catálogo estructurado de respuestas canónicas anti-muro de texto (2-3 oraciones), ordenado por etapas (0 a 4) y objeciones frecuentes. Copiá cualquier respuesta con 1 clic para responder en WhatsApp Web.
+                </p>
+              </div>
+              <div class="flex items-center gap-3">
+                <a href="https://wa.me/5491178122565" target="_blank" class="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold flex items-center gap-2 shadow-md transition-all active:scale-95">
+                  <i data-lucide="smartphone" class="w-4 h-4"></i>
+                  <span>Probar Bot Oficial (+54 9 11 7812-2565)</span>
+                </a>
+              </div>
+            </div>
 
-          <!-- Grid de Respuestas Aprobadas -->
-          <div id="responsesGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <!-- Las tarjetas se generan dinámicamente con JS -->
-          </div>
+            <!-- Buscador y Simulador Interactivo de Matching -->
+            <div class="p-5 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-3">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                  <i data-lucide="sparkles" class="w-4 h-4 text-emerald-600"></i>
+                  <h3 class="text-sm font-bold text-slate-900">Simulador de Respuestas del Bot en Tiempo Real</h3>
+                </div>
+                <span class="text-[11px] font-mono text-slate-500">Matching por palabras clave & intención</span>
+              </div>
+              <div class="flex flex-col sm:flex-row gap-3">
+                <input type="text" id="simQueryInput" placeholder="Ej: ¿Qué pasa si no llegan a los 500 leads? o ¿Cuánto cuesta el servicio?" class="flex-1 px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-emerald-500 focus:bg-white transition-all">
+                <button onclick="testSimulatorQuery()" class="px-5 py-2.5 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-semibold flex items-center justify-center gap-2 transition-all">
+                  <i data-lucide="search" class="w-3.5 h-3.5"></i>
+                  <span>Evaluar Intención</span>
+                </button>
+              </div>
+              <div id="simResultBox" class="hidden p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs space-y-2">
+                <div class="flex items-center justify-between">
+                  <span id="simCategoryBadge" class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-100 text-emerald-800">CATEGORÍA</span>
+                  <span id="simStageBadge" class="text-[11px] font-semibold text-slate-500">Sugerida: Etapa 1</span>
+                </div>
+                <p id="simResponseText" class="text-slate-800 font-medium italic"></p>
+                <div id="simKeyFacts" class="text-[11px] text-slate-500 pt-1 border-t border-slate-200"></div>
+              </div>
+            </div>
 
+            <!-- Grid de Respuestas Aprobadas -->
+            <div id="repoResponsesGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <!-- Renderizado con JS -->
+            </div>
+          </div>
         </div>
-
-      </div>
-    </main>
+</main>
   </div>
 
   <!-- SCRIPT APPLICATION LOGIC -->
@@ -1132,6 +1216,326 @@
     let currentStageFilter = 'all'; // 'all' or 0, 1, 2, 3, 4
 
     // Check Auth
+    
+    // ==========================================
+    // LOGICA DE BANDEJA EN VIVO Y CHATS WPP
+    // ==========================================
+    let currentChatLeadId = 'lead-alan-01';
+    let currentChatTagFilter = 'all';
+
+    function switchWppView(view) {
+      const inboxCont = document.getElementById('wppViewInboxContainer');
+      const repoCont = document.getElementById('wppViewRepoContainer');
+      const btnInbox = document.getElementById('btnViewInbox');
+      const btnRepo = document.getElementById('btnViewRepo');
+      if (view === 'inbox') {
+        inboxCont.classList.remove('hidden');
+        repoCont.classList.add('hidden');
+        btnInbox.className = 'px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all bg-emerald-500 text-slate-950 shadow-sm flex items-center gap-1.5';
+        btnRepo.className = 'px-3.5 py-1.5 rounded-lg text-xs font-medium transition-all text-slate-400 hover:text-white flex items-center gap-1.5';
+      } else {
+        inboxCont.classList.add('hidden');
+        repoCont.classList.remove('hidden');
+        btnInbox.className = 'px-3.5 py-1.5 rounded-lg text-xs font-medium transition-all text-slate-400 hover:text-white flex items-center gap-1.5';
+        btnRepo.className = 'px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all bg-emerald-500 text-slate-950 shadow-sm flex items-center gap-1.5';
+      }
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function renderChatInbox() {
+      const listContainer = document.getElementById('chatConversationsList');
+      if (!listContainer) return;
+
+      const query = (document.getElementById('chatSearchInput')?.value || '').toLowerCase().trim();
+      let filtered = PROSPECTS.filter(p => {
+        const matchesQuery = !query || 
+          p.name.toLowerCase().includes(query) || 
+          p.company.toLowerCase().includes(query) || 
+          (p.phone && p.phone.includes(query));
+
+        if (!matchesQuery) return false;
+
+        if (currentChatTagFilter === 'all') return true;
+        if (currentChatTagFilter === 'etapa-1') return p.stage === 1 || (p.tags && p.tags.includes('etapa-1'));
+        if (currentChatTagFilter === 'etapa-2') return p.stage === 2 || (p.tags && p.tags.includes('etapa-2'));
+        if (currentChatTagFilter === '500leads') return (p.tags && p.tags.some(t => t.includes('500leads')));
+        if (currentChatTagFilter === 'calificado') return (p.tags && p.tags.some(t => t.includes('calificado')));
+        return true;
+      });
+
+      const countBadge = document.getElementById('chatCountBadge');
+      if (countBadge) countBadge.innerText = filtered.length;
+
+      if (filtered.length === 0) {
+        listContainer.innerHTML = '<div class="p-6 text-center text-xs text-slate-400">No se encontraron conversaciones con este filtro.</div>';
+        return;
+      }
+
+      if (!filtered.some(p => p.id === currentChatLeadId)) {
+        currentChatLeadId = filtered[0].id;
+      }
+
+      listContainer.innerHTML = '';
+      filtered.forEach(lead => {
+        const isSelected = lead.id === currentChatLeadId;
+        const lastMsg = (lead.history && lead.history.length > 0) 
+          ? lead.history[lead.history.length - 1] 
+          : { message: lead.lastTouch || "Sin mensajes", timestamp: lead.updatedAt || new Date().toISOString() };
+        
+        const timeStr = new Date(lastMsg.timestamp || Date.now()).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        const stageColors = ['bg-slate-100 text-slate-600', 'bg-blue-100 text-blue-700', 'bg-purple-100 text-purple-700', 'bg-amber-100 text-amber-700', 'bg-emerald-100 text-emerald-800'];
+        const stageBadge = '<span class="px-1.5 py-0.5 rounded text-[9px] font-bold ' + (stageColors[lead.stage] || stageColors[0]) + '">E' + (lead.stage ?? 0) + '</span>';
+
+        const tagsHtml = (lead.tags || []).slice(0, 2).map(t => 
+          '<span class="px-1.5 py-0.5 rounded text-[9px] font-medium bg-slate-100 text-slate-600 border border-slate-200/60 truncate max-w-[90px]">' + t + '</span>'
+        ).join('');
+
+        listContainer.innerHTML += `
+          <div onclick="selectChatLead('${lead.id}')" class="p-3 rounded-xl cursor-pointer transition-all flex flex-col gap-1.5 ${isSelected ? 'bg-white shadow-sm border border-emerald-500/40 ring-1 ring-emerald-500/20' : 'hover:bg-white/80 border border-transparent'}">
+            <div class="flex items-center justify-between gap-1">
+              <div class="flex items-center gap-1.5 min-w-0">
+                <span class="text-xs font-bold text-slate-900 truncate">${lead.name}</span>
+                ${stageBadge}
+              </div>
+              <span class="text-[10px] text-slate-400 shrink-0 font-mono">${timeStr}</span>
+            </div>
+            <p class="text-[11px] text-slate-500 truncate font-medium">${lead.company}</p>
+            <p class="text-[11px] text-slate-600 line-clamp-1 italic text-slate-600">
+              ${lastMsg.direction === 'outbound' ? '✓ ' : ''}${lastMsg.message}
+            </p>
+            <div class="flex items-center gap-1 pt-1 flex-wrap">
+              ${tagsHtml}
+            </div>
+          </div>
+        `;
+      });
+
+      renderActiveChatDetail();
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function selectChatLead(leadId) {
+      currentChatLeadId = leadId;
+      renderChatInbox();
+    }
+
+    function filterChatList() {
+      renderChatInbox();
+    }
+
+    function filterChatByTag(tag) {
+      currentChatTagFilter = tag;
+      document.querySelectorAll('.chat-tag-filter').forEach(btn => {
+        btn.className = 'chat-tag-filter px-2 py-0.5 rounded-lg font-medium bg-white text-slate-600 border border-slate-200 hover:bg-slate-100 shrink-0';
+      });
+      const activeBtn = document.getElementById('tagFilter-' + tag);
+      if (activeBtn) {
+        activeBtn.className = 'chat-tag-filter px-2 py-0.5 rounded-lg font-bold bg-slate-900 text-white shrink-0';
+      }
+      renderChatInbox();
+    }
+
+    function renderActiveChatDetail() {
+      const lead = PROSPECTS.find(p => p.id === currentChatLeadId);
+      const header = document.getElementById('activeChatHeader');
+      const tagsBar = document.getElementById('activeChatTagsBar');
+      const feed = document.getElementById('activeChatMessagesFeed');
+      if (!lead || !header || !tagsBar || !feed) return;
+
+      const cleanPhone = (lead.phone || '').replace(/\D/g, '');
+      const stageOptions = [0, 1, 2, 3, 4].map(stg => 
+        '<option value="' + stg + '" ' + (lead.stage === stg ? 'selected' : '') + '>Etapa ' + stg + '</option>'
+      ).join('');
+
+      header.innerHTML = `
+        <div class="flex items-center gap-3 min-w-0">
+          <div class="w-10 h-10 rounded-xl bg-slate-900 text-emerald-400 font-bold text-xs flex items-center justify-center shrink-0 border border-slate-700 shadow-sm">
+            ${lead.name.slice(0, 2).toUpperCase()}
+          </div>
+          <div class="min-w-0">
+            <div class="flex items-center gap-2">
+              <h3 class="text-xs font-bold text-slate-900 truncate">${lead.name}</h3>
+              <select onchange="changeChatLeadStage('${lead.id}', this.value)" class="text-[10px] font-bold px-2 py-0.5 rounded bg-slate-100 border border-slate-200 text-slate-700 focus:outline-none">
+                ${stageOptions}
+              </select>
+            </div>
+            <p class="text-[11px] text-slate-500 truncate">${lead.company} • +${cleanPhone}</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2 shrink-0">
+          <a href="https://wa.me/${cleanPhone}" target="_blank" class="px-2.5 py-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-700 text-xs font-semibold flex items-center gap-1 border border-emerald-200/60 transition-colors">
+            <i data-lucide="message-circle" class="w-3.5 h-3.5"></i>
+            <span>WhatsApp Web</span>
+          </a>
+          <a href="https://app.chatwoot.com/app/accounts/191100/dashboard" target="_blank" class="px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold flex items-center gap-1 transition-colors" title="Chatwoot Cloud Account 191100">
+            <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+            <span>Chatwoot</span>
+          </a>
+        </div>
+      `;
+
+      // Tags Bar
+      const tagsList = (lead.tags || []).map(t => `
+        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-bold bg-slate-200 text-slate-700 border border-slate-300/80">
+          #${t}
+          <button onclick="removeChatTag('${lead.id}', '${t}')" class="hover:text-rose-600 font-bold ml-0.5">×</button>
+        </span>
+      `).join('');
+
+      tagsBar.innerHTML = `
+        <div class="flex items-center gap-1.5 flex-wrap min-w-0">
+          <span class="text-slate-400 font-bold uppercase text-[9px] tracking-wider">Etiquetas:</span>
+          ${tagsList || '<span class="text-slate-400 italic text-[11px]">Sin etiquetas aplicadas</span>'}
+        </div>
+        <div class="flex items-center gap-1 shrink-0">
+          <input type="text" id="newTagInput" placeholder="Nueva etiqueta..." class="px-2 py-1 bg-white border border-slate-200 rounded-lg text-[11px] text-slate-800 placeholder-slate-400 w-28 focus:outline-none focus:border-emerald-500" onkeydown="if(event.key==='Enter') addChatTag('${lead.id}')">
+          <button onclick="addChatTag('${lead.id}')" class="px-2 py-1 bg-slate-900 hover:bg-slate-800 text-white rounded-lg text-[10px] font-bold transition-all">
+            + Tag
+          </button>
+        </div>
+      `;
+
+      // Messages Feed
+      feed.innerHTML = '';
+      if (!lead.history || lead.history.length === 0) {
+        feed.innerHTML = '<div class="h-full flex items-center justify-center text-xs text-slate-400">No hay mensajes previos en esta conversación. Escribe un mensaje abajo para comenzar.</div>';
+      } else {
+        lead.history.forEach(msg => {
+          const isOut = msg.direction === 'outbound';
+          const time = new Date(msg.timestamp || Date.now()).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+          feed.innerHTML += `
+            <div class="flex flex-col ${isOut ? 'items-end' : 'items-start'}">
+              <div class="max-w-[80%] rounded-2xl p-3 shadow-xs ${isOut ? 'bg-emerald-600 text-white rounded-br-xs' : 'bg-white text-slate-900 border border-slate-200 rounded-bl-xs'}">
+                <p class="text-xs whitespace-pre-wrap leading-relaxed">${msg.message}</p>
+                <div class="flex items-center justify-end gap-1 mt-1 text-[10px] ${isOut ? 'text-emerald-200' : 'text-slate-400'}">
+                  <span>${time}</span>
+                  ${isOut ? '<span>✓✓</span>' : ''}
+                </div>
+              </div>
+            </div>
+          `;
+        });
+        feed.scrollTop = feed.scrollHeight;
+      }
+      if (window.lucide) lucide.createIcons();
+    }
+
+    async function changeChatLeadStage(leadId, newStage) {
+      const idx = PROSPECTS.findIndex(p => p.id === leadId);
+      if (idx !== -1) {
+        PROSPECTS[idx].stage = Number(newStage);
+        renderChatInbox();
+      }
+      try {
+        await fetch('/api/leads', {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id: leadId, stage: Number(newStage) })
+        });
+      } catch (e) {
+        console.error("Error actualizando etapa:", e);
+      }
+    }
+
+    async function addChatTag(leadId) {
+      const input = document.getElementById('newTagInput');
+      const tag = (input?.value || '').trim().toLowerCase().replace(/\s+/g, '-');
+      if (!tag) return;
+      const lead = PROSPECTS.find(p => p.id === leadId);
+      if (lead) {
+        lead.tags = Array.from(new Set([...(lead.tags || []), tag]));
+        renderChatInbox();
+        try {
+          await fetch('/api/leads', {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id: leadId, tags: lead.tags })
+          });
+        } catch (e) {}
+      }
+    }
+
+    async function removeChatTag(leadId, tagToRemove) {
+      const lead = PROSPECTS.find(p => p.id === leadId);
+      if (lead && lead.tags) {
+        lead.tags = lead.tags.filter(t => t !== tagToRemove);
+        renderChatInbox();
+        try {
+          await fetch('/api/leads', {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id: leadId, tags: lead.tags })
+          });
+        } catch (e) {}
+      }
+    }
+
+    function insertQuickResponse(key) {
+      const input = document.getElementById('chatInputMessage');
+      if (!input) return;
+      const responses = {
+        garantia: "¡Hola! Si en los 90 días no alcanzamos los 500 leads calificados, seguimos trabajando gratis sin costo hasta cumplirlos o te devolvemos la diferencia proporcional por contrato firmado (CUIT 20-39210016-5). ¿Cómo comercializan actualmente?",
+        adspend: "¡Hola! La inversión publicitaria de Meta/Google corre directo por tu cuenta para que puedas deducir impuestos con tu tarjeta corporativa. Nosotros gestionamos y optimizamos toda la pauta. ¿Qué presupuesto mensual suelen destinar?",
+        precio: "El sistema llave en mano de 500 leads es de $3.500.000 ARS por el trimestre completo, o se reserva con $350.000 ARS de seña inicial para congelar plaza. ¿Prefieren coordinar una llamada o avanzar directo con la reserva?",
+        calcom: "¡Hola! Para ver en detalle los embudos y proyectar los números de tu rubro, podés elegir el día y hora que te quede más cómodo acá: https://cal.com/alan-lopez/15min ¿Te queda mejor por la mañana o por la tarde?"
+      };
+      input.value = responses[key] || "";
+      input.focus();
+    }
+
+    async function sendManualChatMessage() {
+      const input = document.getElementById('chatInputMessage');
+      const text = (input?.value || '').trim();
+      if (!text) return;
+
+      const lead = PROSPECTS.find(p => p.id === currentChatLeadId);
+      if (!lead) return;
+
+      const btn = document.getElementById('btnSendChatMessage');
+      if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = '<span class="animate-spin">⏳</span> Enviando...';
+      }
+
+      const now = new Date().toISOString();
+      const localMsg = {
+        id: 'msg-' + Date.now(),
+        channel: 'whatsapp',
+        direction: 'outbound',
+        message: text,
+        timestamp: now
+      };
+      if (!lead.history) lead.history = [];
+      lead.history.push(localMsg);
+      lead.lastTouch = 'WHATSAPP (outbound): ' + text;
+      input.value = '';
+      renderActiveChatDetail();
+
+      try {
+        const res = await fetch('/api/messages/send', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            leadId: lead.id,
+            phone: lead.phone,
+            message: text,
+            tags: lead.tags || [],
+            stage: lead.stage
+          })
+        });
+        const data = await res.json();
+        console.log("Mensaje enviado:", data);
+      } catch (err) {
+        console.warn("Envío procesado localmente:", err);
+      } finally {
+        if (btn) {
+          btn.disabled = false;
+          btn.innerHTML = '<i data-lucide="send" class="w-3.5 h-3.5"></i><span>Enviar</span>';
+          if (window.lucide) lucide.createIcons();
+        }
+      }
+    }
+
     function checkAuth() {
       if (sessionStorage.getItem('smd_ventas_auth') === 'true') {
         document.getElementById('authGate').classList.add('hidden');

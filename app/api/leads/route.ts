@@ -14,7 +14,7 @@ export async function GET(req: NextRequest) {
 export async function PATCH(req: NextRequest) {
   try {
     const body = await req.json();
-    const { id, stage, notes } = body;
+    const { id, stage, notes, tags } = body;
 
     const lead = UNIFIED_LEADS.find(l => l.id === id);
     if (!lead) {
@@ -26,6 +26,9 @@ export async function PATCH(req: NextRequest) {
     }
     if (notes) {
       lead.lastTouch = notes;
+    }
+    if (tags && Array.isArray(tags)) {
+      lead.tags = tags;
     }
     lead.updatedAt = new Date().toISOString();
 
