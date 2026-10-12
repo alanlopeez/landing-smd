@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Play, Clock, ArrowUpRight, CheckCircle2, Sparkles } from "lucide-react";
+import { Play, Clock, ArrowUpRight, CheckCircle2, Sparkles, MessageCircle } from "lucide-react";
 
 interface HowItWorksSectionProps {
   onOpenLeadModal: () => void;

@@ -206,15 +206,27 @@ export default function FooterLegal() {
                 <span>hola@serviciodemarketingdigital.com</span>
               </a>
 
-              <a
-                href="https://wa.me/5491127887093"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-silver-mist hover:text-white flex items-center gap-2 transition-colors pt-1"
-              >
-                <MessageCircle className="w-3.5 h-3.5 text-[#25D366]" />
-                <span>WhatsApp: +54 9 11 2788-7093</span>
-              </a>
+              <div className="pt-2">
+                <a
+                  href="https://wa.me/5491127887093?text=Hola%20Alan%2C%20quiero%20hacerte%20una%20consulta%20directa"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-3 rounded-xl bg-liquid-abyss border border-[#25D366]/40 hover:border-[#25D366] flex items-center justify-between gap-3 text-white transition-all group shadow-md"
+                >
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-8 h-8 rounded-lg bg-[#25D366]/20 flex items-center justify-center text-[#25D366] shrink-0">
+                      <MessageCircle className="w-4 h-4 fill-current" />
+                    </div>
+                    <div>
+                      <span className="text-xs font-bold block text-white">WhatsApp Directo 24/7</span>
+                      <span className="text-[11px] text-[#25D366] font-mono">+54 9 11 2788-7093</span>
+                    </div>
+                  </div>
+                  <span className="text-[10px] uppercase font-mono px-2 py-0.5 rounded bg-[#25D366]/20 text-[#25D366] font-bold group-hover:bg-[#25D366] group-hover:text-liquid-abyss transition-colors">
+                    Chatear →
+                  </span>
+                </a>
+              </div>
             </div>
           </div>
 

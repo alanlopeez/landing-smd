@@ -2,7 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import { ArrowUpRight, Sparkles, Clock, ShieldCheck, Zap } from "lucide-react";
+import { ArrowUpRight, Sparkles, Clock, ShieldCheck, Zap, Phone, MessageCircle } from "lucide-react";
 import Floating3DEffects from "./Floating3DEffects";
 
 interface HeaderHeroProps {
@@ -87,6 +87,21 @@ export default function HeaderHero({ onOpenLeadModal }: HeaderHeroProps) {
               Legal
             </a>
           </div>
+
+          <a
+            href="https://wa.me/5491127887093?text=Hola%20Alan%2C%20estuve%20viendo%20tu%20web%20y%20quiero%20hacerte%20una%20consulta"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hidden sm:inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#25D366]/15 hover:bg-[#25D366]/25 border border-[#25D366]/40 text-[#25D366] hover:text-white text-xs font-semibold font-mono tracking-tight transition-all shadow-sm"
+            title="Chat directo por WhatsApp con Alan López (+54 9 11 2788-7093)"
+          >
+            <span className="relative flex h-2 w-2 shrink-0">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#25D366] opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#25D366]" />
+            </span>
+            <Phone className="w-3.5 h-3.5 shrink-0" />
+            <span>+54 9 11 2788-7093</span>
+          </a>
 
           <button
             onClick={onOpenLeadModal}

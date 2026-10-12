@@ -893,6 +893,20 @@
         <div>
           © 2026 Servicio de Marketing Digital. Todos los derechos reservados.
         </div>
+        <div class="my-4 p-4 rounded-xl bg-slate-900 border border-emerald-500/40 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-300">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
+              <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5"><path d="M17.472 14.382c-.301-.15-1.78-.878-2.056-.978-.276-.1-.477-.15-.678.15-.2.3-.778.978-.954 1.179-.175.2-.351.226-.652.075s-1.272-.469-2.423-1.496c-.895-.798-1.5-1.784-1.676-2.085-.175-.3-.019-.463.132-.612.136-.135.301-.351.452-.527.15-.175.201-.3.301-.501.101-.2.05-.376-.025-.527s-.678-1.631-.929-2.234c-.244-.587-.492-.507-.678-.517l-.578-.01c-.2 0-.527.075-.803.376s-1.054 1.029-1.054 2.509 1.079 2.91 1.23 3.11c.15.201 2.122 3.24 5.141 4.542.718.31 1.279.495 1.716.634.721.229 1.377.197 1.896.12.578-.086 1.78-.728 2.031-1.431.251-.703.251-1.305.176-1.431-.076-.126-.277-.201-.578-.351zM12.004 0C5.378 0 .008 5.37.008 11.996c0 2.112.551 4.17 1.598 5.984L0 24l6.192-1.624c1.75 1.01 3.754 1.542 5.807 1.543 6.626 0 11.996-5.37 11.996-11.997 0-3.205-1.248-6.218-3.515-8.486C18.212 1.248 15.202 0 12.004 0zm0 21.968c-1.786 0-3.535-.48-5.059-1.388l-.363-.215-3.673.963.98-3.58-.236-.375c-.998-1.587-1.524-3.424-1.524-5.357 0-5.503 4.478-9.98 9.98-9.98 2.666 0 5.172 1.038 7.057 2.924 1.886 1.886 2.924 4.392 2.924 7.056-.002 5.503-4.48 9.98-9.985 9.98z"/></svg>
+            </div>
+            <div>
+              <span class="font-bold text-white block">WhatsApp Oficial de Atención Directa</span>
+              <span class="text-emerald-400 font-mono text-xs">+54 9 11 2788-7093 (Respuesta Inmediata 24/7)</span>
+            </div>
+          </div>
+          <a href="https://wa.me/5491127887093?text=Hola%20Alan%2C%20quiero%20hacerte%20una%20consulta%20por%20los%20500%20leads" target="_blank" class="px-4 py-2 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-xs transition-all shadow-md">
+            Chatear por WhatsApp →
+          </a>
+        </div>
         <div class="flex items-center justify-center gap-3">
           <span class="inline-flex items-center gap-1.5 text-emerald-400">
             <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
@@ -955,19 +969,26 @@
     updateRoiCalculation();
   </script>
 
-  <!-- ASESOR CONCIERGE INTERACTIVO CON PERSONAJE (MATEO) -->
+  <!-- ASISTENTE CON IA CONVERSACIONAL (MATEO / ALAN LÓPEZ SMD) -->
   <script>
-    window.__AGENCY_BOT_CONFIG__ = {
-      personaName: "Mateo",
-      personaRole: "Director de Alianzas y Crecimiento",
-      personaAvatar: "./assets/mateo_avatar.jpg",
-      agencyName: "Servicio de Marketing Digital",
-      niche: "Empresas de Alto Rendimiento y Servicios Premium",
-      reservationUrl: "https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=3724152558-04c4dcd1-4592-4c02-8ac1-504c13b09ead",
-      whatsappPhone: "5491127887093"
+    window.__SMD_CHATBOT_CONFIG__ = {
+      personaName: "Mateo (IA)",
+      personaRole: "Director de Crecimiento • SMD",
+      personaAvatar: "/assets/logo.png",
+      whatsappPhone: "5491127887093",
+      formattedPhone: "+54 9 11 2788-7093",
+      context: "500_leads",
+      welcomeMessage: "¡Hola! 👋 Soy Mateo, Asistente con IA de **Alan López - Servicio de Marketing Digital**.\n\nAyudo a empresas a incorporar **500 prospectos calificados en 90 días**, 100% garantizados por contrato escrito.\n\n¿En qué podemos orientarte hoy?",
+      calComUrl: "https://cal.com/llamadas/15min",
+      quickReplies: [
+        "⚡ ¿Cuánto cuesta y cómo es el pago?",
+        "🛡️ ¿Cómo funciona la garantía de 500 leads?",
+        "📅 Agendar Videollamada (15 min)",
+        "💬 Hablar por WhatsApp (+54 9 11 2788-7093)"
+      ]
     };
   </script>
-  <script src="./agencias/assets/agency_persona_bot.js"></script>
+  <script src="/assets/smd_ai_chatbot.js"></script>
 
   <!-- AGENTE DE RESCATE COMERCIAL (ANTI-ABANDONO & CONVERSIÓN DE SEÑA) -->
   <script src="./assets/commercial_rescue_agent.js"></script>
