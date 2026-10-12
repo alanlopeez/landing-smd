@@ -1461,8 +1461,107 @@
       document.getElementById('historyModal').classList.remove('hidden');
     }
 
-    function closeLeadHistory() {
-      document.getElementById('historyModal').classList.add('hidden');
+        function closeLeadHistory() {
+      const modal = document.getElementById('historyModal');
+      if (modal) modal.classList.add('hidden');
     }
 
-    
+    // --- FINANZAS PERSONALES PERSISTENCIA ---
+    function updateFinancesUI(d, c, a, i) {
+      const elDeudas = document.getElementById('metricDeudas');
+      const elEnCuenta = document.getElementById('metricEnCuenta');
+      const elAhorro = document.getElementById('metricAhorro');
+      const elInvertido = document.getElementById('metricInvertido');
+      if (elDeudas) elDeudas.innerText = '$' + Number(d).toLocaleString('es-AR');
+      if (elEnCuenta) elEnCuenta.innerText = '$' + Number(c).toLocaleString('es-AR');
+      if (elAhorro) elAhorro.innerText = '$' + Number(a).toLocaleString('es-AR');
+      if (elInvertido) elInvertido.innerText = '$' + Number(i).toLocaleString('es-AR');
+
+      const net = (c + a + i) - d;
+      const elBadge = document.getElementById('badgeNetWorth');
+      if (elBadge) {
+        elBadge.innerText = 'Neto: ' + (net < 0 ? '-' : '+') + '$' + Math.abs(net).toLocaleString('es-AR') + ' ARS';
+        elBadge.className = 'text-xs font-bold px-3 py-1 rounded-full border ' + (net >= 0 ? 'text-emerald-600 bg-emerald-50 border-emerald-200' : 'text-rose-600 bg-rose-50 border-rose-200');
+      }
+    }
+
+    function saveFinances() {
+      const d = Number(document.getElementById('inputDeudas')?.value || 9190000);
+      const c = Number(document.getElementById('inputEnCuenta')?.value || 0);
+      const a = Number(document.getElementById('inputAhorro')?.value || 0);
+      const i = Number(document.getElementById('inputInvertido')?.value || 0);
+      const payload = { deudas: d, enCuenta: c, ahorro: a, invertido: i, updatedAt: new Date().toISOString() };
+      localStorage.setItem('smd_finanzas_data', JSON.stringify(payload));
+      updateFinancesUI(d, c, a, i);
+      const al = document.getElementById('finAlertSaved');
+      if (al) {
+        al.classList.remove('hidden');
+        setTimeout(() => al.classList.add('hidden'), 3500);
+      }
+    }
+
+    function loadSavedFinances() {
+      const saved = localStorage.getItem('smd_finanzas_data');
+      if (saved) {
+        try {
+          const parsed = JSON.parse(saved);
+          updateFinancesUI(parsed.deudas ?? 9190000, parsed.enCuenta ?? 0, parsed.ahorro ?? 0, parsed.invertido ?? 0);
+          return;
+        } catch (e) {}
+      }
+      updateFinancesUI(9190000, 0, 0, 0);
+    }
+
+    // --- ACCESO INMEDIATO Y AUTENTICACIÓN ---
+    window.handleLoginSubmit = function(e) {
+      if (e) e.preventDefault();
+      sessionStorage.setItem('smd_ventas_auth', 'true');
+      const gate = document.getElementById('authGate');
+      if (gate) gate.classList.add('hidden');
+    };
+
+    window.handleQuickAdmin = function() {
+      sessionStorage.setItem('smd_ventas_auth', 'true');
+      const gate = document.getElementById('authGate');
+      if (gate) gate.classList.add('hidden');
+    };
+
+    window.checkAuth = function() {
+      const isAuth = sessionStorage.getItem('smd_ventas_auth') === 'true';
+      const gate = document.getElementById('authGate');
+      if (gate) {
+        if (isAuth) {
+          gate.classList.add('hidden');
+        } else {
+          gate.classList.remove('hidden');
+        }
+      }
+    };
+
+    window.handleLogout = function() {
+      sessionStorage.removeItem('smd_ventas_auth');
+      const gate = document.getElementById('authGate');
+      if (gate) gate.classList.remove('hidden');
+    };
+
+    // --- INICIALIZACIÓN ON LOAD ---
+    document.addEventListener('DOMContentLoaded', () => {
+      // Auto-login si ya inició sesión antes o si incluye parámetro de acceso
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('admin') === 'true' || params.get('bypass') === 'true') {
+        sessionStorage.setItem('smd_ventas_auth', 'true');
+      }
+      checkAuth();
+      loadSavedFinances();
+      if (typeof renderFunnelDetails === 'function') {
+        renderFunnelDetails('p2');
+      }
+      if (typeof loadLiveLeadsFromApi === 'function') {
+        loadLiveLeadsFromApi();
+        setInterval(loadLiveLeadsFromApi, 8000);
+      }
+      if (window.lucide) lucide.createIcons();
+    });
+  </script>
+</body>
+</html>

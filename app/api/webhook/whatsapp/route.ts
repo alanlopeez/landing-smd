@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { stitchOrCreateLead, UNIFIED_LEADS } from "@/lib/leadsStore";
 import { findBestResponse, ConversationResponse } from "@/lib/conversationRepository";
+import { syncLeadWithChatwoot } from "@/lib/chatwootClient";
 
 export const dynamic = "force-dynamic";
 
@@ -33,6 +34,60 @@ REGLAS DE ORO OBLIGATORIAS:
    - Si pregunta por ad spend: explicá que la pauta publicitaria corre por cuenta del cliente directo en sus cuentas de Meta/Google para deducir impuestos.
    - Si pide llamada o coordinar: pasale el link oficial de Cal.com: https://cal.com/alan-lopez/15min
 4. CIERRE CONVERSACIONAL: Cada respuesta tuya DEBE terminar siempre con UNA sola pregunta corta para mantener la conversación viva y fácil de contestar.`;
+
+/**
+ * Función para inferir etiquetas (labels) a partir del texto y la categoría detectada
+ */
+function inferLabels(text: string, category: string, stage: number): string[] {
+  const lower = text.toLowerCase();
+  const labels: Set<string> = new Set();
+
+  // Etiqueta de Etapa Comercial
+  labels.add(`etapa-${stage}`);
+
+  // Etiquetas por Categoría e Intención
+  if (category === "saludo") labels.add("contacto-inicial");
+  if (category === "calificacion") labels.add("en-calificacion");
+  if (category === "oferta_500leads" || lower.includes("500") || lower.includes("leads")) {
+    labels.add("interes-500leads");
+  }
+  if (category === "oferta_landing" || lower.includes("landing") || lower.includes("web") || lower.includes("sitio")) {
+    labels.add("interes-landing-web");
+  }
+  if (category === "oferta_video" || lower.includes("video") || lower.includes("reels") || lower.includes("tiktok")) {
+    labels.add("interes-video-social");
+  }
+  if (category === "objecion_garantia" || lower.includes("garantia") || lower.includes("garantía")) {
+    labels.add("objecion-garantia");
+  }
+  if (category === "objecion_adspend" || lower.includes("publicidad") || lower.includes("pauta") || lower.includes("anuncio")) {
+    labels.add("consulta-adspend");
+  }
+  if (category === "objecion_precio" || lower.includes("precio") || lower.includes("cuanto sale") || lower.includes("costo") || lower.includes("cuánto")) {
+    labels.add("consulta-precio");
+  }
+  if (category === "cierre_reserva" || lower.includes("seña") || lower.includes("pagar") || lower.includes("transferencia") || lower.includes("tarjeta")) {
+    labels.add("intencion-pago-seña");
+  }
+  if (category === "cierre_llamada" || lower.includes("llamada") || lower.includes("reunion") || lower.includes("reunión") || lower.includes("zoom")) {
+    labels.add("solicita-llamada");
+  }
+
+  // Criterios de Calificación ICP
+  if (
+    lower.includes("empresa") ||
+    lower.includes("fabrica") ||
+    lower.includes("fábrica") ||
+    lower.includes("distribuidora") ||
+    lower.includes("lanchas") ||
+    lower.includes("inmobiliaria") ||
+    lower.includes("constructora")
+  ) {
+    labels.add("lead-calificado-icp");
+  }
+
+  return Array.from(labels);
+}
 
 // Función para llamar a Gemini Flash con inyección del Repositorio de Respuestas y contexto histórico
 async function callGeminiFlash(
@@ -91,7 +146,7 @@ INSTRUCCIÓN: Respondé al usuario utilizando la guía de la Respuesta Canónica
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
     });
-    const data = await res.json();
+    const data: any = await res.json();
     let text = data?.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || "";
 
     // Fallback defensivo: si Gemini falla o devuelve vacío, usamos directamente la respuesta aprobada del repositorio
@@ -121,7 +176,7 @@ export async function GET(req: NextRequest) {
   return new Response("Forbidden", { status: 403 });
 }
 
-// POST para recepción de mensajes con Debounce Buffer y Repositorio de Respuestas
+// POST para recepción de mensajes con Debounce Buffer, Repositorio de Respuestas y Sincronización Chatwoot
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
@@ -215,9 +270,12 @@ export async function POST(req: NextRequest) {
             );
 
             // Actualizar etapa del lead en el CRM según el repositorio
-            if (repositoryMatch.suggestedStage > (lead.stage ?? 0)) {
-              lead.stage = repositoryMatch.suggestedStage;
-            }
+            const targetStage = Math.max(lead.stage ?? 0, repositoryMatch.suggestedStage);
+            lead.stage = targetStage;
+
+            // Inferir etiquetas (labels) automáticas
+            const labels = inferLabels(consolidatedBurst, repositoryMatch.matchedResponse.category, targetStage);
+            lead.tags = Array.from(new Set([...(lead.tags || []), ...labels]));
 
             // 6. Generar respuesta contextual corta con Gemini Flash guiado por el Repositorio
             const replyText = await callGeminiFlash(lead, contactName, consolidatedBurst, repositoryMatch);
@@ -231,7 +289,18 @@ export async function POST(req: NextRequest) {
               message: replyText,
             });
 
-            // 7. Enviar mensaje de vuelta vía Meta WhatsApp Cloud API
+            // 7. Sincronizar en segundo plano con Chatwoot (Conversación, Mensajes y Etiquetas)
+            syncLeadWithChatwoot({
+              phone: cleanTo,
+              name: contactName,
+              email: extractedEmail,
+              inboundMessage: consolidatedBurst,
+              outboundMessage: replyText,
+              labels,
+              stage: targetStage,
+            }).catch((err) => console.warn("[Chatwoot Sync Error]:", err));
+
+            // 8. Enviar mensaje de vuelta vía Meta WhatsApp Cloud API
             const metaRes = await fetch(`https://graph.facebook.com/v21.0/${PHONE_NUMBER_ID}/messages`, {
               method: "POST",
               headers: {
@@ -250,9 +319,9 @@ export async function POST(req: NextRequest) {
               }),
             });
 
-            const metaData = await metaRes.json();
+            const metaData: any = await metaRes.json();
             console.log(
-              `✔ [RESPUESTA ENVIADA A ${cleanTo}]: "${replyText}" (Meta:`,
+              `✔ [RESPUESTA ENVIADA A ${cleanTo}]: "${replyText}" (Labels: ${labels.join(", ")}) (Meta:`,
               metaData?.messages?.[0]?.id || "OK",
               ")"
             );
