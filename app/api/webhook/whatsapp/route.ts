@@ -1,14 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
 import { stitchOrCreateLead, UNIFIED_LEADS } from "@/lib/leadsStore";
+import { findBestResponse, ConversationResponse } from "@/lib/conversationRepository";
 
 export const dynamic = "force-dynamic";
 
 const VERIFY_TOKEN = process.env.WHATSAPP_VERIFY_TOKEN || "multiagentes_smd_secret_token_2026";
-const ACCESS_TOKEN = process.env.WHATSAPP_PERMANENT_ACCESS_TOKEN || "EAAT7c4ZB9HGQBSprZCS2af1JUoYpuyVpuFP3WK8DP0HoUvvsPRrnZAnRGoI39DjFarudwdPw40HdtKN37GeWmP12WWxVzUj2jLNJ1a88PVonoBrrZC2watfrocWosyQR1Nul747FXsqNcdDcFW5cizo3ZCtvPXZBnctwpcrW23QFvz25DA3g05h35fQ4E0leeTIwZDZD";
+const ACCESS_TOKEN =
+  process.env.WHATSAPP_PERMANENT_ACCESS_TOKEN ||
+  "EAAT7c4ZB9HGQBSprZCS2af1JUoYpuyVpuFP3WK8DP0HoUvvsPRrnZAnRGoI39DjFarudwdPw40HdtKN37GeWmP12WWxVzUj2jLNJ1a88PVonoBrrZC2watfrocWosyQR1Nul747FXsqNcdDcFW5cizo3ZCtvPXZBnctwpcrW23QFvz25DA3g05h35fQ4E0leeTIwZDZD";
 const PHONE_NUMBER_ID = process.env.WHATSAPP_PHONE_NUMBER_ID || "1254834877724483";
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY || "";
 
-// Búfer de ráfagas en memoria para esperar ráfagas de mensajes (Debounce Buffer)
+// Búfer de ráfagas en memoria para esperar ráfagas de mensajes (Debounce Buffer de 4s)
 interface BurstItem {
   messages: string[];
   contactName: string;
@@ -16,65 +19,94 @@ interface BurstItem {
 }
 const burstBuffer = new Map<string, BurstItem>();
 
-// Prompt del Asesor Comercial Consultivo Humano
+// Prompt del Asesor Comercial Consultivo Humano con Repositorio de Respuestas
 const SYSTEM_PROMPT = `Sos el asesor comercial consultivo de Alan López en Servicio de Marketing Digital (Buenos Aires, Argentina).
 Estás chateando por WhatsApp con un dueño de negocio o prospecto real.
 
 REGLAS DE ORO OBLIGATORIAS:
 1. RESPUESTAS ULTRACORTAS: Máximo 2 a 3 oraciones cortas (35 a 45 palabras en total). En WhatsApp los mensajes largos parecen spam y nadie los lee.
 2. TONO 100% HUMANO Y NATURAL: Cercano, empático, profesional argentino ("Hola Alan, ¿cómo estás?", "Totalmente", "De una", "Te entiendo"). Cero lenguaje corporativo rígido.
-3. DIVULGACIÓN PROGRESIVA:
-   - Si el prospecto recién te saluda o cuenta sobre su negocio (ej. venta de lanchas, maquinarias, servicios): mostrá interés genuino, validá su dolor (la cantidad de curiosos sin presupuesto que hacen perder tiempo) y hacé 1 sola pregunta corta para conocer cómo capta hoy.
-   - NUNCA pegues links de pago ni hables de la seña de $350.000 ARS de entrada, a menos que el usuario pregunte explícitamente "¿Cuánto sale?", "Precios", "¿Cómo se paga?" o "¿Cómo contrato?".
-   - Si pregunta precios o garantía: explicá en 2 oraciones que son 500 leads calificados en 90 días con contrato y CUIT 20-39210016-5, y que la exclusividad de zona se bloquea con seña de $350.000 ARS vía Mercado Pago: https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=3724152558-04c4dcd1-4592-4c02-8ac1-504c13b09ead
+3. DIVULGACIÓN PROGRESIVA Y BASADA EN EL REPOSITORIO:
+   - Apoyate siempre en la "Respuesta Canónica Aprobada" del repositorio que se te proporciona para cada intención.
+   - NUNCA pegues links de pago de entrada, a menos que el usuario pregunte explícitamente precios o cómo reservar.
+   - Si pregunta por la garantía: explicá la extensión gratis sin costo o devolución proporcional, firmado por contrato (CUIT 20-39210016-5).
+   - Si pregunta por ad spend: explicá que la pauta publicitaria corre por cuenta del cliente directo en sus cuentas de Meta/Google para deducir impuestos.
    - Si pide llamada o coordinar: pasale el link oficial de Cal.com: https://cal.com/alan-lopez/15min
 4. CIERRE CONVERSACIONAL: Cada respuesta tuya DEBE terminar siempre con UNA sola pregunta corta para mantener la conversación viva y fácil de contestar.`;
 
-// Función para llamar a Gemini Flash con contexto histórico
-async function callGeminiFlash(lead: any, contactName: string, burstText: string): Promise<string> {
+// Función para llamar a Gemini Flash con inyección del Repositorio de Respuestas y contexto histórico
+async function callGeminiFlash(
+  lead: any,
+  contactName: string,
+  burstText: string,
+  repositoryMatch: {
+    matchedResponse: ConversationResponse;
+    recommendedText: string;
+    suggestedStage: number;
+  }
+): Promise<string> {
   const historySnippet = (lead?.history || [])
     .slice(-8)
     .map((h: any) => `${h.direction === "inbound" ? "Usuario" : "Asesor"}: ${h.message}`)
     .join("\n");
 
-  const promptText = `${SYSTEM_PROMPT}\n\nDATOS DEL CONTACTO:\nNombre: ${lead?.name || contactName}\nRubro/Empresa: ${lead?.company || "Negocio"}\n\nHISTORIAL RECIENTE:\n${historySnippet || "Sin historial previo."}\n\nMENSAJES RECIÉN ENVIADOS POR EL USUARIO:\n${burstText}\n\nRespuesta (máximo 2 a 3 oraciones cortas, terminando con 1 sola pregunta):`;
+  const promptText = `${SYSTEM_PROMPT}
+
+DATOS DEL CONTACTO:
+Nombre: ${lead?.name || contactName}
+Rubro/Empresa: ${lead?.company || "Negocio"}
+Etapa Actual del Lead: Etapa ${lead?.stage ?? 0} (0: Saludo -> 1: Calificado -> 2: Oferta -> 3: Objeción -> 4: Cierre)
+
+REPOSITORIO DE RESPUESTAS APROBADAS (GUÍA EXACTA PARA ESTA INTENCIÓN):
+- Título: ${repositoryMatch.matchedResponse.title}
+- Categoría: ${repositoryMatch.matchedResponse.category}
+- Respuesta Canónica Aprobada: "${repositoryMatch.recommendedText}"
+- Datos Clave Inmutables: ${repositoryMatch.matchedResponse.keyFacts.join(", ")}
+
+HISTORIAL RECIENTE:
+${historySnippet || "Sin historial previo."}
+
+MENSAJES RECIÉN ENVIADOS POR EL USUARIO:
+${burstText}
+
+INSTRUCCIÓN: Respondé al usuario utilizando la guía de la Respuesta Canónica Aprobada. Máximo 2 a 3 oraciones cortas en tono argentino natural, terminando con 1 sola pregunta:`;
 
   const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=${GEMINI_API_KEY}`;
   const payload = {
     contents: [
       {
         role: "user",
-        parts: [{ text: promptText }]
-      }
+        parts: [{ text: promptText }],
+      },
     ],
     generationConfig: {
       maxOutputTokens: 120,
-      temperature: 0.65
-    }
+      temperature: 0.65,
+    },
   };
 
   try {
     const res = await fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload)
+      body: JSON.stringify(payload),
     });
     const data = await res.json();
     let text = data?.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || "";
-    
-    // Fallback defensivo si Gemini devuelve vacío
+
+    // Fallback defensivo: si Gemini falla o devuelve vacío, usamos directamente la respuesta aprobada del repositorio
     if (!text) {
-      text = `¡Hola ${contactName.split(" ")[0]}! Qué bueno que escribas. ¿De qué rubro es tu negocio y en qué zona estás operando actualmente?`;
+      text = repositoryMatch.recommendedText;
     }
 
     return text;
   } catch (err) {
     console.error("Error llamando a Gemini Flash:", err);
-    return `¡Hola ${contactName.split(" ")[0]}! Qué bueno que escribas. ¿De qué rubro es tu negocio y en qué zona estás operando actualmente?`;
+    return repositoryMatch.recommendedText;
   }
 }
 
-// GET para validación del Webhook por Meta Graph API y visor de logs
+// GET para validación del Webhook por Meta Graph API
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const mode = searchParams.get("hub.mode");
@@ -89,7 +121,7 @@ export async function GET(req: NextRequest) {
   return new Response("Forbidden", { status: 403 });
 }
 
-// POST para recepción de mensajes con Debounce Buffer (4 segundos de espera para ráfagas)
+// POST para recepción de mensajes con Debounce Buffer y Repositorio de Respuestas
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
@@ -115,15 +147,15 @@ export async function POST(req: NextRequest) {
             fetch(readUrl, {
               method: "POST",
               headers: {
-                "Authorization": `Bearer ${ACCESS_TOKEN}`,
-                "Content-Type": "application/json"
+                Authorization: `Bearer ${ACCESS_TOKEN}`,
+                "Content-Type": "application/json",
               },
               body: JSON.stringify({
                 messaging_product: "whatsapp",
                 status: "read",
-                message_id: messageId
-              })
-            }).catch(e => console.warn("Error marcando leído:", e));
+                message_id: messageId,
+              }),
+            }).catch((e) => console.warn("Error marcando leído:", e));
 
             // 2. Acumular en el Debounce Buffer por teléfono
             let item = burstBuffer.get(cleanTo);
@@ -132,7 +164,7 @@ export async function POST(req: NextRequest) {
               item = {
                 messages: [messageText],
                 contactName,
-                lastArrival: now
+                lastArrival: now,
               };
               burstBuffer.set(cleanTo, item);
             } else {
@@ -141,7 +173,7 @@ export async function POST(req: NextRequest) {
             }
 
             // 3. Ventana de espera inteligente (4 segundos para captar mensajes múltiples en ráfaga)
-            await new Promise(r => setTimeout(r, 4000));
+            await new Promise((r) => setTimeout(r, 4000));
 
             // Si llegó un mensaje más nuevo durante los 4 segundos, este hilo cede el turno
             const currentItem = burstBuffer.get(cleanTo);
@@ -154,7 +186,7 @@ export async function POST(req: NextRequest) {
             const consolidatedBurst = currentItem.messages.join("\n");
             burstBuffer.delete(cleanTo);
 
-            console.log(`🤖 [PROCESANDO RÁFAGA] ${contactName}: "${consolidatedBurst}"`);
+            console.log(`🚀 [PROCESANDO RÁFAGA] ${contactName}: "${consolidatedBurst}"`);
 
             // Extraer email si fue mencionado en alguno de los mensajes
             const emailMatch = consolidatedBurst.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/);
@@ -167,11 +199,28 @@ export async function POST(req: NextRequest) {
               name: contactName !== "Prospecto" ? contactName : undefined,
               channel: "whatsapp",
               direction: "inbound",
-              message: consolidatedBurst
+              message: consolidatedBurst,
             });
 
-            // 5. Generar respuesta contextual corta con Gemini Flash
-            const replyText = await callGeminiFlash(lead, contactName, consolidatedBurst);
+            // 5. Consultar el Repositorio de Respuestas para esta intención y etapa
+            const repositoryMatch = findBestResponse(
+              consolidatedBurst,
+              lead?.stage ?? 0,
+              contactName,
+              lead?.company ?? "Negocio"
+            );
+
+            console.log(
+              `📚 [REPOSITORIO MATCH] Intención: "${repositoryMatch.matchedResponse.title}" (Score: ${repositoryMatch.score}) -> Sugiere Etapa ${repositoryMatch.suggestedStage}`
+            );
+
+            // Actualizar etapa del lead en el CRM según el repositorio
+            if (repositoryMatch.suggestedStage > (lead.stage ?? 0)) {
+              lead.stage = repositoryMatch.suggestedStage;
+            }
+
+            // 6. Generar respuesta contextual corta con Gemini Flash guiado por el Repositorio
+            const replyText = await callGeminiFlash(lead, contactName, consolidatedBurst, repositoryMatch);
 
             // Guardar respuesta del bot en el historial del lead
             stitchOrCreateLead({
@@ -179,15 +228,15 @@ export async function POST(req: NextRequest) {
               email: extractedEmail,
               channel: "whatsapp",
               direction: "outbound",
-              message: replyText
+              message: replyText,
             });
 
-            // 6. Enviar mensaje de vuelta vía Meta WhatsApp Cloud API
+            // 7. Enviar mensaje de vuelta vía Meta WhatsApp Cloud API
             const metaRes = await fetch(`https://graph.facebook.com/v21.0/${PHONE_NUMBER_ID}/messages`, {
               method: "POST",
               headers: {
-                "Authorization": `Bearer ${ACCESS_TOKEN}`,
-                "Content-Type": "application/json"
+                Authorization: `Bearer ${ACCESS_TOKEN}`,
+                "Content-Type": "application/json",
               },
               body: JSON.stringify({
                 messaging_product: "whatsapp",
@@ -196,13 +245,17 @@ export async function POST(req: NextRequest) {
                 type: "text",
                 text: {
                   preview_url: true,
-                  body: replyText
-                }
-              })
+                  body: replyText,
+                },
+              }),
             });
 
             const metaData = await metaRes.json();
-            console.log(`✔ [RESPUESTA ENVIADA A ${cleanTo}]: "${replyText}" (Meta:`, metaData?.messages?.[0]?.id || "OK", ")");
+            console.log(
+              `✔ [RESPUESTA ENVIADA A ${cleanTo}]: "${replyText}" (Meta:`,
+              metaData?.messages?.[0]?.id || "OK",
+              ")"
+            );
           }
         }
       }
