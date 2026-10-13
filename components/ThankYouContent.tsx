@@ -79,7 +79,7 @@ export default function ThankYouContent() {
     `Hola Alan, completé el formulario de calificación en la web (Ref: ${referralId}) y me gustaría coordinar mi propuesta técnica.`
   );
   const whatsappUrl =
-    customWaUrl || `https://wa.me/5491127887093?text=${defaultWaMessage}`;
+    customWaUrl || `https://wa.me/5491178122565?text=${defaultWaMessage}`;
 
   return (
     <div className="min-h-screen bg-liquid-abyss text-silver-mist flex flex-col justify-between selection:bg-bioluminescent-lime selection:text-liquid-abyss relative overflow-hidden">

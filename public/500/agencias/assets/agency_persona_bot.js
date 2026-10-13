@@ -19,7 +19,7 @@
     agencyName: "Servicio de Marketing Digital",
     niche: "Empresas de Alto Rendimiento y Servicios Premium",
     reservationUrl: "https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=3724152558-04c4dcd1-4592-4c02-8ac1-504c13b09ead",
-    whatsappPhone: "5491127887093"
+    whatsappPhone: "5491178122565"
   };
 
   // Inyectar estilos CSS de diseño premium mobile-first

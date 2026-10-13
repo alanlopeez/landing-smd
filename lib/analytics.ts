@@ -22,7 +22,7 @@ export interface QualificationData {
 }
 
 export const WHATSAPP_PHONE =
-  process.env.NEXT_PUBLIC_WHATSAPP_PHONE || "5491127887093";
+  process.env.NEXT_PUBLIC_WHATSAPP_PHONE || "5491178122565";
 
 /**
  * Criterio estricto de calificación BANT / FAINT:

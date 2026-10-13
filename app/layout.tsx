@@ -115,7 +115,7 @@ export default function RootLayout({
     image: "https://serviciodemarketingdigital.com/images/alan-lopez.png",
     description:
       "Rediseño y creación de landing page interactiva de alto impacto para lanzamiento de producto o captación de leads. Primera propuesta interactiva en 48 hs. Entrega final afinada en 3 a 5 días hábiles.",
-    telephone: "+54 9 11 2788-7093",
+    telephone: "+54 9 11 7812-2565",
     email: "hola@serviciodemarketingdigital.com",
     priceRange: "$$ - $$$",
     address: {

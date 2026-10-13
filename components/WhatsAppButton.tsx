@@ -30,8 +30,8 @@ interface ChatMessage {
   quickReplies?: string[];
 }
 
-const OFFICIAL_WHATSAPP = "5491127887093";
-const FORMATTED_WHATSAPP = "+54 9 11 2788-7093";
+const OFFICIAL_WHATSAPP = "5491178122565";
+const FORMATTED_WHATSAPP = "+54 9 11 7812-2565";
 
 const INITIAL_QUICK_REPLIES = [
   "⚡ Rediseño Web ($490 USD)",
@@ -162,7 +162,7 @@ export default function WhatsAppButton() {
         text: `Puedes agendar una videollamada ejecutiva de 15 minutos directamente en el calendario oficial:\n\n📅 **Llamada de Asesoría Web:** [cal.com/llamadas/online](https://cal.com/llamadas/online)\n📅 **Plan 500 Leads:** [cal.com/llamadas/15min](https://cal.com/llamadas/15min)\n\nO si preferís coordinar ahora mismo, escribinos al WhatsApp **${FORMATTED_WHATSAPP}**.`,
         actionUrl: "https://cal.com/llamadas/online",
         actionLabel: "📅 Abrir Calendario Cal.com (15 min)",
-        quickReplies: ["💬 Escribir al WhatsApp (+54 9 11 2788-7093)", "⚡ Rediseño Web ($490 USD)"],
+        quickReplies: ["💬 Escribir al WhatsApp (+54 9 11 7812-2565)", "⚡ Rediseño Web ($490 USD)"],
       };
     }
 
@@ -279,7 +279,7 @@ export default function WhatsAppButton() {
             type="button"
             onClick={isOpen ? handleCloseChat : handleOpenChat}
             aria-label={isOpen ? "Cerrar chat con Asistente" : "Abrir chat con Asistente con IA"}
-            title="Asistente con IA | WhatsApp Directo +54 9 11 2788-7093"
+            title="Asistente con IA | WhatsApp Directo +54 9 11 7812-2565"
             className="w-13 h-13 sm:w-14 sm:h-14 rounded-full bg-gradient-to-tr from-[#128C7E] to-[#25D366] hover:brightness-110 transition-all flex items-center justify-center text-white shrink-0 shadow-2xl cursor-pointer hover:scale-105 active:scale-95 border-2 border-white/20 relative"
           >
             {isOpen ? (

@@ -21,7 +21,7 @@ const BUDGET_OPTIONS = [
   "$500 – $1.000+ USD",
 ];
 
-const WHATSAPP_PHONE = "5491127887093";
+const WHATSAPP_PHONE = "5491178122565";
 
 function sanitizeInput(str: string): string {
   return str.replace(/[<>]/g, "").replace(/javascript:/gi, "").trim();
@@ -213,7 +213,7 @@ export default function RedesignLeadModal({ isOpen, onClose }: RedesignLeadModal
                   className="w-full inline-flex items-center justify-center gap-2.5 py-3 px-5 rounded-xl bg-[#25D366] hover:bg-[#20ba59] text-liquid-abyss font-semibold text-xs sm:text-sm transition-all shadow-lg hover:shadow-[#25D366]/30 cursor-pointer"
                 >
                   <MessageCircle className="w-4 h-4 fill-current" />
-                  <span>Continuar por WhatsApp (5491127887093)</span>
+                  <span>Continuar por WhatsApp (5491178122565)</span>
                 </a>
 
                 <button
@@ -344,7 +344,7 @@ export default function RedesignLeadModal({ isOpen, onClose }: RedesignLeadModal
                     <span>Procesando solicitud...</span>
                   ) : (
                     <>
-                      <span>Enviar y Abrir WhatsApp (+54 9 11 2788-7093)</span>
+                      <span>Enviar y Abrir WhatsApp (+54 9 11 7812-2565)</span>
                       <Send className="w-4 h-4" />
                     </>
                   )}

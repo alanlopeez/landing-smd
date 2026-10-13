@@ -10,7 +10,7 @@
 
   // Parámetros y enlaces globales
   const RESERVATION_URL = "https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=3724152558-04c4dcd1-4592-4c02-8ac1-504c13b09ead";
-  const WHATSAPP_PHONE = "5491127887093";
+  const WHATSAPP_PHONE = "5491178122565";
   const RESCUE_COOLDOWN_KEY = "commercial_rescue_shown";
 
   // Obtener contexto de la página actual

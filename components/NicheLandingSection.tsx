@@ -37,7 +37,7 @@ interface NicheItem {
   whatsappMessage: string;
 }
 
-const WHATSAPP_PHONE = "5491127887093";
+const WHATSAPP_PHONE = "5491178122565";
 
 const NICHES: NicheItem[] = [
   {

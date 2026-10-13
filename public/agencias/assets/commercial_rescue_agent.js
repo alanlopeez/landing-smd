@@ -10,7 +10,7 @@
 
   // Parámetros y enlaces globales
   const RESERVATION_URL = "https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=3724152558-04c4dcd1-4592-4c02-8ac1-504c13b09ead";
-  const WHATSAPP_PHONE = "5491127887093";
+  const WHATSAPP_PHONE = "5491178122565";
   const RESCUE_COOLDOWN_KEY = "commercial_rescue_shown";
 
   // Obtener contexto de la página actual
@@ -315,7 +315,7 @@
       </a>
 
       <a href="https://wa.me/${WHATSAPP_PHONE}?text=Hola%20Alan,%20estoy%20en%20la%20p%C3%A1gina%20de%20los%20500%20leads%20y%20quiero%20asegurar%20mi%20zona%20con%20la%20se%C3%B1a%20de%20$350.000%20antes%20de%20que%20se%20libere" target="_blank" class="rescue-btn-wa" id="btnRescueWa">
-        <span>💬</span> Hablar directo con Alan por WhatsApp (+54 9 11 2788-7093)
+        <span>💬</span> Hablar directo con Alan por WhatsApp (+54 9 11 7812-2565)
       </a>
 
       <div style="text-align:center; margin-top:10px; font-size:10.5px; color:#64748b;">

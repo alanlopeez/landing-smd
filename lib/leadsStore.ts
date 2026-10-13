@@ -30,7 +30,7 @@ export const UNIFIED_LEADS: UnifiedLead[] = [
     name: "Alan López",
     company: "Náutica Delta (Venta de Lanchas & Embarcaciones)",
     email: "alan.ezequiel95@gmail.com",
-    phone: "5491127887093",
+    phone: "5491178122565",
     channels: ["whatsapp", "email"],
     funnelId: "p2",
     stage: 1,

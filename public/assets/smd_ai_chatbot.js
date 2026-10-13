@@ -6,7 +6,7 @@
  * - Mobile-First 10x: Se eleva por encima del Sticky Mobile Dock (bottom: calc(76px + env(safe-area-inset-bottom))).
  * - Cero auto-zoom en iOS Safari (font-size >= 16px en inputs).
  * - Motor conversacional con IA y procesamiento en tiempo real (precios, garantías, Cal.com, WhatsApp, demo).
- * - Conexión directa y prominente a WhatsApp Oficial: +54 9 11 2788-7093.
+ * - Conexión directa y prominente a WhatsApp Oficial: +54 9 11 7812-2565.
  */
 
 (function() {
@@ -17,8 +17,8 @@
     personaName: "Alan López SMD",
     personaRole: "Asistente con IA 24/7",
     personaAvatar: "/logo.png",
-    whatsappPhone: "5491127887093",
-    formattedPhone: "+54 9 11 2788-7093",
+    whatsappPhone: "5491178122565",
+    formattedPhone: "+54 9 11 7812-2565",
     context: "general", // "500_leads", "praga", "general"
     welcomeMessage: "¡Hola! 👋 Soy el Asistente con IA de **Alan López - Servicio de Marketing Digital**.\n\n¿En qué podemos ayudarte hoy para potenciar las ventas de tu negocio?",
     calComUrl: "https://cal.com/llamadas/online",
@@ -560,7 +560,7 @@
         text: `Podés agendar una videollamada ejecutiva de 15 minutos en el calendario oficial:\n\n📅 **Enlace Cal.com:** [${config.calComUrl}](${config.calComUrl})\n\nO si preferís una respuesta inmediata en el acto, escribinos al WhatsApp **${config.formattedPhone}**.`,
         actionUrl: config.calComUrl,
         actionLabel: "📅 Abrir Calendario Cal.com (15 min)",
-        chips: ["💬 Escribir al WhatsApp (+54 9 11 2788-7093)", "⚡ Precios y Planes"]
+        chips: ["💬 Escribir al WhatsApp (+54 9 11 7812-2565)", "⚡ Precios y Planes"]
       };
     }
 

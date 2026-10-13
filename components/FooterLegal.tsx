@@ -208,7 +208,7 @@ export default function FooterLegal() {
 
               <div className="pt-2">
                 <a
-                  href="https://wa.me/5491127887093?text=Hola%20Alan%2C%20quiero%20hacerte%20una%20consulta%20directa"
+                  href="https://wa.me/5491178122565?text=Hola%20Alan%2C%20quiero%20hacerte%20una%20consulta%20directa"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="p-3 rounded-xl bg-liquid-abyss border border-[#25D366]/40 hover:border-[#25D366] flex items-center justify-between gap-3 text-white transition-all group shadow-md"
@@ -219,7 +219,7 @@ export default function FooterLegal() {
                     </div>
                     <div>
                       <span className="text-xs font-bold block text-white">WhatsApp Directo 24/7</span>
-                      <span className="text-[11px] text-[#25D366] font-mono">+54 9 11 2788-7093</span>
+                      <span className="text-[11px] text-[#25D366] font-mono">+54 9 11 7812-2565</span>
                     </div>
                   </div>
                   <span className="text-[10px] uppercase font-mono px-2 py-0.5 rounded bg-[#25D366]/20 text-[#25D366] font-bold group-hover:bg-[#25D366] group-hover:text-liquid-abyss transition-colors">

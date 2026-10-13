@@ -49,13 +49,13 @@ export default function PagarCheckoutPage() {
               <span>Conexión 256-Bit SSL</span>
             </div>
             <a
-              href="https://wa.me/5491127887093?text=Hola%20Alan%2C%20estoy%20en%20el%20checkout%20y%20quiero%20confirmar%20mi%20transferencia"
+              href="https://wa.me/5491178122565?text=Hola%20Alan%2C%20estoy%20en%20el%20checkout%20y%20quiero%20confirmar%20mi%20transferencia"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#25D366]/20 border border-[#25D366]/50 text-[#25D366] hover:text-white text-xs font-semibold transition-all"
             >
               <MessageCircle className="w-3.5 h-3.5 fill-current" />
-              <span>WhatsApp: +54 9 11 2788-7093</span>
+              <span>WhatsApp: +54 9 11 7812-2565</span>
             </a>
           </div>
         </div>
@@ -310,13 +310,13 @@ export default function PagarCheckoutPage() {
 
               {/* Direct WhatsApp Receipt Button */}
               <a
-                href="https://wa.me/5491127887093?text=Hola%20Alan%2C%20adjunto%20el%20comprobante%20de%20mi%20transferencia%20bancaria%20al%20alias%20marketingdigital.arg"
+                href="https://wa.me/5491178122565?text=Hola%20Alan%2C%20adjunto%20el%20comprobante%20de%20mi%20transferencia%20bancaria%20al%20alias%20marketingdigital.arg"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full py-4 px-6 rounded-2xl bg-[#25D366] hover:bg-[#20ba59] text-black font-black text-center flex items-center justify-center gap-3 shadow-lg shadow-[#25D366]/20 transition-all text-base"
               >
                 <MessageCircle className="w-5 h-5 fill-current" />
-                <span>Enviar Comprobante por WhatsApp (+54 9 11 2788-7093)</span>
+                <span>Enviar Comprobante por WhatsApp (+54 9 11 7812-2565)</span>
                 <ArrowRight className="w-5 h-5" />
               </a>
             </div>
@@ -360,7 +360,7 @@ export default function PagarCheckoutPage() {
 
               <div className="mt-6 pt-6 border-t border-white/10">
                 <a
-                  href="https://wa.me/5491127887093?text=Hola%20Alan%2C%20deseo%20abonar%20desde%20el%20exterior%20en%20USD%20v%C3%ADa%20transferencia"
+                  href="https://wa.me/5491178122565?text=Hola%20Alan%2C%20deseo%20abonar%20desde%20el%20exterior%20en%20USD%20v%C3%ADa%20transferencia"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full py-4 px-6 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-black font-black text-center flex items-center justify-center gap-3 transition-all text-base"
