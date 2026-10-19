@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import {
   Shield,
   FileText,
@@ -191,6 +192,25 @@ export default function FooterLegal() {
             <p className="text-xs text-silver-mist leading-relaxed font-matter max-w-sm">
               Rediseño y creación de landing pages interactivas de alto impacto para lanzamiento de producto o captación de leads.
             </p>
+
+            {/* Quick Links & Service Pages */}
+            <div className="pt-2 pb-1 flex flex-wrap gap-x-4 gap-y-2 text-xs font-matter">
+              <Link
+                href="/precios-servicios"
+                className="text-bioluminescent-lime font-semibold hover:underline inline-flex items-center gap-1"
+              >
+                <span>→ Precios y Servicios</span>
+              </Link>
+              <a href="/#como-funciona" className="text-silver-mist hover:text-platinum">
+                ¿Cómo funciona?
+              </a>
+              <a href="/#portfolio" className="text-silver-mist hover:text-platinum">
+                Portfolio
+              </a>
+              <a href="/#sobre-mi" className="text-silver-mist hover:text-platinum">
+                Sobre mí
+              </a>
+            </div>
 
             <div className="pt-2 space-y-2 text-xs font-mono">
               <div className="flex items-center gap-2 text-silver-mist">

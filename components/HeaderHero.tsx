@@ -2,6 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { ArrowUpRight, Sparkles, Clock, ShieldCheck, Zap, Phone, MessageCircle } from "lucide-react";
 import Floating3DEffects from "./Floating3DEffects";
 
@@ -62,6 +63,12 @@ export default function HeaderHero({ onOpenLeadModal }: HeaderHeroProps) {
         {/* Center / Right Floating Navigation Capsule */}
         <div className="flex items-center gap-2 sm:gap-6 bg-abyssal-ink/80 backdrop-blur-md border border-white/10 rounded-full px-3 sm:px-6 py-1.5 sm:py-2 shadow-lg">
           <div className="hidden md:flex items-center gap-6 text-xs uppercase tracking-wider font-matter">
+            <Link
+              href="/precios-servicios"
+              className="text-bioluminescent-lime font-semibold hover:text-platinum transition-colors"
+            >
+              Precios y Servicios
+            </Link>
             <a
               href="#como-funciona"
               className="text-silver-mist hover:text-platinum transition-colors"
