@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { UNIFIED_LEADS, stitchOrCreateLead } from "@/lib/leadsStore";
+import { saveFormLead } from "@/lib/supabaseServer";
 
 export const dynamic = "force-dynamic";
 
@@ -42,6 +43,18 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     const lead = stitchOrCreateLead(body);
+
+    // Persistir en Supabase en segundo plano
+    if (body.email || body.phone) {
+      saveFormLead(
+        body.email || "",
+        body.name || "",
+        body.phone || "",
+        body.company || "",
+        body
+      ).catch(e => console.warn("[Supabase Lead Sync Error]:", e));
+    }
+
     return NextResponse.json({ status: "CREATED", lead });
   } catch (err: any) {
     return NextResponse.json({ status: "ERROR", error: err.message }, { status: 400 });

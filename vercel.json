@@ -1,0 +1,12 @@
+{
+  "crons": [
+    {
+      "path": "/api/cron/outbound",
+      "schedule": "0 13 * * 1-5"
+    },
+    {
+      "path": "/api/cron/sync-inbox",
+      "schedule": "0 18 * * 1-5"
+    }
+  ]
+}
