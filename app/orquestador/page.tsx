@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Send, CheckCircle, XCircle, AlertTriangle, Shield, RefreshCw, Cpu, Mail, Globe, Users, TrendingUp, Sparkles, Zap } from "lucide-react";
+import { Send, CheckCircle, XCircle, AlertTriangle, Shield, RefreshCw, Cpu, Mail, Globe, Users, TrendingUp, Sparkles, Zap, Lock } from "lucide-react";
 
 interface ApprovalItem {
   id: string;
@@ -18,12 +18,59 @@ interface ApprovalItem {
 }
 
 export default function OrquestadorCloudPage() {
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [pinInput, setPinInput] = useState<string>("");
+  const [authError, setAuthError] = useState<string | null>(null);
+  const [authLoading, setAuthLoading] = useState<boolean>(false);
+
   const [instruction, setInstruction] = useState("");
   const [loading, setLoading] = useState(false);
   const [approvals, setApprovals] = useState<ApprovalItem[]>([]);
   const [latestPlan, setLatestPlan] = useState<string | null>(null);
   const [statusMsg, setStatusMsg] = useState<string | null>(null);
   const [refreshing, setRefreshing] = useState(false);
+
+  // Verificar sesión persistida
+  useEffect(() => {
+    const savedToken = localStorage.getItem("smd_orchestrator_token");
+    if (savedToken === "smd_auth_session_authorized") {
+      setIsAuthenticated(true);
+      fetchStatus();
+    }
+  }, []);
+
+  const handleUnlock = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!pinInput.trim() || authLoading) return;
+
+    setAuthLoading(true);
+    setAuthError(null);
+    try {
+      const res = await fetch("/api/orchestrator/auth", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ pin: pinInput }),
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        localStorage.setItem("smd_orchestrator_token", data.token);
+        setIsAuthenticated(true);
+        fetchStatus();
+      } else {
+        setAuthError(data.error || "PIN incorrecto");
+      }
+    } catch (err: any) {
+      setAuthError("Error de conexión: " + err.message);
+    } finally {
+      setAuthLoading(false);
+    }
+  };
+
+  const handleLock = () => {
+    localStorage.removeItem("smd_orchestrator_token");
+    setIsAuthenticated(false);
+    setPinInput("");
+  };
 
   // Cargar estado inicial y aprobaciones pendientes
   const fetchStatus = async () => {
@@ -40,10 +87,6 @@ export default function OrquestadorCloudPage() {
       setRefreshing(false);
     }
   };
-
-  useEffect(() => {
-    fetchStatus();
-  }, []);
 
   // Enviar directiva al Orquestador
   const handleSendCommand = async (e: React.FormEvent) => {
@@ -113,6 +156,63 @@ export default function OrquestadorCloudPage() {
     }
   };
 
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-[#090d16] text-[#e2e8f0] flex items-center justify-center p-4 selection:bg-[#ea580c] selection:text-white">
+        <div className="w-full max-w-md bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl relative overflow-hidden backdrop-blur-xl">
+          {/* Acento superior de luz */}
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-48 h-1 bg-gradient-to-r from-transparent via-[#ea580c] to-transparent"></div>
+          
+          <div className="text-center mb-6">
+            <div className="w-14 h-14 rounded-2xl bg-orange-500/10 border border-orange-500/20 text-[#ea580c] flex items-center justify-center mx-auto mb-3 shadow-lg shadow-orange-500/10">
+              <Shield className="w-7 h-7" />
+            </div>
+            <h1 className="text-xl font-bold text-white tracking-tight">Acceso Maestro al Orquestador</h1>
+            <p className="text-xs text-slate-400 mt-1">Servicio de Marketing Digital &bull; Alan López</p>
+            <p className="text-xs text-slate-300 mt-3 leading-relaxed">
+              Ingresa tu PIN de seguridad maestro para autorizar órdenes y supervisar los 22 agentes en la nube.
+            </p>
+          </div>
+
+          <form onSubmit={handleUnlock} className="space-y-4">
+            <div>
+              <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2 text-center">
+                PIN de Autorización
+              </label>
+              <input
+                type="password"
+                maxLength={8}
+                value={pinInput}
+                onChange={(e) => { setPinInput(e.target.value); setAuthError(null); }}
+                placeholder="••••"
+                className="w-full text-center text-3xl tracking-[0.4em] font-mono px-4 py-3.5 rounded-2xl bg-slate-950 border border-slate-800 text-white placeholder-slate-600 focus:outline-none focus:border-[#ea580c] transition-all"
+                autoFocus
+              />
+            </div>
+
+            {authError && (
+              <p className="text-xs text-rose-400 text-center font-medium bg-rose-500/10 border border-rose-500/20 py-2.5 rounded-xl">
+                {authError}
+              </p>
+            )}
+
+            <button
+              type="submit"
+              disabled={authLoading || !pinInput}
+              className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-[#ea580c] to-[#f97316] text-white font-bold text-sm hover:opacity-95 transition-all shadow-lg shadow-[#ea580c]/25 disabled:opacity-50"
+            >
+              {authLoading ? "Verificando..." : "Desbloquear Centro de Control"}
+            </button>
+          </form>
+
+          <p className="text-[11px] text-slate-500 text-center mt-6">
+            Seguridad Zero-Trust &bull; Sesión encriptada para Alan López
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-[#090d16] text-[#e2e8f0] pb-24 font-sans selection:bg-[#ea580c] selection:text-white">
       {/* Barra Superior */}
@@ -141,6 +241,13 @@ export default function OrquestadorCloudPage() {
             title="Refrescar estado"
           >
             <RefreshCw className={`w-4 h-4 ${refreshing ? "animate-spin" : ""}`} />
+          </button>
+          <button
+            onClick={handleLock}
+            className="p-2 rounded-lg bg-slate-800 hover:bg-rose-500/20 hover:text-rose-400 text-slate-400 transition-colors"
+            title="Bloquear y Cerrar Sesión"
+          >
+            <Lock className="w-4 h-4" />
           </button>
         </div>
       </header>
