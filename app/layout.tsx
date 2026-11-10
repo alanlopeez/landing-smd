@@ -5,14 +5,12 @@ import WhatsAppButton from "../components/WhatsAppButton";
 
 const interTight = Inter_Tight({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
   variable: "--font-aspekta",
   display: "swap",
 });
 
 const inter = Inter({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
   variable: "--font-matter",
   display: "swap",
 });
