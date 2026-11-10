@@ -46,3 +46,4 @@ export async function sendEmail({ to, subject, html, text, inReplyTo, references
     return { success: false, error: error.message };
   }
 }
+

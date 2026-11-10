@@ -126,3 +126,4 @@ Devuelve en formato HTML elegante con tarjetas y tablas.`;
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
+

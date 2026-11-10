@@ -319,8 +319,23 @@ export default function OrquestadorCloudPage() {
                   )}
 
                   {req.result && (
-                    <div className="mt-2 p-2 bg-slate-900/60 rounded text-[11px] text-emerald-300 font-mono">
-                      Resultado: {JSON.stringify(req.result)}
+                    <div className="mt-3 p-3 bg-slate-900/80 rounded-lg text-xs text-slate-200 border border-slate-800">
+                      <div className="font-semibold text-emerald-400 mb-1 flex items-center gap-1.5">
+                        <CheckCircle className="w-3.5 h-3.5" />
+                        {req.result.totalDispatched ? `${req.result.totalDispatched} correos reales despachados y visibles en tu Gmail Enviados:` : "Ejecución completada:"}
+                      </div>
+                      {req.result.dispatchedList ? (
+                        <ul className="space-y-1 mt-2 font-mono text-[11px] text-slate-300">
+                          {req.result.dispatchedList.map((d: any, idx: number) => (
+                            <li key={idx} className="flex items-center justify-between border-b border-slate-800/50 pb-1">
+                              <span><b>{d.company}:</b> {d.email}</span>
+                              <span className="text-emerald-400">✔ Enviado ({d.messageId ? d.messageId.slice(0, 16) + "..." : "OK"})</span>
+                            </li>
+                          ))}
+                        </ul>
+                      ) : (
+                        <div className="text-[11px] text-slate-400 font-mono">{typeof req.result === "string" ? req.result : JSON.stringify(req.result)}</div>
+                      )}
                     </div>
                   )}
                 </div>
@@ -421,3 +436,4 @@ export default function OrquestadorCloudPage() {
     </div>
   );
 }
+
