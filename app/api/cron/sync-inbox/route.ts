@@ -54,3 +54,4 @@ export async function GET(req: NextRequest) {
     message: "Auditoría de contactos y buzón completada satisfactoriamente."
   }, { status: 200 });
 }
+

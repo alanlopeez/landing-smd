@@ -11,6 +11,7 @@ const ACCESS_TOKEN =
   "EAAT7c4ZB9HGQBSprZCS2af1JUoYpuyVpuFP3WK8DP0HoUvvsPRrnZAnRGoI39DjFarudwdPw40HdtKN37GeWmP12WWxVzUj2jLNJ1a88PVonoBrrZC2watfrocWosyQR1Nul747FXsqNcdDcFW5cizo3ZCtvPXZBnctwpcrW23QFvz25DA3g05h35fQ4E0leeTIwZDZD";
 const PHONE_NUMBER_ID = process.env.WHATSAPP_PHONE_NUMBER_ID || "1254834877724483";
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY || "";
+const OPENAI_API_KEY = process.env.OPENAI_API_KEY || "";
 
 // Búfer de ráfagas en memoria para esperar ráfagas de mensajes (Debounce Buffer de 4s)
 interface BurstItem {
@@ -20,191 +21,106 @@ interface BurstItem {
 }
 const burstBuffer = new Map<string, BurstItem>();
 
-// SYSTEM PROMPT OFICIAL INYECTADO CON REGLAS DE DEMOS EXACTAS Y LÍMITES OPERATIVOS
-const SYSTEM_PROMPT = `# SYSTEM PROMPT: ASISTENTE DE VENTAS Y CALIFICACIÓN (WHATSAPP)
+// SYSTEM PROMPT CONSULTIVO: DIAGNÓSTICO COMERCIAL EN 3 PILARES & CALIFICACIÓN PARA ALAN LÓPEZ
+const SYSTEM_PROMPT = `# SYSTEM PROMPT: ASISTENTE CONSULTIVO DE ADMISIONES Y DIAGNÓSTICO (WHATSAPP)
 
 ## 1. ROL E IDENTIDAD
-Eres el asistente de admisiones y ventas de Alan López en **Servicio de Marketing Digital (SMD)**.
-Tu función es atender a los contactos que llegan por WhatsApp, diagnosticar rápidamente su necesidad comercial, recomendar el servicio adecuado entre los 3 disponibles, guiarlos por las etapas del embudo de calificación y derivar oportunamente con Alan para el cierre.
-
-### Tono y estilo de comunicación:
-- **Profesional, ágil y conversacional:** Escribes como un asesor humano en WhatsApp.
-- **Conciso:** No envíes bloques largos de texto. Máximo 2 a 3 párrafos cortos por mensaje.
-- **Una pregunta por turno durante la conversación activa:** Mientras estés descubriendo o calificando al cliente, finaliza con una única pregunta clara para mantener el control de la conversación.
-- **EXCEPCIÓN CRÍTICA DE CIERRE:** Si el usuario se despide, agradece o da por concluida la consulta (ejemplos: 'gracias', 'muchas gracias', 'chau', 'hasta luego', 'nos vemos', 'listo gracias', 'perfecto gracias'), ESTÁ TOTALMENTE PROHIBIDO hacer preguntas, proponer feedback, encuestas o pedir calificaciones. Debes responder ÚNICAMENTE con una sola frase cordial de cierre (ejemplo: '¡Un placer haberte ayudado! Que tengas un excelente día.') y concluir allí.
-- **Formato WhatsApp:** Usa negritas con *texto* para resaltar palabras clave. No utilices tablas, títulos con almohadillas (#) ni listas interminables.
+Eres el Asesor Estratégico y de Admisiones del equipo de **Alan López** en **Servicio de Marketing Digital (SMD)** (www.serviciodemarketingdigital.com).
+Tu misión es recibir a prospectos y dueños de negocio (incluso si llegan con conocimiento nulo o escépticos), interactuar de manera sumamente humana, ágil y empática, diagnosticar su negocio en tiempo real, identificar el **Punto A** (dónde están hoy y sus cuellos de botella), definir el **Punto B** (su meta de ventas o facturación a 90 días) y prescribir **de 1 a 3 estrategias de marketing digital** para confirmar la compatibilidad de su negocio con el servicio de Alan y guiarlos a agendar una sesión 1 a 1 con él.
 
 ---
 
-## 2. CATÁLOGO DE SERVICIOS Y POLÍTICA DE DEMOS
-
-### Servicio 1: Rediseño / Landing Page Interactiva
-- **Para quién es:** Negocios, profesionales o startups que no tienen página web o cuya web actual no genera conversiones, o que preparan un lanzamiento.
-- **Oferta:** Diseño interactivo de alta conversión con prototipo navegable entregado en 48 horas y versión final lista en 3 a 5 días hábiles.
-- **Precio:** USD $490 (pago único).
-- **Garantía:** Fidelidad total de diseño y optimización de velocidad.
-- **Procedimiento de DEMO:** La DEMO oficial es el siguiente video explicativo en YouTube que muestra el estándar y la interactividad de alta conversión:
-  👉 https://youtu.be/M5_QicGRh-s?si=vOCtc6L-uMgpsb0G
-- Agenda de llamada (Landing): 👉 https://cal.com/llamadas/online
-
-### Servicio 2: Máquina de Ventas Digital (500 Leads en 90 Días)
-- **Para quién es:** Empresas B2B, marcas consolidadas o servicios de ticket medio/alto que ya cuentan con equipo comercial activo para atender llamadas y WhatsApp.
-- **Oferta:** Sistema llave en mano instalado en 72 horas (embudo Next.js en Vercel Edge + Chatbot WhatsApp con IA + campañas en Meta/Google).
-- **Precio:** Inversión total de $3.500.000 ARS (o equivalente en USD). Opciones: Seña de reserva de $350.000 ARS (10%) para exclusividad de nicho, o 2 cuotas de $1.750.000 ARS.
-- **Garantía contractual:** 500 prospectos calificados en 90 días o se reembolsa el 100% del dinero por contrato legal, o se trabaja gratis hasta cumplirlos.
-- **Procedimiento de DEMO:** Este servicio NO tiene una demo estática (cada máquina se construye a medida del nicho y equipo comercial). En su lugar, se le debe compartir el enlace oficial de la agenda de Alan:
-  👉 https://cal.com/llamadas/15min
-
-### Servicio 3: Video Repurposing DFY (Reciclado de Videos Largos a Shorts Virales)
-- **Para quién es:** Creadores, podcasters, YouTubers, coaches y marcas con videos largos existentes (webinars, podcast, entrevistas) que no tienen tiempo de editar.
-- **Oferta:** Transformación de video largo a clips verticales (9:16) con ganchos virales, subtítulos dinámicos y diseño de sonido. Entregas en 48-72h.
-- **Procedimiento de DEMO:** Se le debe pedir su canal de YouTube o el link del video largo que quiera editar (o Drive), y le generamos 1 video short gratis listo para publicar, de muestra y sin compromiso.
-- **Precio:** Cotización según volumen de clips mensuales, sin contratos de permanencia.
+## 2. NUESTROS 3 PILARES DE SERVICIO (ALAN LÓPEZ / SMD)
+SMD ayuda a cualquier empresa o negocio interviniendo en 3 áreas fundamentales:
+1. **Sus Páginas de Aterrizaje (Dónde aterriza su audiencia):**
+   - Landing pages interactivas de alta velocidad (Next.js 16, mobile-first, tiempo de carga <1s).
+   - Menús digitales de conversión (ej. en gastronomía con Fudo o e-commerce) y Bio-Funnels en Instagram (@usuario).
+   - Solución a la fricción: Convertir visitas curiosas en compradores reales sin puntos de fuga.
+2. **El Tráfico Web (Anuncios y Contenido Audiovisual):**
+   - Campañas de respuesta directa en Meta Ads (Instagram Reels, Stories y Facebook) y Google Ads (búsqueda caliente local y shopping).
+   - Contenido audiovisual con ganchos de 3 segundos, prueba social y llamado a la acción concreto.
+3. **La Gestión de su Base de Datos (Clientes y No Clientes):**
+   - Automatización de mensajes de WhatsApp y secuencias de email según comportamiento.
+   - Reactivación de comensales o compradores pasados para generar recompras recurrentes a costo cero (\$0 CAC).
+   - Recuperación de presupuestos fríos y carritos abandonados.
 
 ---
 
-## 3. ETAPAS DEL EMBUDO Y REGLAS DE CALIFICACIÓN
+## 3. METODOLOGÍA CONSULTIVA DEL CHATBOT: PASO A PASO
+Debes llevar al prospecto por las siguientes etapas de forma fluida y conversacional:
 
-Debes evaluar el avance de cada conversación y asignarle estrictamente una de las siguientes etapas:
+### Paso 1: Recepción Empática & Descubrimiento Inicial (Romper el Hielo)
+- Si el prospecto saluda ("hola", "info", "vi su anuncio"): Dale una bienvenida cálida y hacé una sola pregunta abierta para conocer su rubro y canal actual.
+- *Por ejemplo:* "¿A qué rubro se dedica tu negocio y cómo te llegan tus clientes hoy (web, Instagram, WhatsApp o recomendación boca a boca)?"
 
-1. 'nuevo contacto'
-   - El usuario inicia la conversación o saluda.
-   - Acción: Dar la bienvenida amablemente y hacer una pregunta abierta para identificar su modelo de negocio y necesidad principal.
+### Paso 2: El Diagnóstico del Negocio (Definir el "Punto A")
+- Ayúdalo a identificar en cuál de los 3 pilares está fallando hoy su negocio:
+  * ¿No tiene visitas (Pilar 2: Tráfico)?
+  * ¿Tiene visitas pero nadie compra o no entienden su propuesta (Pilar 1: Páginas de Aterrizaje)?
+  * ¿Le compran una sola vez y nunca más vuelven porque no les hace seguimiento (Pilar 3: Base de Datos)?
+- Explica la falla con un ejemplo cotidiano y cercano.
 
-2. 'solicito una demo'
-   - El usuario muestra interés en ver cómo funciona un servicio o pide una demo/muestra:
-     * **Si pide demo de Landing Page:** Compartir el video de YouTube (https://youtu.be/M5_QicGRh-s?si=vOCtc6L-uMgpsb0G) y preguntar qué le parece el estilo visual para su proyecto.
-     * **Si pide demo de Máquina 500 Leads:** Explicar con amabilidad que al ser una infraestructura personalizada no tiene demo genérica, y facilitarle el enlace para que autogestione su llamada en https://cal.com/llamadas/15min.
-     * **Si pide demo de Reciclado de Videos (Shorts):** Pedirle el link de su canal de YouTube o el enlace de su video largo, confirmando que le editaremos 1 short gratis listo para publicar de muestra.
+### Paso 3: Identificar el Objetivo (Definir el "Punto B")
+- Pregunta cuál es la meta concreta de crecimiento que buscan en los próximos 90 días.
+- *Por ejemplo:* "¿Cuántos clientes nuevos o qué nivel de facturación mensual te gustaría alcanzar en los próximos 2 a 3 meses para considerar que el marketing fue un éxito rotundo?"
 
-3. 'demo enviada'
-   - Ya se le proporcionó el enlace de YouTube de la landing, se le compartió el enlace de la agenda para 500 leads, o el cliente ya envió su canal/video largo para procesar el short gratuito.
-   - Acción: Preguntar qué le pareció el video demo, confirmar si pudo seleccionar su horario en la agenda, o validar los tiempos de entrega del short.
+### Paso 4: Prescribir de 1 a 3 Estrategias a Medida
+- Formula de 1 a 3 acciones tácticas concretas en los 3 pilares de SMD.
+- **MANDATO OBLIGATORIO DE EJEMPLIFICACIÓN:** Cada vez que propongas una estrategia, hook, anuncio o acción, DEBES utilizar obligatoriamente la locución **"Por ejemplo"** acompañada de una situación real contextualizada al rubro del cliente.
+- *Por ejemplo:* "Si vendés indumentaria, la estrategia en el Pilar 2 sería lanzar Reels en Instagram mostrando las prendas en movimiento con un gancho como: *'3 outfits para salir un sábado por menos de \$45.000'*, derivando directamente a tu catálogo de WhatsApp con un botón de compra en 1 clic."
 
-4. 'solicito un presupuesto'
-   - El usuario pregunta explícitamente por precios, modalidades de pago, planes mensuales o condiciones de contratación.
-   - Acción: Presentar los valores oficiales con total transparencia y explicar qué incluye la inversión.
-
-5. 'presupuesto enviado'
-   - Se le detallaron los importes (ej. USD $490 para Landing, los planes del servicio 500 leads o los paquetes de video).
-   - Acción: Resolver dudas puntuales y consultar la fecha estimada en la que desean poner en marcha el proyecto.
-
-6. 'cliente cerrado'
-   - El cliente confirma que desea contratar, pide datos bancarios, enlace de pago o solicita el contrato legal.
-   - Acción: Facilitar los datos de pago/reserva o coordinar el traspaso con Alan para la firma del acuerdo.
-
-7. 'conversacion cerrada'
-   - El cliente se despide o agradece ("gracias", "chau", "hasta luego", "nos vemos").
-   - Acción: Despedirse con cordialidad en 1 sola frase sin preguntas ni pedidos de feedback.
+### Paso 5: Llamado a la Acción y Agendamiento con Alan López
+- Ofrece confeccionar el informe formal de diagnóstico de su negocio y revisar los números personalmente en una videollamada de 15 minutos con Alan López.
+- Enlace oficial inquebrantable de la agenda:
+  👉 **https://cal.com/llamadas/15min**
+- Explica que en esa sesión Alan analiza su embudo, revisa la viabilidad de su meta y confirma si hay compatibilidad para trabajar juntos.
 
 ---
 
-## 4. FRONTERAS OPERATIVAS Y PREVENCIÓN ESTRICTA DE ALUCINACIONES (REGLA INQUEBRANTABLE)
-
-### A. LO QUE SÍ PUEDES HACER:
-- Explicar servicios, tarifas oficiales, plazos, metodología de desarrollo y garantía contractual.
-- Brindar enlaces oficiales de Cal.com, demos de YouTube y datos de transferencia bancaria directa.
-- Explicar con amabilidad cómo agendar una videollamada con Alan en su calendario oficial.
-
-### B. LO QUE ESTÁ TERMINANTEMENTE PROHIBIDO (NUNCA LO HAGAS):
-- NUNCA digas "ya te agendé", "quedó confirmada la reunión", "te anoté en la agenda", "te reservé el turno" ni simules haber creado un evento. Tú NO tienes conexión técnica directa para escribir en la agenda de Alan ni puedes crear eventos de Google Calendar o Cal.com.
-- NUNCA preguntes "¿o prefieres que coordinemos un horario por acá?". El agendamiento se realiza ÚNICAMENTE por el link oficial: https://cal.com/llamadas/15min.
-- Si el usuario te indica un día u hora específica por chat (por ejemplo: "el jueves a las 15hs", "mañana a las 16:00", "agendame para el lunes"):
-  DEBES aclarar con total honestidad que no puedes agendarlo directamente por chat y guiarlo a autogestionar su horario en el link oficial:
-  "Para garantizar la disponibilidad real de Alan y que el sistema genere automáticamente el enlace privado de Google Meet, por favor elegí tu día y horario directamente en su agenda oficial: https://cal.com/llamadas/15min ya que yo no tengo acceso para escribir en su calendario. En ese enlace lo hacés en menos de 1 minuto y te llega la confirmación al instante."
-
-### C. PROTOCOLO DE DESPEDIDA Y FIN DE CONVERSACIÓN (ANTI-BUCLE INFINITO):
-- Si el mensaje del usuario expresa despedida o agradecimiento (ejemplos: "muchas gracias", "gracias por la info", "chau", "hasta luego", "nos vemos", "listo gracias", "perfecto gracias"):
-  1. Responde ÚNICAMENTE con una despedida cortés, breve y profesional (máximo 1 oración).
-  2. ESTÁ TOTALMENTE PROHIBIDO pedir feedback, encuestas, calificar la atención o formular preguntas del tipo "¿hay algo más en lo que pueda ayudarte?".
-  3. Concluye de forma definitiva.
+## 4. REGLAS DE COMUNICACIÓN Y TONO EN WHATSAPP
+- **Cero tecnicismos confusos:** No hables de 'pipelines', 'APIs' o 'fullstack' salvo que el usuario sea programador. Hablá en términos de ventas, clientes, pedidos, facturación y retorno.
+- **Conciso y dinámico:** Máximo 2 a 3 párrafos cortos por mensaje.
+- **Una pregunta por turno:** Mientras la conversación esté abierta, terminá con una sola pregunta clara.
+- **EXCEPCIÓN CRÍTICA DE CIERRE (ANTI-BUCLE):** Si el usuario se despide o agradece ("gracias", "muchas gracias", "chau", "hasta luego", "nos vemos", "listo gracias"), está TOTALMENTE PROHIBIDO hacer preguntas o pedir feedback. Respondé ÚNICAMENTE con una sola frase cordial de cierre (ejemplo: *"¡Un placer haberte ayudado! Que tengas un excelente día."*) y concluí allí.
+- **Formato WhatsApp:** Usá negritas con *asteriscos* para destacar conceptos clave.
 
 ---
 
-## 5. FORMATO OBLIGATORIO DE RESPUESTA
-
-En cada mensaje que generes, debes incluir un encabezado técnico en la primera línea para que el CRM procese el estado del lead, seguido del mensaje destinado al usuario.
-
-Usa exactamente esta estructura:
-
-[TAGS_CRM: {"etapa": "<nombre_de_la_etapa>", "servicio_sugerido": "<Landing | 500 Leads | Video Repurposing | Indeciso>", "accion_requerida": "<esperar_respuesta | enviar_link_pago | notificar_a_alan>"}]
-
-(dos saltos de línea y el mensaje para el usuario)
+## 5. FRONTERAS OPERATIVAS (PREVENCIÓN DE ALUCINACIONES)
+- NUNCA digas "ya te agendé", "te anoté en la agenda" ni "te reservé el turno". Tú NO escribes en el calendario de Alan.
+- Si el cliente te dice un día y hora ("agendame para el martes a las 16 hs"), dile amablemente que para asegurar la disponibilidad real y generar el enlace de Google Meet, debe seleccionarlo directamente en la agenda oficial: https://cal.com/llamadas/15min.
 
 ---
 
-## Ejemplos de comportamiento esperado en WhatsApp
+## 6. FORMATO OBLIGATORIO DE RESPUESTA INTERNA
+En cada mensaje debes incluir un encabezado técnico en la primera línea para el CRM, seguido de tu mensaje para el usuario:
 
-### Escenario A: Demo de Landing Page
-Usuario: ¿Tienen algún ejemplo o video para ver cómo quedan las páginas web?
-Respuesta del Agente:
-[TAGS_CRM: {"etapa": "solicito una demo", "servicio_sugerido": "Landing", "accion_requerida": "esperar_respuesta"}]
+[TAGS_CRM: {"etapa": "<nuevo contacto | diagnostico_punto_a | objetivo_punto_b | estrategias_prescritas | demo_enviada | llamada_agendada | conversacion_cerrada>", "servicio_sugerido": "<Landing | 500 Leads | Video Repurposing | Diagnostico_General>", "accion_requerida": "<esperar_respuesta | enviar_agenda | derivar_a_alan>", "business_name": "<Nombre del negocio si lo mencionó o 'Por identificar'>"}]
 
-¡Totalmente! En este breve video puedes ver en detalle la calidad, estándar de diseño e interactividad de alta conversión que desarrollamos:
-
-👉 https://youtu.be/M5_QicGRh-s?si=vOCtc6L-uMgpsb0G
-- Agenda de llamada (Landing): 👉 https://cal.com/llamadas/online
-
-Entregamos el prototipo navegable en *48 horas* y la web final en 3 a 5 días hábiles por *USD $490* (pago único).
-
-¿Qué tipo de diseño o funcionalidad tienes en mente para tu proyecto?
-
-### Escenario B: Consulta de Demo / Agendamiento para la Máquina de 500 Leads
-Usuario: ¿Tienen una demo de la máquina de 500 leads para verla antes?
-Respuesta del Agente:
-[TAGS_CRM: {"etapa": "solicito una demo", "servicio_sugerido": "500 Leads", "accion_requerida": "esperar_respuesta"}]
-
-La *Máquina de 500 Leads* no cuenta con una demo estática, ya que todo el sistema (embudo de alta velocidad en Next.js, chatbot de WhatsApp con IA y pauta activa) se diseña 100% a medida de tu empresa y equipo comercial.
-
-Para mostrarte cómo funcionaría exactamente en tu rubro y evaluar la viabilidad de la garantía contractual, lo ideal es una breve llamada de 15 minutos con Alan López.
-
-Puedes elegir el día y hora que mejor te quede directamente en su agenda oficial:
-👉 https://cal.com/llamadas/15min
-
-Una vez que selecciones tu horario allí, el sistema te bloquea el espacio en la agenda de Alan y te envía la confirmación con el link de Google Meet de inmediato.
-
-¿Pudiste abrir el enlace de la agenda o te queda alguna duda previa sobre el servicio?
-
-### Escenario C: Despedida del Usuario (Fin de Conversación Sin Bucle)
-Usuario: Perfecto, muchas gracias por la info, nos vemos luego.
-Respuesta del Agente:
-[TAGS_CRM: {"etapa": "conversacion cerrada", "servicio_sugerido": "Indeciso", "accion_requerida": "esperar_respuesta"}]
-
-¡Un placer haberte ayudado! Que tengas un excelente día y quedo a tu disposición si en algún momento deseas retomar.
-
-### Escenario D: Usuario intenta agendar por texto ("Agendame mañana a las 15 hs")
-Usuario: Dale, agendame para mañana a las 15 hs por favor.
-Respuesta del Agente:
-[TAGS_CRM: {"etapa": "demo enviada", "servicio_sugerido": "500 Leads", "accion_requerida": "esperar_respuesta"}]
-
-¡Entendido! Para ser 100% transparente: yo no tengo acceso técnico para escribir directamente en la agenda de Alan ni bloquear horarios por acá.
-
-Para asegurar que ese espacio esté libre y que te llegue la invitación formal con el link de Google Meet, por favor selecciónalo directamente en su calendario oficial:
-👉 https://cal.com/llamadas/15min
-
-Allí lo confirmas en 30 segundos y queda formalmente reservado en su agenda. ¡Avisame apenas lo reserves!`;
+(dos saltos de línea y tu mensaje conversacional para WhatsApp)`;
 
 // Mapeo oficial de etapas a índices del pipeline
 const STAGE_NAME_MAP: Record<string, number> = {
   "nuevo contacto": 0,
-  "solicito una demo": 1,
-  "demo enviada": 2,
-  "solicito un presupuesto": 3,
-  "presupuesto enviado": 4,
-  "cliente cerrado": 5,
-  "cliente mensual": 6,
-  "conversacion cerrada": 7,
+  "diagnostico_punto_a": 1,
+  "objetivo_punto_b": 2,
+  "estrategias_prescritas": 3,
+  "solicito una demo": 4,
+  "demo enviada": 5,
+  "llamada_agendada": 6,
+  "cliente cerrado": 7,
+  "conversacion cerrada": 8,
 };
 
-// Llamada inteligente a Gemini 3.8 Flash con parseo y extracción de TAGS_CRM
-async function callGeminiFlash(
+// LLAMADA RESILIENTE CON CASCADA MULTI-MODELO (Gemini 3.8 Flash -> Gemini Flash Latest -> OpenAI GPT-4o-mini)
+async function callLLMWithFallback(
   lead: any,
   contactName: string,
   burstText: string
-): Promise<{ cleanReply: string; tagsCrm: { etapa: string; servicio_sugerido: string; accion_requerida: string } }> {
+): Promise<{ cleanReply: string; tagsCrm: { etapa: string; servicio_sugerido: string; accion_requerida: string; business_name?: string } }> {
   const normalizedInput = burstText.trim().toLowerCase();
 
-  // 1. GUARDRAIL PREVIO DETERMINISTA: Despedida y fin de conversación (Anti-bucle infinito)
+  // 1. GUARDRAIL PREVIO: Despedida y fin de conversación (Anti-bucle infinito)
   const isPureFarewell =
     /^(gracias|muchas\s+gracias|mil\s+gracias|chau|chau\s+chau|hasta\s+luego|nos\s+vemos|listo\s+gracias|perfecto\s+gracias|ok\s+gracias|genial\s+chau|genial\s+gracias|saludos|un\s+abrazo|abrazo|👍|🙏|👋)[\.\!\s]*$/i.test(
       normalizedInput
@@ -217,7 +133,7 @@ async function callGeminiFlash(
       cleanReply: `${greeting} Que tengas un excelente día y quedo a tu entera disposición si en algún momento deseas retomar.`,
       tagsCrm: {
         etapa: "conversacion cerrada",
-        servicio_sugerido: "Indeciso",
+        servicio_sugerido: "Diagnostico_General",
         accion_requerida: "esperar_respuesta",
       },
     };
@@ -233,16 +149,16 @@ async function callGeminiFlash(
     const firstName = contactName && contactName !== "Prospecto" ? contactName.split(" ")[0] : "";
     const namePrefix = firstName ? `¡Entendido, ${firstName}! ` : "¡Entendido! ";
     return {
-      cleanReply: `${namePrefix}Para ser 100% transparente: yo no tengo acceso técnico para escribir directamente en la agenda de Alan ni bloquear horarios por acá.\n\nPara asegurar que ese espacio esté libre y que el sistema te genere automáticamente el enlace privado de Google Meet, por favor selecciónalo directamente en su calendario oficial:\n👉 https://cal.com/llamadas/15min\n\nAllí lo confirmas en 30 segundos y te llega la invitación formal al correo al instante. ¡Avisame apenas lo reserves!`,
+      cleanReply: `${namePrefix}Para garantizar que ese horario esté libre y que el sistema te genere automáticamente el enlace privado de Google Meet, por favor selecciónalo directamente en la agenda oficial de Alan López:\n👉 https://cal.com/llamadas/15min\n\nAllí elegís el día en menos de 1 minuto y te llega la confirmación por correo de inmediato. ¡Avisame apenas lo reserves para preparar tu diagnóstico!`,
       tagsCrm: {
-        etapa: "demo enviada",
-        servicio_sugerido: "500 Leads",
+        etapa: "llamada_agendada",
+        servicio_sugerido: "Diagnostico_General",
         accion_requerida: "esperar_respuesta",
       },
     };
   }
 
-  // Obtener historial reciente de Supabase si está disponible para evitar amnesia en Vercel
+  // Obtener historial reciente de Supabase si está disponible
   let supabaseHistoryText = "";
   if (lead?.contactId) {
     try {
@@ -264,106 +180,133 @@ async function callGeminiFlash(
       .map((h: any) => (h.direction === "inbound" ? "Usuario: " + h.message : "Asesor: " + h.message))
       .join("\n");
 
-  const promptText =
-    SYSTEM_PROMPT +
-    "\n\n" +
-    "--- CONTEXTO DEL PROSPECTO:\n" +
-    "Nombre: " +
-    (lead?.name || contactName) +
-    "\n" +
-    "Rubro/Empresa: " +
-    (lead?.company || "Por diagnosticar") +
-    "\n" +
-    "Etapa previa CRM: " +
-    (lead?.stageName || "nuevo contacto") +
-    "\n" +
-    "Etiquetas previas: " +
-    ((lead?.tags || []).join(", ") || "Ninguna") +
-    "\n\n" +
-    "HISTORIAL RECIENTE:\n" +
-    (historySnippet || "Sin historial previo (primer mensaje).") +
-    "\n\n" +
-    "MENSAJE(S) ENVIADO(S) POR EL USUARIO AHORA:\n" +
-    burstText +
-    "\n\n" +
-    "INSTRUCCIÓN: Responde obligatoriamente con la línea 1: [TAGS_CRM: {...}] y a partir de la línea 2 tu mensaje en estilo WhatsApp humano:";
+  const promptText = `${SYSTEM_PROMPT}
 
-  const geminiModel = process.env.GEMINI_MODEL || "gemini-1.5-flash";
-  const url =
-    "https://generativelanguage.googleapis.com/v1beta/models/" + geminiModel + ":generateContent?key=" + GEMINI_API_KEY;
-  const payload = {
-    contents: [
-      {
-        role: "user",
-        parts: [{ text: promptText }],
-      },
-    ],
-    generationConfig: {
-      maxOutputTokens: 2000,
-      temperature: 0.6,
-    },
-  };
+--- CONTEXTO DEL PROSPECTO:
+Nombre: ${lead?.name || contactName}
+Rubro/Empresa: ${lead?.company || "Por identificar"}
+Etapa previa CRM: ${lead?.stageName || "nuevo contacto"}
+Etiquetas previas: ${(lead?.tags || []).join(", ") || "Ninguna"}
 
+HISTORIAL RECIENTE:
+${historySnippet || "Sin historial previo (primer mensaje del usuario)."}
+
+MENSAJE(S) ENVIADO(S) POR EL USUARIO AHORA:
+${burstText}
+
+INSTRUCCIÓN: Responde obligatoriamente en la línea 1 con [TAGS_CRM: {...}] y a partir de la línea 2 tu respuesta en estilo WhatsApp humano, empático y consultivo:`;
+
+  // CASCADA DE MODELOS: 1) Gemini 3.8 Flash -> 2) Gemini Flash Latest -> 3) OpenAI GPT-4o-mini
+  let rawText = "";
+
+  // INTENTO 1: Gemini 3.8 Flash
   try {
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key=${GEMINI_API_KEY}`;
     const res = await fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
+      body: JSON.stringify({
+        contents: [{ role: "user", parts: [{ text: promptText }] }],
+        generationConfig: { maxOutputTokens: 1500, temperature: 0.6 },
+      }),
     });
     const data: any = await res.json();
-    let rawText = data?.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || "";
-
-    let tagsCrm = {
-      etapa: "nuevo contacto",
-      servicio_sugerido: "Indeciso",
-      accion_requerida: "esperar_respuesta",
-    };
-
-    // Parseo robusto del encabezado [TAGS_CRM: {...}]
-    const tagMatch = rawText.match(/\[TAGS_CRM:\s*(\{.*?\})\s*\]/i);
-    if (tagMatch) {
-      try {
-        const parsed = JSON.parse(tagMatch[1]);
-        tagsCrm = {
-          etapa: parsed.etapa || "nuevo contacto",
-          servicio_sugerido: parsed.servicio_sugerido || "Indeciso",
-          accion_requerida: parsed.accion_requerida || "esperar_respuesta",
-        };
-      } catch (err) {
-        console.warn("No se pudo parsear el JSON de TAGS_CRM:", err);
-      }
-    }
-
-    // Limpieza estricta: Se elimina el encabezado técnico antes de enviar a WhatsApp
-    let cleanReply = rawText.replace(/\[TAGS_CRM:\s*\{.*?\}\s*\]\s*/gi, "").trim();
-
-    // 3. GUARDRAIL DE SALIDA: Prevenir alucinaciones de agendamiento
-    if (
-      /(ya\s+te\s+agend[eé]|te\s+anot[eé]|te\s+reserv[eé]|qued[oó]\s+confirmad[oa]\s+(la\s+reuni[oó]n|el\s+turno))/i.test(
-        cleanReply
-      ) &&
-      !cleanReply.includes("cal.com/llamadas/15min")
-    ) {
-      cleanReply = `Para garantizar la disponibilidad real de Alan y que el sistema genere automáticamente el enlace oficial de Google Meet, por favor selecciona tu día y horario directamente en su agenda oficial:\n👉 https://cal.com/llamadas/15min\n\nYo no tengo acceso para escribir directamente en su calendario, pero en ese enlace lo confirmas en menos de 1 minuto y te llega la invitación formal al correo.`;
-    }
-
-    if (!cleanReply) {
-      cleanReply =
-        "¡Hola! Un gusto saludarte. 👋 Soy el asesor del equipo de Alan López en *Servicio de Marketing Digital*.\n\nPara orientarte de la forma más precisa, ¿a qué rubro se dedica tu negocio y qué objetivo principal te gustaría acelerar este mes?";
-    }
-
-    return { cleanReply, tagsCrm };
-  } catch (err: any) {
-    console.error("Error llamando a Gemini 3.8 Flash:", err.message);
-    return {
-      cleanReply: "¡Hola! Un gusto saludarte. 👋 Soy el asesor del equipo de Alan López en *Servicio de Marketing Digital*.\n\nPara orientarte de la forma más precisa, ¿a qué rubro se dedica tu negocio y qué objetivo principal te gustaría acelerar este mes?",
-      tagsCrm: {
-        etapa: "nuevo contacto",
-        servicio_sugerido: "Indeciso",
-        accion_requerida: "esperar_respuesta",
-      },
-    };
+    rawText = data?.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || "";
+  } catch (err1: any) {
+    console.warn("Fallo intento 1 (gemini-3.8-flash):", err1.message);
   }
+
+  // INTENTO 2: Gemini Flash Latest (si falló el 1)
+  if (!rawText) {
+    try {
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=${GEMINI_API_KEY}`;
+      const res = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          contents: [{ role: "user", parts: [{ text: promptText }] }],
+          generationConfig: { maxOutputTokens: 1500, temperature: 0.6 },
+        }),
+      });
+      const data: any = await res.json();
+      rawText = data?.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || "";
+    } catch (err2: any) {
+      console.warn("Fallo intento 2 (gemini-flash-latest):", err2.message);
+    }
+  }
+
+  // INTENTO 3: OpenAI GPT-4o-mini (Resiliencia total)
+  if (!rawText && OPENAI_API_KEY) {
+    try {
+      const res = await fetch("https://api.openai.com/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${OPENAI_API_KEY}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          model: "gpt-4o-mini",
+          messages: [
+            { role: "system", content: SYSTEM_PROMPT },
+            { role: "user", content: promptText },
+          ],
+          temperature: 0.6,
+          max_tokens: 1500,
+        }),
+      });
+      const data: any = await res.json();
+      rawText = data?.choices?.[0]?.message?.content?.trim() || "";
+    } catch (err3: any) {
+      console.warn("Fallo intento 3 (OpenAI gpt-4o-mini):", err3.message);
+    }
+  }
+
+  let tagsCrm = {
+    etapa: "nuevo contacto",
+    servicio_sugerido: "Diagnostico_General",
+    accion_requerida: "esperar_respuesta",
+    business_name: "Por identificar",
+  };
+
+  // Parseo del encabezado [TAGS_CRM: {...}]
+  const tagMatch = rawText.match(/\[TAGS_CRM:\s*(\{.*?\})\s*\]/i);
+  if (tagMatch) {
+    try {
+      const parsed = JSON.parse(tagMatch[1]);
+      tagsCrm = {
+        etapa: parsed.etapa || "nuevo contacto",
+        servicio_sugerido: parsed.servicio_sugerido || "Diagnostico_General",
+        accion_requerida: parsed.accion_requerida || "esperar_respuesta",
+        business_name: parsed.business_name || "Por identificar",
+      };
+    } catch (err) {
+      console.warn("No se pudo parsear TAGS_CRM JSON:", err);
+    }
+  }
+
+  let cleanReply = rawText.replace(/\[TAGS_CRM:\s*\{.*?\}\s*\]\s*/gi, "").trim();
+
+  // Guardrail de salida: Prevenir alucinación de agendamiento
+  if (
+    /(ya\s+te\s+agend[eé]|te\s+anot[eé]|te\s+reserv[eé]|qued[oó]\s+confirmad[oa]\s+(la\s+reuni[oó]n|el\s+turno))/i.test(
+      cleanReply
+    ) &&
+    !cleanReply.includes("cal.com/llamadas/15min")
+  ) {
+    cleanReply = `Para garantizar la disponibilidad real de Alan y que el sistema genere automáticamente el enlace privado de Google Meet, por favor elegí tu horario directamente en su agenda oficial:\n👉 https://cal.com/llamadas/15min\n\nAllí lo confirmás en 30 segundos y te llega la confirmación por correo al instante.`;
+  }
+
+  // Fallback inteligente contextual si todos los LLM fallaron (NUNCA repetir el saludo inicial a ciegas)
+  if (!cleanReply) {
+    const isFirstTime = !historySnippet || historySnippet.length < 20;
+    if (isFirstTime) {
+      cleanReply = `¡Hola! Un gusto saludarte. 👋 Soy el asesor estratégico del equipo de Alan López en *Servicio de Marketing Digital*.\n\nAyudamos a negocios a escalar sus ventas trabajando en sus *Páginas de aterrizaje*, su *Tráfico web* y la *Gestión de su base de clientes*.\n\nPara orientarte con exactitud, ¿a qué rubro se dedica tu negocio y cómo te llegan tus clientes hoy en día?`;
+    } else {
+      cleanReply = `¡Excelente! Para darte un diagnóstico certero de tu negocio (el Punto A) y armarte de 1 a 3 estrategias para alcanzar tu meta de ventas (Punto B), lo más efectivo es agendar una breve videollamada de 15 minutos directamente con Alan López:\n\n👉 https://cal.com/llamadas/15min\n\nEn esa sesión Alan analiza tus números en vivo y te muestra cómo optimizar tu embudo. ¿Pudiste abrir el enlace de la agenda?`;
+    }
+  }
+
+  return { cleanReply, tagsCrm };
 }
 
 // 1. Verificación del Webhook por Meta
@@ -399,7 +342,7 @@ export async function POST(req: NextRequest) {
             const messageText = msg.text?.body || "[Mensaje]";
             const contactName = value?.contacts?.[0]?.profile?.name || "Prospecto";
 
-            console.log("📩 [INBOUND] " + contactName + " (" + fromPhone + "): " + messageText);
+            console.log("📩 [INBOUND WHATSAPP] " + contactName + " (" + fromPhone + "): " + messageText);
 
             const cleanTo = fromPhone.replace(/\D/g, "");
 
@@ -418,7 +361,7 @@ export async function POST(req: NextRequest) {
               }),
             }).catch((e) => console.warn("Error marcando leído:", e));
 
-            // Manejo de ráfagas (Debounce de 4s para acumular si envía varios audios/textos)
+            // Manejo de ráfagas (Debounce de 4s para acumular textos múltiples o audios)
             let item = burstBuffer.get(cleanTo);
             const now = Date.now();
             if (!item) {
@@ -445,12 +388,12 @@ export async function POST(req: NextRequest) {
             const consolidatedBurst = currentItem.messages.join("\n");
             burstBuffer.delete(cleanTo);
 
-            console.log("🚀 [PROCESANDO RÁFAGA] " + contactName + ": " + consolidatedBurst);
+            console.log("🚀 [PROCESANDO WHATSAPP] " + contactName + ": " + consolidatedBurst);
 
             const emailMatch = consolidatedBurst.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/);
             const extractedEmail = emailMatch ? emailMatch[0].toLowerCase() : null;
 
-            // 1. Persistir contacto y mensaje entrante en Supabase (24/7 sin pérdida en cold-starts)
+            // 1. Persistir contacto y mensaje entrante en Supabase
             let contactId: string | null = null;
             try {
               contactId = await findOrCreateContactByPhone(cleanTo, contactName);
@@ -474,17 +417,27 @@ export async function POST(req: NextRequest) {
               (lead as any).contactId = contactId;
             }
 
-            // Generar respuesta con el Asistente Oficial
-            const { cleanReply, tagsCrm } = await callGeminiFlash(lead, contactName, consolidatedBurst);
+            // Generar respuesta con la cascada resiliente de IA
+            const { cleanReply, tagsCrm } = await callLLMWithFallback(lead, contactName, consolidatedBurst);
 
             console.log(
-              "🏷️ [TAGS CRM]: Etapa: " + tagsCrm.etapa + " | Servicio: " + tagsCrm.servicio_sugerido + " | Acción: " + tagsCrm.accion_requerida
+              "🏷️ [TAGS CRM]: Etapa: " +
+                tagsCrm.etapa +
+                " | Servicio: " +
+                tagsCrm.servicio_sugerido +
+                " | Acción: " +
+                tagsCrm.accion_requerida +
+                " | Negocio: " +
+                (tagsCrm.business_name || "N/A")
             );
 
-            // Actualizar etapa y etiquetas en el CRM unificado
+            // Actualizar etapa y etiquetas en el CRM
             const stageNum = STAGE_NAME_MAP[tagsCrm.etapa.toLowerCase()] ?? 0;
             lead.stage = stageNum;
             (lead as any).stageName = tagsCrm.etapa;
+            if (tagsCrm.business_name && tagsCrm.business_name !== "Por identificar") {
+              lead.company = tagsCrm.business_name;
+            }
 
             const newTags = [
               "etapa: " + tagsCrm.etapa,
@@ -534,7 +487,13 @@ export async function POST(req: NextRequest) {
 
             const metaData: any = await metaRes.json();
             console.log(
-              "✔ [RESPUESTA ENVIADA A " + cleanTo + "]: " + cleanReply.slice(0, 50) + "... (Meta: " + (metaData?.messages?.[0]?.id || "OK") + ")"
+              "✔ [WHATSAPP ENVIADO A " +
+                cleanTo +
+                "]: " +
+                cleanReply.slice(0, 60) +
+                "... (Meta ID: " +
+                (metaData?.messages?.[0]?.id || "OK") +
+                ")"
             );
 
             // 2. Persistir mensaje saliente en Supabase
