@@ -6,13 +6,13 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     const pin = body?.pin?.trim();
-    const masterPin = process.env.ORCHESTRATOR_PIN || "2026";
+    const masterPin = process.env.ORCHESTRATOR_PIN || "3152";
 
     if (pin === masterPin) {
       return NextResponse.json({
         success: true,
         message: "Acceso autorizado al Centro de Control Maestro",
-        token: "smd_auth_session_authorized"
+        token: "smd_auth_session_3152"
       });
     } else {
       return NextResponse.json(
@@ -24,3 +24,4 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ success: false, error: "Petición inválida" }, { status: 400 });
   }
 }
+

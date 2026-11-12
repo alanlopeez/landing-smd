@@ -33,7 +33,7 @@ export default function OrquestadorCloudPage() {
   // Verificar sesión persistida
   useEffect(() => {
     const savedToken = localStorage.getItem("smd_orchestrator_token");
-    if (savedToken === "smd_auth_session_authorized") {
+    if (savedToken === "smd_auth_session_3152") {
       setIsAuthenticated(true);
       fetchStatus();
     }

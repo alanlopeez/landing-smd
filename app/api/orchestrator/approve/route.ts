@@ -74,6 +74,25 @@ export async function POST(req: NextRequest) {
         dispatchedList,
         timestamp: new Date().toISOString(),
       };
+    } else if (item.actionType === "INBOX_REPLY") {
+      const toEmail = item.payload?.to;
+      const replySubject = item.payload?.subject || "Re: Consulta Comercial - Servicio de Marketing Digital";
+      const replyHtml = item.payload?.replyHtml || "";
+
+      if (toEmail && replyHtml) {
+        const sendRes = await sendEmail({
+          to: toEmail,
+          subject: replySubject,
+          html: replyHtml,
+        });
+        executionResult = {
+          dispatchedTo: toEmail,
+          subject: replySubject,
+          messageId: sendRes.messageId,
+          success: sendRes.success,
+          timestamp: new Date().toISOString(),
+        };
+      }
     } else {
       executionResult = {
         executedAt: new Date().toISOString(),
