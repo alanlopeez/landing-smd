@@ -1,9 +1,12 @@
 /**
  * Almacén y Coordinador de Estado Persistente en Supabase PostgreSQL para el Orquestador Cloud
- * 100% REAL: Persiste cada solicitud en Supabase (tabla `verification` con identifier='smd_orchestrator_approval')
- * para que ningún reinicio serverless de Vercel pierda las órdenes ni aprobaciones de Alan López.
+ * 100% REAL:
+ * 1. Persiste cada solicitud en Supabase (tabla `verification` con identifier='smd_orchestrator_approval').
+ * 2. Cada vez que se genera una nueva solicitud en estado PENDING_APPROVAL, envía automáticamente
+ *    un correo de alerta a alan.ezequiel95@gmail.com indicando que hay una tarea esperando su aprobación.
  */
 import { REAL_PROSPECTS_DATABASE } from "./prospectsData";
+import { sendEmail } from "./emailService";
 
 export interface ApprovalRequest {
   id: string;
@@ -28,6 +31,7 @@ export interface ApprovalRequest {
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://smvhwaeppoigxmbiccjw.supabase.co";
 const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || "";
 const APPROVAL_IDENTIFIER = "smd_orchestrator_approval";
+const ALAN_PERSONAL_EMAIL = "alan.ezequiel95@gmail.com";
 
 const defaultSeedRequest: ApprovalRequest = {
   id: "REQ-OUT-REAL-001",
@@ -48,6 +52,86 @@ const defaultSeedRequest: ApprovalRequest = {
 const memoryCache: Map<string, ApprovalRequest> = new Map([
   [defaultSeedRequest.id, defaultSeedRequest],
 ]);
+
+async function notifyAlanPendingApproval(item: ApprovalRequest): Promise<void> {
+  try {
+    const planPreview = item.payload?.planOutput
+      ? String(item.payload.planOutput)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/\*\*(.*?)\*\*/g, "<b>$1</b>")
+          .replace(/\n/g, "<br/>")
+      : "";
+
+    const html = `<div style="font-family: Arial, sans-serif; max-width: 680px; margin: 0 auto; color: #0f172a; line-height: 1.6;">
+  <div style="background: #090d16; color: #ffffff; padding: 20px 24px; border-radius: 12px 12px 0 0; border-bottom: 3px solid #f59e0b;">
+    <p style="margin: 0; font-size: 11px; color: #fbbf24; text-transform: uppercase; letter-spacing: 1px;">
+      <b>🔔 Alerta Human-in-the-Loop • Requiere tu Aprobación</b>
+    </p>
+    <h2 style="margin: 6px 0 0; font-size: 18px;">Nueva petición pendiente en /orquestador (${item.id})</h2>
+  </div>
+
+  <div style="padding: 24px; border: 1px solid #e2e8f0; border-top: none; border-radius: 0 0 12px 12px; background: #ffffff;">
+    <p>Hola <b>Alan</b>,</p>
+    <p>Hay una nueva tarea retenida en la <b>Puerta de Control Humano</b> esperando tu confirmación antes de ejecutarse:</p>
+
+    <table style="width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 13.5px;">
+      <tr>
+        <td style="padding: 8px 12px; background: #f8fafc; border: 1px solid #e2e8f0; width: 140px;"><b>ID de Solicitud:</b></td>
+        <td style="padding: 8px 12px; border: 1px solid #e2e8f0; font-family: monospace;">${item.id}</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px 12px; background: #f8fafc; border: 1px solid #e2e8f0;"><b>Agente / División:</b></td>
+        <td style="padding: 8px 12px; border: 1px solid #e2e8f0;">${item.agentName} (${item.division})</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px 12px; background: #f8fafc; border: 1px solid #e2e8f0;"><b>Nivel de Riesgo:</b></td>
+        <td style="padding: 8px 12px; border: 1px solid #e2e8f0;"><b>${item.riskLevel}</b></td>
+      </tr>
+      <tr>
+        <td style="padding: 8px 12px; background: #f8fafc; border: 1px solid #e2e8f0;"><b>Título:</b></td>
+        <td style="padding: 8px 12px; border: 1px solid #e2e8f0;"><b>${item.title}</b></td>
+      </tr>
+      <tr>
+        <td style="padding: 8px 12px; background: #f8fafc; border: 1px solid #e2e8f0;"><b>Descripción:</b></td>
+        <td style="padding: 8px 12px; border: 1px solid #e2e8f0;">${item.description}</td>
+      </tr>
+    </table>
+
+    ${
+      planPreview
+        ? `<div style="margin-top: 16px;">
+      <p style="margin-bottom: 6px; font-size: 13px; color: #ea580c;"><b>📋 Plan Formulado por el Orquestador (Vista Previa):</b></p>
+      <div style="background: #f8fafc; padding: 14px; border-radius: 8px; border: 1px solid #cbd5e1; font-size: 13px;">
+        ${planPreview}
+      </div>
+    </div>`
+        : ""
+    }
+
+    <div style="margin: 24px 0 12px; text-align: center;">
+      <a href="https://www.serviciodemarketingdigital.com/orquestador"
+         style="display: inline-block; background: #ea580c; color: #ffffff; text-decoration: none; font-weight: bold; padding: 14px 26px; border-radius: 10px; font-size: 14px;">
+        👉 Entrar a /orquestador para Aprobar o Rechazar (PIN: 3152)
+      </a>
+    </div>
+
+    <p style="font-size: 12px; color: #64748b; text-align: center; margin-top: 16px;">
+      Ninguna acción se ejecutará hasta que presiones <b>"Aprobar y Ejecutar"</b> en tu panel.
+    </p>
+  </div>
+</div>`;
+
+    await sendEmail({
+      to: ALAN_PERSONAL_EMAIL,
+      subject: `🔔 [Pendiente de tu Aprobación] (${item.id}) ${item.title}`,
+      html,
+    });
+  } catch (err) {
+    console.warn("Aviso enviando notificación de aprobación pendiente a Alan:", err);
+  }
+}
 
 async function saveToSupabase(item: ApprovalRequest): Promise<void> {
   memoryCache.set(item.id, item);
@@ -144,6 +228,8 @@ export const orchestratorStore = {
       status: "PENDING_APPROVAL",
     };
     await saveToSupabase(newReq);
+    // Enviar alerta inmediata por correo a alan.ezequiel95@gmail.com
+    await notifyAlanPendingApproval(newReq);
     return newReq;
   },
 
@@ -157,6 +243,7 @@ export const orchestratorStore = {
       status: "PENDING_APPROVAL",
     };
     saveToSupabase(newReq).catch(() => {});
+    notifyAlanPendingApproval(newReq).catch(() => {});
     return newReq;
   },
 

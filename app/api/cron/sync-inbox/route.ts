@@ -107,6 +107,7 @@ function isAutomatedOrInternalEmail(fromEmail: string, subject: string): boolean
 
   const blockedSubjects = [
     "[auto-respuesta modo b",
+    "[pendiente de tu aprobación]",
     "misión aprobada",
     "manual maestro",
     "delivery status notification",
